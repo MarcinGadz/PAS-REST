@@ -1,4 +1,4 @@
 package com.pas.app.model.client;
 
-public class Reduced {
+public class Reduced extends ClientType {
 }

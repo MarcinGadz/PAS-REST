@@ -1,4 +1,4 @@
 package com.pas.app.model.client;
 
-public class Student {
+public class Student extends ClientType{
 }
