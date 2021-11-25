@@ -1,6 +1,6 @@
 package com.pas.app.model;
 
-public class Seat {
+public class Seat extends Entity {
     private int row;
     private int column;
     private Hall litera;
