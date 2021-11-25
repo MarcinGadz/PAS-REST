@@ -2,18 +2,25 @@ package com.pas.app.DAO;
 
 import com.pas.app.model.Entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public abstract class RepositoryGeneric<T extends Entity> {
-    private List<T> objects = new ArrayList<>();
+    private Set<T> objects = new HashSet<T>();
 
-    public T register(T object) {
+    public T getById(UUID id) {
+        return objects.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
+    }
+
+    public List<T> getAll() {
+        return new ArrayList<>(objects);
+    }
+
+    public T add(T object) {
         objects.add(object);
         return object;
     }
 
-    public void unregister(T object) {
+    public void remove(T object) {
         objects.remove(object);
     }
 
@@ -25,9 +32,5 @@ public abstract class RepositoryGeneric<T extends Entity> {
 
     public long getSize() {
         return objects.size();
-    }
-
-    public List<T> getAll() {
-        return new ArrayList<>(objects);
     }
 }

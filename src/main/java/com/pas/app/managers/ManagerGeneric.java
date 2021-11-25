@@ -4,6 +4,7 @@ import com.pas.app.DAO.RepositoryGeneric;
 import com.pas.app.model.Entity;
 
 import java.util.List;
+import java.util.UUID;
 
 public abstract class ManagerGeneric<T extends Entity> {
     private final RepositoryGeneric<T> repo;
@@ -11,20 +12,36 @@ public abstract class ManagerGeneric<T extends Entity> {
     public ManagerGeneric(RepositoryGeneric<T> repo) {
         this.repo = repo;
     }
-    public T register(T object) {
-        return this.repo.register(object);
+
+    public T add(T object) {
+        return this.repo.add(object);
     }
-    public void unregister(T object) {
-        this.repo.unregister(object);
+
+    public void remove(T object) {
+        this.repo.remove(object);
     }
-    public String generateReport() {
-        return this.repo.generateReport();
-    }
-    public long getRepoSize() {
-        return this.repo.getSize();
+
+    public T getById(UUID id) {
+        return repo.getById(id);
     }
 
     public List<T> getAll() {
         return repo.getAll();
+    }
+
+    public T update(UUID id, T obj) {
+        T tmp = repo.getById(id);
+        if (tmp != null) {
+            //TODO
+        }
+        return null;
+    }
+
+    public String generateReport() {
+        return this.repo.generateReport();
+    }
+
+    public long getRepoSize() {
+        return this.repo.getSize();
     }
 }

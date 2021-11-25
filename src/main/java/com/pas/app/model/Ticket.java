@@ -1,5 +1,7 @@
 package com.pas.app.model;
 
+import com.pas.app.model.client.Client;
+
 public class Ticket extends Entity {
     String ticketId;
     Client client;
