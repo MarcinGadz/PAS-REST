@@ -1,4 +1,4 @@
 package com.pas.app.model;
 
-public class Film {
+public class Film extends Entity {
 }

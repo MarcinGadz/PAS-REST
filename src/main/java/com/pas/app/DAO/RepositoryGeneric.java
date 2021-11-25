@@ -1,9 +1,11 @@
 package com.pas.app.DAO;
 
+import com.pas.app.model.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RepositoryGeneric<T> {
+public abstract class RepositoryGeneric<T extends Entity> {
     private List<T> objects = new ArrayList<>();
 
     public T register(T object) {

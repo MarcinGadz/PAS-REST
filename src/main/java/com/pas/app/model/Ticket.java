@@ -1,10 +1,11 @@
 package com.pas.app.model;
 
-public class Ticket {
+public class Ticket extends Entity {
     String ticketId;
     Client client;
     Film film;
     Seat seat;
+
     public Ticket(String ticketId, Client client, Film film, Seat seat) {
         this.ticketId = ticketId;
         this.client = client;

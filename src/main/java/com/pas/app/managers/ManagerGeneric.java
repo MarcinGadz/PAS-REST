@@ -1,10 +1,11 @@
 package com.pas.app.managers;
 
 import com.pas.app.DAO.RepositoryGeneric;
+import com.pas.app.model.Entity;
 
 import java.util.List;
 
-public abstract class ManagerGeneric<T> {
+public abstract class ManagerGeneric<T extends Entity> {
     private final RepositoryGeneric<T> repo;
 
     public ManagerGeneric(RepositoryGeneric<T> repo) {

@@ -1,4 +1,6 @@
 package com.pas.app.model.client;
 
-public class Client {
+import com.pas.app.model.Entity;
+
+public class Client extends Entity {
 }
