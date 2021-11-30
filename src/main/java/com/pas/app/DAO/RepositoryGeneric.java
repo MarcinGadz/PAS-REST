@@ -6,7 +6,6 @@ import java.util.*;
 
 public abstract class RepositoryGeneric<T extends Entity> {
     private Set<T> objects = new HashSet<T>();
-
     public T getById(UUID id) {
         return objects.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
     }
@@ -16,6 +15,7 @@ public abstract class RepositoryGeneric<T extends Entity> {
     }
 
     public T add(T object) {
+        object.setId(UUID.randomUUID());
         objects.add(object);
         return object;
     }

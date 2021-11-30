@@ -8,11 +8,32 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class Film extends Entity{
-    String title;
-    String genre;
-    Date beginTime;
-    Date endTime;
-    BigDecimal basePrice;
+    private String title;
+    private String genre;
+    private Date beginTime;
+    private Date endTime;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    private BigDecimal basePrice;
 
     public Film(String title, String genre, Date beginTime, Date endTime, BigDecimal basePrice) {
         this.title = title;

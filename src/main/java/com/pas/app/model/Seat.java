@@ -5,6 +5,18 @@ public class Seat extends Entity {
     private int column;
     private Hall litera;
 
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public void setLitera(Hall litera) {
+        this.litera = litera;
+    }
+
     public Seat(int row, int column, Hall litera) {
         this.row = row;
         this.column = column;

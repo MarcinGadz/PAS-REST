@@ -4,6 +4,9 @@ import com.pas.app.DAO.ClientRepository;
 import com.pas.app.model.Ticket;
 import com.pas.app.model.Client;
 
+import java.sql.Date;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,18 +55,36 @@ public class ClientManager {
 
     public void updateClient(UUID id, Client c) {
         Client tmp = getById(id);
+        repo.remove(tmp);
         if (tmp != null) {
-            //TODO set new data to tmp
+            if(c.getFirstName() != null) {
+                tmp.setFirstName(c.getFirstName());
+            }
+            if(c.getLastName() != null) {
+                tmp.setLastName(c.getLastName());
+            }
+            repo.add(tmp);
         }
     }
 
-    public List<Ticket> getActiveTickets(Client c) {
-        //TODO get list of tickets
-        return null;
+    public List<Ticket> getActiveTickets(UUID id) {
+        List<Ticket> tickets = new ArrayList<>();
+        Client tmp = getById(id);
+        if (tmp != null) {
+            tmp.getTickets().forEach(t -> {
+                if(t.getFilm().getEndTime().after(Date.from(Instant.now()))) {
+                    tickets.add(t);
+                }
+            });
+        }
+        return tickets;
     }
 
-    public List<Ticket> getAllTickets(Client c) {
-        //TODO
-        return null;
+    public List<Ticket> getAllTickets(UUID id) {
+        Client tmp = getById(id);
+        if (tmp != null) {
+            return tmp.getTickets();
+        }
+        return new ArrayList<>();
     }
 }

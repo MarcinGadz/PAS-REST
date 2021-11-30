@@ -2,6 +2,7 @@ package com.pas.app.model;
 import com.pas.app.exceptions.ClientException;
 import com.pas.app.model.Entity;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Client extends Entity {
@@ -9,6 +10,31 @@ public class Client extends Entity {
     private String lastName;
     private String login;
     private boolean active;
+    private List<Ticket> tickets;
+
+    public void addTicket(Ticket t) {
+        tickets.add(t);
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
     public boolean isActive() {
         return active;
