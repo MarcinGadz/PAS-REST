@@ -2,7 +2,7 @@ package com.pas.app.managers;
 
 import com.pas.app.DAO.ClientRepository;
 import com.pas.app.model.Ticket;
-import com.pas.app.model.client.Client;
+import com.pas.app.model.Client;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.pas.app.DAO;
 
-import com.pas.app.model.client.Client;
+import com.pas.app.model.Client;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,11 +11,11 @@ public class ClientRepository extends RepositoryGeneric<Client> {
     }
 
     public Client getClient(String login) {
-        return super.getAll().stream().filter(c -> c.getPersonalID().equals(login)).findFirst().orElse(null);
+        return super.getAll().stream().filter(c -> c.getLogin().equals(login)).findFirst().orElse(null);
     }
 
     public List<Client> getWithCharsInLogin(String chars) {
-        return super.getAll().stream().filter(c -> c.getPersonalID().contains(chars)).collect(Collectors.toList());
+        return super.getAll().stream().filter(c -> c.getLogin().contains(chars)).collect(Collectors.toList());
     }
 
     public void activateClient(Client c) {

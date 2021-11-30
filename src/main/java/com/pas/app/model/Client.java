@@ -1,4 +1,4 @@
-package com.pas.app.model.client;
+package com.pas.app.model;
 import com.pas.app.exceptions.ClientException;
 import com.pas.app.model.Entity;
 
@@ -7,8 +7,7 @@ import java.util.Objects;
 public class Client extends Entity {
     private String firstName;
     private String lastName;
-    private String personalID;
-    private ClientType clientType;
+    private String login;
     private boolean active;
 
     public boolean isActive() {
@@ -19,16 +18,15 @@ public class Client extends Entity {
         this.active = active;
     }
 
-    public Client(String firstName, String lastName, String personalID, ClientType clientType) throws ClientException {
+    public Client(String firstName, String lastName, String personalID) throws ClientException {
         try {
             if (Objects.equals(firstName, "") || Objects.equals(lastName, "") ||
-                    Objects.equals(personalID, "") || Objects.equals(clientType, null)) {
+                    Objects.equals(personalID, "")) {
                 throw new ClientException();
             }
             this.firstName = firstName;
             this.lastName = lastName;
-            this.personalID = personalID;
-            this.clientType = clientType;
+            this.login = personalID;
         } catch(ClientException e) {
             e.printStackTrace();
         }
@@ -42,11 +40,8 @@ public class Client extends Entity {
         return lastName;
     }
 
-    public String getPersonalID() {
-        return personalID;
+    public String getLogin() {
+        return login;
     }
 
-    public com.pas.app.model.client.ClientType getClientType() {
-        return clientType;
-    }
 }
