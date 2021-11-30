@@ -1,5 +1,4 @@
 package com.pas.app.model;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.DayOfWeek;
@@ -52,6 +51,4 @@ public class Film {
         //TODO: Zmienic date bo w Date wszystko jest deprecated
         return new BigInteger("1");
     }
-
-
 }

@@ -1,6 +1,4 @@
 package com.pas.app.model.client;
-
-
 import com.pas.app.exceptions.ClientException;
 
 import java.util.Objects;
