@@ -32,7 +32,10 @@ public abstract class ManagerGeneric<T extends Entity> {
     public T update(UUID id, T obj) {
         T tmp = repo.getById(id);
         if (tmp != null) {
-            //TODO
+            remove(tmp);
+            obj.setId(id);
+            add(obj);
+            return obj;
         }
         return null;
     }
