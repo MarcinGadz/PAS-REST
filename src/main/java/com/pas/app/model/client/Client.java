@@ -1,24 +1,42 @@
 package com.pas.app.model.client;
+import com.pas.app.exceptions.ClientException;
 
-import com.pas.app.model.Entity;
+import java.util.Objects;
 
-public class Client extends Entity {
-    private String login;
-    private boolean isActive;
+public class Client {
+    String firstName;
+    String lastName;
+    String personalID;
+    ClientType clientType;
 
-    public String getLogin() {
-        return login;
+    public Client(String firstName, String lastName, String personalID, ClientType clientType) throws ClientException {
+        try {
+            if (Objects.equals(firstName, "") || Objects.equals(lastName, "") ||
+                    Objects.equals(personalID, "") || Objects.equals(clientType, null)) {
+                throw new ClientException();
+            }
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.personalID = personalID;
+            this.clientType = clientType;
+        } catch(ClientException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public String getPersonalID() {
+        return personalID;
+    }
+
+    public com.pas.app.model.client.ClientType getClientType() {
+        return clientType;
     }
 }
