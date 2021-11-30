@@ -1,38 +1,19 @@
 package com.pas.app.model;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 
-public class Film extends Entity{
+public class Film extends Entity {
     private String title;
     private String genre;
     private Date beginTime;
     private Date endTime;
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public void setBeginTime(Date beginTime) {
-        this.beginTime = beginTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public void setBasePrice(BigDecimal basePrice) {
-        this.basePrice = basePrice;
-    }
-
+    private List<Ticket> tickets;
     private BigDecimal basePrice;
 
     public Film(String title, String genre, Date beginTime, Date endTime, BigDecimal basePrice) {
@@ -43,24 +24,56 @@ public class Film extends Entity{
         this.basePrice = basePrice;
     }
 
+    public void addTicket(Ticket t) {
+        tickets.add(t);
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getGenre() {
         return genre;
     }
 
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
     public Date getBeginTime() {
         return beginTime;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
     }
 
     public Date getEndTime() {
         return endTime;
     }
 
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
     public BigDecimal getBasePrice() {
         return basePrice;
+    }
+
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
     }
 
     public Boolean isWeekend(LocalDate currentDate) {

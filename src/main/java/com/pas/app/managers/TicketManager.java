@@ -13,12 +13,12 @@ public class TicketManager extends ManagerGeneric<Ticket> {
 
     @Override
     public Ticket add(Ticket object) {
-        // if repo contains ticket with the same Hall and seat and new ticket has start time beetween
+        // if repo contains ticket with the same Hall and seat and new ticket has start time between
         // start and end time of existing ticket - cannot put reservation
-        if(isSeatAvailable(object.getSeat(), object.getFilm().getBeginTime())) {
+        if(isSeatAvailable(object.getSeat(), object.getFilm().getBeginTime()) && object.getClient().isActive()) {
             return super.add(object);
         }
-        throw new IllegalStateException("This seat is already taken by another client");
+        throw new IllegalStateException("This seat is already taken by another client or client is not active");
     }
 
     private boolean isSeatAvailable(Seat s, Date d) {
