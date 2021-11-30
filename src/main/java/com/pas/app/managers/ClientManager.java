@@ -36,9 +36,6 @@ public class ClientManager {
     }
 
     //D - Delete
-    public void unregisterClient(UUID id) {
-        repo.remove(repo.getById(id));
-    }
 
     public void deactivateClient(Client c) {
         repo.deactivateClient(c);
