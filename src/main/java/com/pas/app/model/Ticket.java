@@ -2,6 +2,8 @@ package com.pas.app.model;
 
 import com.pas.app.model.client.Client;
 
+import java.math.BigDecimal;
+
 public class Ticket extends Entity {
     String ticketId;
     Client client;
@@ -31,8 +33,8 @@ public class Ticket extends Entity {
         return seat;
     }
 
-    public double getFinalPrice() {
-        return client.getClientType.applyDiscount(film.adjustWeekendPrice(film.getBeginTime()));
+    public BigDecimal getFinalPrice() {
+        return client.getClientType().applyDiscount(film.adjustWeekendPrice(film.getBeginTime()));
     }
 
     @Override

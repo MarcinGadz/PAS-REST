@@ -7,7 +7,7 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-public class Film {
+public class Film extends Entity{
     String title;
     String genre;
     Date beginTime;
@@ -50,5 +50,9 @@ public class Film {
     public BigInteger getDuration() {
         //TODO: Zmienic date bo w Date wszystko jest deprecated
         return new BigInteger("1");
+    }
+
+    public BigDecimal adjustWeekendPrice(Date beginTime) {
+        return new BigDecimal(0);
     }
 }
