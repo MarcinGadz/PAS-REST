@@ -5,10 +5,12 @@ import com.pas.app.DAO.RepositoryGeneric;
 import com.pas.app.model.Film;
 import com.pas.app.model.Ticket;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.Instant;
 import java.util.*;
 
+@ApplicationScoped
 public class FilmManager extends ManagerGeneric<Film> {
     @Inject
     public FilmManager(FilmRepository repo) {

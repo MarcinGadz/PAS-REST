@@ -4,10 +4,12 @@ import com.pas.app.DAO.TicketRepository;
 import com.pas.app.model.Seat;
 import com.pas.app.model.Ticket;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.Instant;
 import java.util.Date;
 
+@ApplicationScoped
 public class TicketManager extends ManagerGeneric<Ticket> {
 
     @Inject

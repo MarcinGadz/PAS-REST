@@ -3,6 +3,7 @@ package com.pas.app.DAO;
 import com.pas.app.model.User;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class UserRepository extends RepositoryGeneric<User> {
@@ -18,15 +19,17 @@ public class UserRepository extends RepositoryGeneric<User> {
         return super.getAll().stream().filter(c -> c.getLogin().contains(chars)).collect(Collectors.toList());
     }
 
-    public void activate(User c) {
-        c = getById(c.getId());
+    public void activate(UUID id) {
+        User c = getById(id);
+        //TODO check
 //        remove(c);
         c.setActive(true);
 //        add(c);
     }
 
-    public void deactivate(User c) {
-        c = getById(c.getId());
+    public void deactivate(UUID id) {
+        User c = getById(id);
+        //TODO check
         if (c != null) {
             c.setActive(false);
         }

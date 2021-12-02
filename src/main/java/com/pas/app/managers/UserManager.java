@@ -4,6 +4,7 @@ import com.pas.app.DAO.UserRepository;
 import com.pas.app.model.Ticket;
 import com.pas.app.model.User;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.sql.Date;
 import java.time.Instant;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@ApplicationScoped
 public class UserManager {
     private final UserRepository repo;
 
@@ -39,17 +41,17 @@ public class UserManager {
 
     //D - Delete
 
-    public void deactivate(User c) {
-        repo.deactivate(c);
+    public void deactivate(UUID id) {
+        repo.deactivate(id);
     }
 
     //C - Create
-    public void register(User c) {
-        repo.add(c);
+    public User register(User c) {
+        return repo.add(c);
     }
 
-    public void activate(User c) {
-        repo.activate(c);
+    public void activate(UUID id) {
+        repo.activate(id);
     }
 
     public User update(UUID id, User c) {

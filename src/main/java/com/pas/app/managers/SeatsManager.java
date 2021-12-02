@@ -4,6 +4,7 @@ import com.pas.app.DAO.SeatRepository;
 import com.pas.app.model.Seat;
 import com.pas.app.model.Ticket;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.sql.Date;
 import java.time.Instant;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@ApplicationScoped
 public class SeatsManager extends ManagerGeneric<Seat> {
 
     @Inject
