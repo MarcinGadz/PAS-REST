@@ -1,57 +1,59 @@
 package com.pas.app.managers;
 
-import com.pas.app.DAO.ClientRepository;
+import com.pas.app.DAO.UserRepository;
 import com.pas.app.model.Ticket;
-import com.pas.app.model.Client;
+import com.pas.app.model.User;
 
+import javax.inject.Inject;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ClientManager {
-    private final ClientRepository repo;
+public class UserManager {
+    private final UserRepository repo;
 
-    public ClientManager(ClientRepository repo) {
+    @Inject
+    public UserManager(UserRepository repo) {
         this.repo = repo;
     }
 
     //R - Read
-    public Client getById(UUID id) {
+    public User getById(UUID id) {
         return repo.getById(id);
     }
 
     //R - Read
-    public Client getClient(String login) {
-        return repo.getClient(login);
+    public User getUser(String login) {
+        return repo.get(login);
     }
 
-    public List<Client> getAllClients() {
+    public List<User> getAll() {
         return repo.getAll();
     }
 
-    public List<Client> getClientsWithCharsInLogin(String chars) {
+    public List<User> getWithCharsInLogin(String chars) {
         return repo.getWithCharsInLogin(chars);
     }
 
     //D - Delete
 
-    public void deactivateClient(Client c) {
-        repo.deactivateClient(c);
+    public void deactivate(User c) {
+        repo.deactivate(c);
     }
 
     //C - Create
-    public void registerClient(Client c) {
+    public void register(User c) {
         repo.add(c);
     }
 
-    public void activateClient(Client c) {
-        repo.activateClient(c);
+    public void activate(User c) {
+        repo.activate(c);
     }
 
-    public void updateClient(UUID id, Client c) {
-        Client tmp = getById(id);
+    public User update(UUID id, User c) {
+        User tmp = getById(id);
         repo.remove(tmp);
         if (tmp != null) {
             if(c.getFirstName() != null) {
@@ -62,11 +64,12 @@ public class ClientManager {
             }
             repo.add(tmp);
         }
+        return tmp;
     }
 
     public List<Ticket> getActiveTickets(UUID id) {
         List<Ticket> tickets = new ArrayList<>();
-        Client tmp = getById(id);
+        User tmp = getById(id);
         if (tmp != null) {
             tmp.getTickets().forEach(t -> {
                 if(t.getFilm().getEndTime().after(Date.from(Instant.now()))) {
@@ -77,8 +80,21 @@ public class ClientManager {
         return tickets;
     }
 
+    public List<Ticket> getInactiveTickets(UUID id) {
+        List<Ticket> tickets = new ArrayList<>();
+        User tmp = getById(id);
+        if (tmp != null) {
+            tmp.getTickets().forEach(t -> {
+                if(t.getFilm().getEndTime().before(Date.from(Instant.now()))) {
+                    tickets.add(t);
+                }
+            });
+        }
+        return tickets;
+    }
+
     public List<Ticket> getAllTickets(UUID id) {
-        Client tmp = getById(id);
+        User tmp = getById(id);
         if (tmp != null) {
             return tmp.getTickets();
         }

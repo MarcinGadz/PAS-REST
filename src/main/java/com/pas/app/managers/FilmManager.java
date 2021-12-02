@@ -1,14 +1,17 @@
 package com.pas.app.managers;
 
+import com.pas.app.DAO.FilmRepository;
 import com.pas.app.DAO.RepositoryGeneric;
 import com.pas.app.model.Film;
 import com.pas.app.model.Ticket;
 
+import javax.inject.Inject;
 import java.time.Instant;
 import java.util.*;
 
 public class FilmManager extends ManagerGeneric<Film> {
-    public FilmManager(RepositoryGeneric<Film> repo) {
+    @Inject
+    public FilmManager(FilmRepository repo) {
         super(repo);
     }
 
@@ -20,10 +23,11 @@ public class FilmManager extends ManagerGeneric<Film> {
         return new ArrayList<>();
     }
 
-    @Override
-    public void remove(Film object) {
-        if(object.getTickets().isEmpty() || object.getEndTime().before(Date.from(Instant.now()))) {
-            super.remove(object);
-        }
-    }
+
+//    @Override
+//    public void remove(Film object) {
+//        if(object.getTickets().isEmpty() || object.getEndTime().before(Date.from(Instant.now()))) {
+//            super.remove(object);
+//        }
+//    }
 }

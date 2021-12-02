@@ -89,4 +89,13 @@ public class Film extends Entity {
     public BigDecimal adjustWeekendPrice(Date beginTime) {
         return new BigDecimal(0);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

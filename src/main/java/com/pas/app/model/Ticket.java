@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 
 public class Ticket extends Entity {
     private String ticketId;
-    private Client client;
+    private User user;
     private Film film;
     private Seat seat;
 
-    public Ticket(String ticketId, Client client, Film film, Seat seat) {
+    public Ticket(String ticketId, User user, Film film, Seat seat) {
         this.ticketId = ticketId;
-        this.client = client;
+        this.user = user;
         this.film = film;
         this.seat = seat;
     }
@@ -19,8 +19,8 @@ public class Ticket extends Entity {
         this.ticketId = ticketId;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(User user) {
+        this.user = user;
     }
 
     public void setFilm(Film film) {
@@ -35,8 +35,8 @@ public class Ticket extends Entity {
         return ticketId;
     }
 
-    public Client getClient() {
-        return client;
+    public User getClient() {
+        return user;
     }
 
     public Film getFilm() {
@@ -55,9 +55,18 @@ public class Ticket extends Entity {
     public String toString() {
         return "Ticket{" +
                 "ticketId='" + ticketId + '\'' +
-                ", client=" + client +
+                ", client=" + user +
                 ", film=" + film +
                 ", seat=" + seat +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
