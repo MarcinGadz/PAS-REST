@@ -18,8 +18,8 @@ public abstract class ManagerGeneric<T extends Entity> {
         return this.repo.add(object);
     }
 
-    public void remove(T object) {
-        this.repo.remove(object);
+    public void remove(T obj) {
+        this.repo.remove(obj);
     }
 
     public T getById(UUID id) {
