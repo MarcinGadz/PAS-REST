@@ -12,9 +12,13 @@ import java.util.*;
 
 @ApplicationScoped
 public class FilmManager extends ManagerGeneric<Film> {
+
+    private FilmRepository repository;
+
     @Inject
     public FilmManager(FilmRepository repo) {
         super(repo);
+        this.repository = repo;
     }
 
     public List<Ticket> getTickets(UUID id) {

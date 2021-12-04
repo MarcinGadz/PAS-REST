@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @ApplicationScoped
 public class UserManager {
-    private final UserRepository repo;
+    private UserRepository repo;
 
     @Inject
     public UserManager(UserRepository repo) {

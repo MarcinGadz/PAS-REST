@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public abstract class ManagerGeneric<T extends Entity> {
 
-    private final RepositoryGeneric<T> repo;
+    private RepositoryGeneric<T> repo;
 
     public ManagerGeneric(RepositoryGeneric<T> repo) {
         this.repo = repo;
