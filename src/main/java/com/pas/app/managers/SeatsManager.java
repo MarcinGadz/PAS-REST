@@ -1,5 +1,6 @@
 package com.pas.app.managers;
 
+import com.pas.app.DAO.FilmRepository;
 import com.pas.app.DAO.SeatRepository;
 import com.pas.app.model.Seat;
 import com.pas.app.model.Ticket;
@@ -14,10 +15,19 @@ import java.util.UUID;
 
 @ApplicationScoped
 public class SeatsManager extends ManagerGeneric<Seat> {
+    private SeatRepository repository;
+
+    public SeatRepository getRepository() {
+        return repository;
+    }
 
     @Inject
-    public SeatsManager(SeatRepository repo) {
-        super(repo);
+    public void setRepository(SeatRepository repository) {
+        this.repository = repository;
+        super.setRepo(repository);
+    }
+
+    public SeatsManager() {
     }
 
     @Override

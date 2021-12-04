@@ -12,9 +12,20 @@ import java.util.Date;
 @ApplicationScoped
 public class TicketManager extends ManagerGeneric<Ticket> {
 
+    private TicketRepository repository;
+
+    public TicketManager() {
+
+    }
+
+    public TicketRepository getRepository() {
+        return repository;
+    }
+
     @Inject
-    public TicketManager(TicketRepository repo) {
-        super(repo);
+    public void setRepository(TicketRepository repository) {
+        this.repository = repository;
+        super.setRepo(repository);
     }
 
     @Override
