@@ -15,10 +15,17 @@ public class FilmManager extends ManagerGeneric<Film> {
 
     private FilmRepository repository;
 
+    public FilmManager() {
+    }
+
+    public FilmRepository getRepository() {
+        return repository;
+    }
+
     @Inject
-    public FilmManager(FilmRepository repo) {
-        super(repo);
-        this.repository = repo;
+    public void setRepository(FilmRepository repository) {
+        this.repository = repository;
+        super.setRepo(repository);
     }
 
     public List<Ticket> getTickets(UUID id) {

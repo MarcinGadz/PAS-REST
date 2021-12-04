@@ -16,8 +16,15 @@ import java.util.UUID;
 public class UserManager {
     private UserRepository repo;
 
+    public UserManager() {
+    }
+
+    public UserRepository getRepo() {
+        return repo;
+    }
+
     @Inject
-    public UserManager(UserRepository repo) {
+    public void setRepo(UserRepository repo) {
         this.repo = repo;
     }
 

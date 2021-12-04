@@ -10,8 +10,19 @@ public abstract class ManagerGeneric<T extends Entity> {
 
     private RepositoryGeneric<T> repo;
 
+    public RepositoryGeneric<T> getRepo() {
+        return repo;
+    }
+
+    public void setRepo(RepositoryGeneric<T> repo) {
+        this.repo = repo;
+    }
+
     public ManagerGeneric(RepositoryGeneric<T> repo) {
         this.repo = repo;
+    }
+
+    public ManagerGeneric() {
     }
 
     public T add(T object) {
