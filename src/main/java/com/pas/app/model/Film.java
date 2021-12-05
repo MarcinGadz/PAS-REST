@@ -14,6 +14,9 @@ public class Film extends Entity {
     private List<Ticket> tickets;
     private BigDecimal basePrice;
 
+    public Film() {
+    }
+
     public Film(String title, String genre, LocalDateTime beginTime, LocalDateTime endTime, BigDecimal basePrice) {
         this.title = title;
         this.genre = genre;

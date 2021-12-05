@@ -8,6 +8,9 @@ public class Ticket extends Entity {
     private Film film;
     private Seat seat;
 
+    public Ticket() {
+    }
+
     public Ticket(String ticketId, User user, Film film, Seat seat) {
         this.ticketId = ticketId;
         this.user = user;

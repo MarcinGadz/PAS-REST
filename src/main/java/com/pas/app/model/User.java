@@ -11,6 +11,9 @@ public class User extends Entity {
     private List<Ticket> tickets;
     private Role role;
 
+    public User() {
+    }
+
     public User(String firstName, String lastName, String personalID) {
         if (Objects.equals(firstName, "") || Objects.equals(lastName, "") ||
                 Objects.equals(personalID, "")) {

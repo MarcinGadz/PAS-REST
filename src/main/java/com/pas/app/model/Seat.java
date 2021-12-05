@@ -9,6 +9,9 @@ public class Seat extends Entity {
     private Hall hall;
     private List<Ticket> ticketList;
 
+    public Seat() {
+    }
+
     public void addTicket(Ticket t) {
         if(ticketList == null) {
             ticketList = new ArrayList<>();
