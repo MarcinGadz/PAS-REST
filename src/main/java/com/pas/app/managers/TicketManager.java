@@ -7,7 +7,8 @@ import com.pas.app.model.Ticket;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @ApplicationScoped
 public class TicketManager extends ManagerGeneric<Ticket> {
@@ -42,7 +43,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
 
     @Override
     public void remove(Ticket object) {
-        if(object.getFilm().getEndTime().after(Date.from(Instant.now()))) {
+        if(object.getFilm().getEndTime().isAfter(LocalDateTime.from(Instant.now()))) {
             object.getSeat().removeTicket(object);
             object.getClient().removeTicket(object);
             super.remove(object);
@@ -50,9 +51,9 @@ public class TicketManager extends ManagerGeneric<Ticket> {
         else throw new IllegalStateException("Cannot remove ended reservation");
     }
 
-    private boolean isSeatAvailable(Seat s, Date d) {
+    private boolean isSeatAvailable(Seat s, LocalDateTime d) {
         for(Ticket t : getAll()) {
-            if(t.getSeat().equals(s) && t.getFilm().getBeginTime().before(d) && t.getFilm().getEndTime().after(d)) {
+            if(t.getSeat().equals(s) && t.getFilm().getBeginTime().isBefore(d) && t.getFilm().getEndTime().isAfter(d)) {
                 return false;
             }
         }

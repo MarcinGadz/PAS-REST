@@ -10,7 +10,10 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class UserRepository extends RepositoryGeneric<User> {
     public UserRepository() {
-        //TODO add init data to repo
+        User u = new User("Jan", "Kowalski", "janko123");
+        User u2 = new User("John", "Doe", "JD");
+        add(u);
+        add(u2);
     }
 
     public User get(String login) {

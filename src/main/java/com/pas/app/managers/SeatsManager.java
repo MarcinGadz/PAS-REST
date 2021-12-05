@@ -9,6 +9,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.sql.Date;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -56,7 +58,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
         Seat tmp = getById(id);
         if (tmp != null) {
             tmp.getTicketList().forEach(t -> {
-                if (t.getFilm().getEndTime().after(Date.from(Instant.now()))) {
+                if (t.getFilm().getEndTime().isAfter(LocalDateTime.from(Instant.now()))) {
                     tickets.add(t);
                 }
             });
@@ -69,7 +71,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
         Seat tmp = getById(id);
         if (tmp != null) {
             tmp.getTicketList().forEach(t -> {
-                if (t.getFilm().getEndTime().before(Date.from(Instant.now()))) {
+                if (t.getFilm().getEndTime().isBefore(LocalDateTime.from(Instant.now()))) {
                     tickets.add(t);
                 }
             });

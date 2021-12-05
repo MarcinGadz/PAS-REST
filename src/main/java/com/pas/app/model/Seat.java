@@ -67,12 +67,6 @@ public class Seat extends Entity {
                 '}';
     }
 
-    public String getSeatID() {
-        String id = "C" + getColumn() + "R" + getRow() + "H";
-//        trzeba dokleic czesc z hallami, ale nw jak to wyglada narazie jeszcze
-        return id;
-    }
-
     @Override
     public boolean equals(Object o) {
         return super.equals(o);

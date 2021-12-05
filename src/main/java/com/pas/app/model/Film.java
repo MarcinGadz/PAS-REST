@@ -1,22 +1,20 @@
 package com.pas.app.model;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
-import java.util.Date;
 import java.util.List;
 
 public class Film extends Entity {
     private String title;
     private String genre;
-    private Date beginTime;
-    private Date endTime;
+    private LocalDateTime beginTime;
+    private LocalDateTime endTime;
     private List<Ticket> tickets;
-    private int basePrice;
+    private BigDecimal basePrice;
 
-    public Film(String title, String genre, Date beginTime, Date endTime, int basePrice) {
+    public Film(String title, String genre, LocalDateTime beginTime, LocalDateTime endTime, BigDecimal basePrice) {
         this.title = title;
         this.genre = genre;
         this.beginTime = beginTime;
@@ -52,42 +50,40 @@ public class Film extends Entity {
         this.genre = genre;
     }
 
-    public Date getBeginTime() {
+    public LocalDateTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Date beginTime) {
+    public void setBeginTime(LocalDateTime beginTime) {
         this.beginTime = beginTime;
     }
 
-    public Date getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
-    public int getBasePrice() {
+    public BigDecimal getBasePrice() {
         return basePrice;
     }
 
-    public void setBasePrice(int basePrice) {
+    public void setBasePrice(BigDecimal basePrice) {
         this.basePrice = basePrice;
     }
 
-    public Boolean isWeekend(LocalDate currentDate) {
+    public Boolean isWeekend(LocalDateTime currentDate) {
         return DayOfWeek.of(currentDate.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SATURDAY ||
                 DayOfWeek.of(currentDate.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SUNDAY;
     }
 
-    public BigInteger getDuration() {
-        //TODO: Zmienic date bo w Date wszystko jest deprecated
-        return new BigInteger("1");
-    }
-
-    public BigDecimal adjustWeekendPrice(Date beginTime) {
-        return new BigDecimal(0);
+    public BigDecimal adjustWeekendPrice(LocalDateTime beginTime) {
+        if(isWeekend(beginTime)) {
+            return basePrice.multiply(BigDecimal.valueOf(1.2));
+        }
+        return basePrice;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.pas.app.model;
 
-import com.pas.app.exceptions.ClientException;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -13,10 +11,10 @@ public class User extends Entity {
     private List<Ticket> tickets;
     private Role role;
 
-    public User(String firstName, String lastName, String personalID) throws ClientException {
+    public User(String firstName, String lastName, String personalID) {
         if (Objects.equals(firstName, "") || Objects.equals(lastName, "") ||
                 Objects.equals(personalID, "")) {
-            throw new ClientException();
+            throw new IllegalArgumentException();
         }
         this.firstName = firstName;
         this.lastName = lastName;
