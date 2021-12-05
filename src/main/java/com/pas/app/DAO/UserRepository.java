@@ -26,15 +26,11 @@ public class UserRepository extends RepositoryGeneric<User> {
 
     public void activate(UUID id) {
         User c = getById(id);
-        //TODO check
-//        remove(c);
         c.setActive(true);
-//        add(c);
     }
 
     public void deactivate(UUID id) {
         User c = getById(id);
-        //TODO check
         if (c != null) {
             c.setActive(false);
         }
