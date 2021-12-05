@@ -23,6 +23,7 @@ public class FilmController {
     @Path("/{id}")
     @Produces("application/json")
     public Film get(@PathParam("id") UUID id) {
+        System.out.println("Id to: " + id);
         return manager.getById(id);
     }
 

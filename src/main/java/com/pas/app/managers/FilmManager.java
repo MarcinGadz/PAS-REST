@@ -16,6 +16,7 @@ public class FilmManager extends ManagerGeneric<Film> {
     private FilmRepository repository;
 
     public FilmManager() {
+
     }
 
     public FilmRepository getRepository() {
