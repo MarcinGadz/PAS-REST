@@ -14,9 +14,9 @@ public class Film extends Entity {
     private Date beginTime;
     private Date endTime;
     private List<Ticket> tickets;
-    private BigDecimal basePrice;
+    private int basePrice;
 
-    public Film(String title, String genre, Date beginTime, Date endTime, BigDecimal basePrice) {
+    public Film(String title, String genre, Date beginTime, Date endTime, int basePrice) {
         this.title = title;
         this.genre = genre;
         this.beginTime = beginTime;
@@ -68,11 +68,11 @@ public class Film extends Entity {
         this.endTime = endTime;
     }
 
-    public BigDecimal getBasePrice() {
+    public int getBasePrice() {
         return basePrice;
     }
 
-    public void setBasePrice(BigDecimal basePrice) {
+    public void setBasePrice(int basePrice) {
         this.basePrice = basePrice;
     }
 
