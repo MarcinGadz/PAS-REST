@@ -1,6 +1,7 @@
 package com.pas.app.managers;
 
 import com.pas.app.DAO.UserRepository;
+import com.pas.app.model.Role;
 import com.pas.app.model.Ticket;
 import com.pas.app.model.User;
 
@@ -56,6 +57,7 @@ public class UserManager {
 
     //C - Create
     public User register(User c) {
+        c.setRole(Role.ROLE_USER);
         return repo.add(c);
     }
 

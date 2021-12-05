@@ -66,7 +66,6 @@ public class UserController {
     @Produces("application/json")
     @Consumes("application/json")
     public User create(User u) {
-        //TODO test
         return manager.register(u);
     }
 
