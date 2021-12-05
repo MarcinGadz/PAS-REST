@@ -1,35 +1,44 @@
 package com.pas.app.api;
 
-import com.pas.app.managers.FilmManager;
-import com.pas.app.model.Film;
+import com.pas.app.managers.SeatsManager;
+import com.pas.app.model.Seat;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.List;
 import java.util.UUID;
 
-@Path("/film")
-public class FilmController {
+@Path("/seat")
+public class SeatController {
+
+    private SeatsManager manager;
+
+    public SeatsManager getManager() {
+        return manager;
+    }
+
     @Inject
-    private FilmManager manager;
+    public void setManager(SeatsManager manager) {
+        this.manager = manager;
+    }
 
     @GET
     @Produces("application/json")
-    public List<Film> getAll() {
+    public List<Seat> getAll() {
         return manager.getAll();
     }
 
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Film get(@PathParam("id") UUID id) {
+    public Seat get(@PathParam("id") UUID id) {
         return manager.getById(id);
     }
 
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public Film create(Film f) {
+    public Seat create(Seat f) {
         return manager.add(f);
     }
 
@@ -37,7 +46,7 @@ public class FilmController {
     @Path("/{id}")
     @Produces("application/json")
     @Consumes("application/json")
-    public Film update(@PathParam("id") UUID id, Film f) {
+    public Seat update(@PathParam("id") UUID id, Seat f) {
         return manager.update(id, f);
     }
 

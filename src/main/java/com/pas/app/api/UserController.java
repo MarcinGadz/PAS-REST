@@ -50,14 +50,12 @@ public class UserController {
 
     @POST
     @Path("/{id}/activate")
-    @Produces("application/json")
     public void activate(@PathParam("id") UUID id) {
         manager.activate(id);
     }
 
     @POST
     @Path("/{id}/deactivate")
-    @Produces("application/json")
     public void deactivate(@PathParam("id") UUID id) {
         manager.deactivate(id);
     }
