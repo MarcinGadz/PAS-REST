@@ -8,7 +8,7 @@ import java.util.Date;
 
 @ApplicationScoped
 public class FilmRepository extends RepositoryGeneric<Film> {
-    FilmRepository() {
+    public FilmRepository() {
         addFilms();
     }
 
