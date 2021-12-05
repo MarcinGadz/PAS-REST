@@ -8,6 +8,12 @@ import java.util.UUID;
 
 public abstract class ManagerGeneric<T extends Entity> {
 
+    private final Object lock = new Object();
+
+    public Object getLock() {
+        return lock;
+    }
+
     private RepositoryGeneric<T> repo;
 
     public RepositoryGeneric<T> getRepo() {
@@ -30,7 +36,9 @@ public abstract class ManagerGeneric<T extends Entity> {
     }
 
     public void remove(T obj) {
-        this.repo.remove(obj);
+        synchronized (lock) {
+            this.repo.remove(obj);
+        }
     }
 
     public T getById(UUID id) {
@@ -42,14 +50,16 @@ public abstract class ManagerGeneric<T extends Entity> {
     }
 
     public T update(UUID id, T obj) {
-        T tmp = repo.getById(id);
-        if (tmp != null) {
-            remove(tmp);
-            obj.setId(id);
-            add(obj);
-            return obj;
+        synchronized(lock) {
+            T tmp = repo.getById(id);
+            if (tmp != null) {
+                remove(tmp);
+                obj.setId(id);
+                add(obj);
+                return obj;
+            }
+            return null;
         }
-        return null;
     }
 
     public String generateReport() {

@@ -35,22 +35,24 @@ public class SeatsManager extends ManagerGeneric<Seat> {
     @Override
     public void remove(Seat object) {
         // If there aren't active reservations with this object - remove
-        if (getActiveTickets(object.getId()).isEmpty()) {
-            super.remove(object);
-        } else throw new IllegalStateException("Cannot remove seat with active reservations");
+        synchronized (super.getLock()) {
+            if (getActiveTickets(object.getId()).isEmpty()) {
+                super.remove(object);
+            } else throw new IllegalStateException("Cannot remove seat with active reservations");
+        }
     }
 
     @Override
     public Seat update(UUID id, Seat c) {
-        Seat tmp = getById(id);
-        remove(tmp);
-        if (tmp != null) {
-            tmp.setHall(c.getHall());
-            tmp.setColumn(c.getColumn());
-            tmp.setRow(c.getRow());
-            add(tmp);
+        synchronized (super.getLock()) {
+            Seat tmp = getById(id);
+            if (tmp != null) {
+                tmp.setHall(c.getHall());
+                tmp.setColumn(c.getColumn());
+                tmp.setRow(c.getRow());
+            }
+            return tmp;
         }
-        return tmp;
     }
 
     public List<Ticket> getActiveTickets(UUID id) {

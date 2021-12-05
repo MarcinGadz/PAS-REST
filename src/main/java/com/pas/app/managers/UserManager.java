@@ -18,6 +18,7 @@ import java.util.UUID;
 @ApplicationScoped
 public class UserManager {
     private UserRepository repo;
+    private final Object lock = new Object();
 
     public UserManager() {
     }
@@ -52,32 +53,40 @@ public class UserManager {
     //D - Delete
 
     public void deactivate(UUID id) {
-        repo.deactivate(id);
+        synchronized (lock) {
+            repo.deactivate(id);
+        }
     }
 
     //C - Create
     public User register(User c) {
-        c.setRole(Role.ROLE_USER);
-        return repo.add(c);
+        synchronized (lock) {
+            c.setRole(Role.ROLE_USER);
+            return repo.add(c);
+        }
     }
 
     public void activate(UUID id) {
-        repo.activate(id);
+        synchronized (lock) {
+            repo.activate(id);
+        }
     }
 
     public User update(UUID id, User c) {
-        User tmp = getById(id);
-        repo.remove(tmp);
-        if (tmp != null) {
-            if(c.getFirstName() != null) {
-                tmp.setFirstName(c.getFirstName());
+        synchronized (lock) {
+            User tmp = getById(id);
+            repo.remove(tmp);
+            if (tmp != null) {
+                if (c.getFirstName() != null) {
+                    tmp.setFirstName(c.getFirstName());
+                }
+                if (c.getLastName() != null) {
+                    tmp.setLastName(c.getLastName());
+                }
+                repo.add(tmp);
             }
-            if(c.getLastName() != null) {
-                tmp.setLastName(c.getLastName());
-            }
-            repo.add(tmp);
+            return tmp;
         }
-        return tmp;
     }
 
     public List<Ticket> getActiveTickets(UUID id) {

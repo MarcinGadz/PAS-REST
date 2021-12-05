@@ -33,30 +33,35 @@ public class TicketManager extends ManagerGeneric<Ticket> {
     public Ticket add(Ticket object) {
         // if repo contains ticket with the same Hall and seat and new ticket has start time between
         // start and end time of existing ticket - cannot put reservation
-        if(isSeatAvailable(object.getSeat(), object.getFilm().getBeginTime()) && object.getClient().isActive()) {
-            object.getClient().addTicket(object);
-            object.getSeat().addTicket(object);
-            return super.add(object);
+        synchronized (super.getLock()) {
+            if (isSeatAvailable(object.getSeat(), object.getFilm().getBeginTime()) && object.getClient().isActive()) {
+                object.getClient().addTicket(object);
+                object.getSeat().addTicket(object);
+                return super.add(object);
+            }
+            throw new IllegalStateException("This seat is already taken by another client or client is not active");
         }
-        throw new IllegalStateException("This seat is already taken by another client or client is not active");
     }
 
     @Override
     public void remove(Ticket object) {
-        if(object.getFilm().getEndTime().isAfter(LocalDateTime.from(Instant.now()))) {
-            object.getSeat().removeTicket(object);
-            object.getClient().removeTicket(object);
-            super.remove(object);
+        synchronized (super.getLock()) {
+            if (object.getFilm().getEndTime().isAfter(LocalDateTime.from(Instant.now()))) {
+                object.getSeat().removeTicket(object);
+                object.getClient().removeTicket(object);
+                super.remove(object);
+            } else throw new IllegalStateException("Cannot remove ended reservation");
         }
-        else throw new IllegalStateException("Cannot remove ended reservation");
     }
 
     private boolean isSeatAvailable(Seat s, LocalDateTime d) {
-        for(Ticket t : getAll()) {
-            if(t.getSeat().equals(s) && t.getFilm().getBeginTime().isBefore(d) && t.getFilm().getEndTime().isAfter(d)) {
-                return false;
+        synchronized (super.getLock()) {
+            for (Ticket t : getAll()) {
+                if (t.getSeat().equals(s) && t.getFilm().getBeginTime().isBefore(d) && t.getFilm().getEndTime().isAfter(d)) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
     }
 }
