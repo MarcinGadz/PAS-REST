@@ -1,5 +1,6 @@
 package com.pas.app.model;
 
+import javax.json.bind.annotation.JsonbTransient;
 import java.math.BigDecimal;
 
 public class Ticket extends Entity {
@@ -38,6 +39,7 @@ public class Ticket extends Entity {
         return ticketId;
     }
 
+    @JsonbTransient
     public User getClient() {
         return user;
     }
@@ -50,9 +52,9 @@ public class Ticket extends Entity {
         return seat;
     }
 
-    public BigDecimal getFinalPrice() {
-        return film.adjustWeekendPrice(film.getBeginTime());
-    }
+//    public BigDecimal getFinalPrice() {
+//        return film.adjustWeekendPrice(film.getBeginTime());
+//    }
 
     @Override
     public String toString() {

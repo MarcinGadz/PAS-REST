@@ -32,6 +32,10 @@ public class UserManager {
         this.repo = repo;
     }
 
+    public boolean existsById(UUID id) {
+        return repo.existsById(id);
+    }
+
     //R - Read
     public User getById(UUID id) {
         return repo.getById(id);

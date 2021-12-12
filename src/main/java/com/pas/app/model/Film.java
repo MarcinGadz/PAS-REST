@@ -1,9 +1,11 @@
 package com.pas.app.model;
 
+import javax.json.bind.annotation.JsonbTransient;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Film extends Entity {
@@ -11,6 +13,7 @@ public class Film extends Entity {
     private String genre;
     private LocalDateTime beginTime;
     private LocalDateTime endTime;
+    @JsonbTransient
     private List<Ticket> tickets;
     private BigDecimal basePrice;
 
@@ -26,6 +29,9 @@ public class Film extends Entity {
     }
 
     public void addTicket(Ticket t) {
+        if(tickets == null) {
+            tickets = new ArrayList<>();
+        }
         tickets.add(t);
     }
 

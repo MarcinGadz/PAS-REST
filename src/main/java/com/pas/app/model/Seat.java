@@ -1,5 +1,6 @@
 package com.pas.app.model;
 
+import javax.json.bind.annotation.JsonbTransient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ public class Seat extends Entity {
     private int row;
     private int column;
     private Hall hall;
+    @JsonbTransient
     private List<Ticket> ticketList;
 
     public Seat() {

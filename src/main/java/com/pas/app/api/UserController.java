@@ -6,6 +6,7 @@ import com.pas.app.model.User;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,25 +25,30 @@ public class UserController {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public User get(@PathParam("id") UUID id) {
-        return manager.getById(id);
+    public Response get(@PathParam("id") UUID id) {
+        if (manager.existsById(id)) {
+            User user = manager.getById(id);
+            return Response.status(Response.Status.OK).entity(user).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @GET
     @Path("/find")
     @Produces("application/json")
-    public User findByLogin(@QueryParam("login") String login) {
-        if(login == null) {
-            return null;
+    public Response findByLogin(@QueryParam("login") String login) {
+        if (login == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        return manager.getUser(login);
+        User user = manager.getUser(login);
+        return Response.status(Response.Status.OK).entity(user).build();
     }
 
     @GET
     @Path("/findcontaining")
     @Produces("application/json")
     public List<User> findWithCharsInLogin(@QueryParam("login") String login) {
-        if(login == null) {
+        if (login == null) {
             return null;
         }
         return manager.getWithCharsInLogin(login);
@@ -50,48 +56,79 @@ public class UserController {
 
     @POST
     @Path("/{id}/activate")
-    public void activate(@PathParam("id") UUID id) {
+    public Response activate(@PathParam("id") UUID id) {
+        if (manager.existsById(id)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         manager.activate(id);
+        return Response.ok().build();
     }
 
     @POST
     @Path("/{id}/deactivate")
-    public void deactivate(@PathParam("id") UUID id) {
+    public Response deactivate(@PathParam("id") UUID id) {
+        if (manager.existsById(id)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         manager.deactivate(id);
+        return Response.ok().build();
     }
 
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public User create(User u) {
-        return manager.register(u);
+    public Response create(User u) {
+        if (u == null || u.getFirstName() == null || u.getLastName() == null || u.getLogin() == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        u = manager.register(u);
+        return Response.status(Response.Status.OK).entity(u).build();
     }
 
     @PUT
     @Path("/{id}")
     @Produces("application/json")
     @Consumes("application/json")
-    public User update(@PathParam("id") UUID id, User u) {
-        return manager.update(id, u);
+    public Response update(@PathParam("id") UUID id, User u) {
+        if (id == null || u == null || u.getFirstName() == null || u.getLastName() == null || u.getLogin() == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        if (!manager.existsById(id)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        User tmp = manager.update(id, u);
+        return Response.status(Response.Status.OK).entity(tmp).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") UUID id) {
-        manager.deactivate(id);
+    public Response delete(@PathParam("id") UUID id) {
+        if (manager.existsById(id)) {
+            manager.deactivate(id);
+            return Response.status(Response.Status.OK).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @GET
     @Path("/{id}/active")
     @Produces("application/json")
-    public List<Ticket> getActive(@PathParam("id") UUID id) {
-        return manager.getActiveTickets(id);
+    public Response getActive(@PathParam("id") UUID id) {
+        if (manager.existsById(id)) {
+            List<Ticket> t = manager.getActiveTickets(id);
+            return Response.ok().entity(t).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @GET
     @Path("/{id}/past")
     @Produces("application/json")
-    public List<Ticket> getPast(@PathParam("id") UUID id) {
-        return manager.getInactiveTickets(id);
+    public Response getPast(@PathParam("id") UUID id) {
+        if (manager.existsById(id)) {
+            List<Ticket> t = manager.getInactiveTickets(id);
+            return Response.ok().entity(t).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

@@ -1,8 +1,10 @@
 package com.pas.app.managers;
 
 import com.pas.app.DAO.TicketRepository;
+import com.pas.app.model.Film;
 import com.pas.app.model.Seat;
 import com.pas.app.model.Ticket;
+import com.pas.app.model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -15,8 +17,14 @@ public class TicketManager extends ManagerGeneric<Ticket> {
 
     private TicketRepository repository;
 
-    public TicketManager() {
+    @Inject
+    private SeatsManager seatsManager;
+    @Inject
+    private UserManager userManager;
+    @Inject
+    private FilmManager filmManager;
 
+    public TicketManager() {
     }
 
     public TicketRepository getRepository() {
@@ -31,12 +39,16 @@ public class TicketManager extends ManagerGeneric<Ticket> {
 
     @Override
     public Ticket add(Ticket object) {
+        User client = userManager.getById(object.getClient().getId());
+        Film film = filmManager.getById(object.getFilm().getId());
+        Seat s = seatsManager.getById(object.getSeat().getId());
         // if repo contains ticket with the same Hall and seat and new ticket has start time between
         // start and end time of existing ticket - cannot put reservation
         synchronized (super.getLock()) {
-            if (isSeatAvailable(object.getSeat(), object.getFilm().getBeginTime()) && object.getClient().isActive()) {
-                object.getClient().addTicket(object);
-                object.getSeat().addTicket(object);
+            System.out.println(object.getClient().isActive());
+            if (isSeatAvailable(s, film.getBeginTime()) && client.isActive()) {
+                client.addTicket(object);
+                s.addTicket(object);
                 return super.add(object);
             }
             throw new IllegalStateException("This seat is already taken by another client or client is not active");
@@ -57,7 +69,9 @@ public class TicketManager extends ManagerGeneric<Ticket> {
     private boolean isSeatAvailable(Seat s, LocalDateTime d) {
         synchronized (super.getLock()) {
             for (Ticket t : getAll()) {
+                System.out.println(t);
                 if (t.getSeat().equals(s) && t.getFilm().getBeginTime().isBefore(d) && t.getFilm().getEndTime().isAfter(d)) {
+                    System.out.println("false");
                     return false;
                 }
             }

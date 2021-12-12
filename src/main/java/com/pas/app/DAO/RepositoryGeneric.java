@@ -11,6 +11,10 @@ public abstract class RepositoryGeneric<T extends Entity> {
         return res;
     }
 
+    public boolean existsById(UUID id) {
+        return !(getById(id) == null);
+    }
+
     public List<T> getAll() {
         return new ArrayList<>(objects);
     }

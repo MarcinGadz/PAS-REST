@@ -38,6 +38,9 @@ public class TicketController {
     @Produces("application/json")
     @Consumes("application/json")
     public Ticket create(Ticket f) {
+        System.out.println(f.getFilm());
+        System.out.println(f.getSeat());
+        System.out.println(f.getClient());
         return manager.add(f);
     }
 

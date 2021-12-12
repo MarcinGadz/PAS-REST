@@ -31,6 +31,10 @@ public abstract class ManagerGeneric<T extends Entity> {
     public ManagerGeneric() {
     }
 
+    public boolean existsById(UUID id) {
+        return repo.existsById(id);
+    }
+
     public T add(T object) {
         return this.repo.add(object);
     }

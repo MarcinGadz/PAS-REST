@@ -12,6 +12,7 @@ public class UserRepository extends RepositoryGeneric<User> {
     public UserRepository() {
         User u = new User("Jan", "Kowalski", "janko123");
         User u2 = new User("John", "Doe", "JD");
+        u2.setActive(true);
         add(u);
         add(u2);
     }

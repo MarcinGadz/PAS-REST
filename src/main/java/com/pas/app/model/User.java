@@ -1,5 +1,6 @@
 package com.pas.app.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +35,9 @@ public class User extends Entity {
     }
 
     public void addTicket(Ticket t) {
+        if(tickets == null) {
+            tickets = new ArrayList<>();
+        }
         tickets.add(t);
     }
 
