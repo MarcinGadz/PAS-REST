@@ -5,6 +5,7 @@ import com.pas.app.model.Seat;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,28 +32,47 @@ public class SeatController {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Seat get(@PathParam("id") UUID id) {
-        return manager.getById(id);
+    public Response get(@PathParam("id") UUID id) {
+        Seat s = manager.getById(id);
+        if (s == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok().entity(s).build();
     }
 
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public Seat create(Seat f) {
-        return manager.add(f);
+    public Response create(Seat f) {
+        if (f.getHall() == null) {
+            return Response.status(Response.Status.BAD_GATEWAY).build();
+        }
+        f = manager.add(f);
+        return Response.ok().entity(f).build();
     }
 
     @PUT
     @Path("/{id}")
     @Produces("application/json")
     @Consumes("application/json")
-    public Seat update(@PathParam("id") UUID id, Seat f) {
-        return manager.update(id, f);
+    public Response update(@PathParam("id") UUID id, Seat f) {
+        if(!manager.existsById(id)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        if(f == null || f.getHall() == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        f = manager.update(id, f);
+        return Response.ok().entity(f).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") UUID id) {
+    public Response delete(@PathParam("id") UUID id) {
+        if(!manager.existsById(id)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         manager.remove(manager.getById(id));
+        return Response.ok().build();
     }
 }
