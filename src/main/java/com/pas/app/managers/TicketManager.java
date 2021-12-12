@@ -42,6 +42,9 @@ public class TicketManager extends ManagerGeneric<Ticket> {
         User client = userManager.getById(object.getClient().getId());
         Film film = filmManager.getById(object.getFilm().getId());
         Seat s = seatsManager.getById(object.getSeat().getId());
+        if(client == null || film == null || s == null) {
+            throw new IllegalArgumentException("Passed wrong id");
+        }
         // if repo contains ticket with the same Hall and seat and new ticket has start time between
         // start and end time of existing ticket - cannot put reservation
         synchronized (super.getLock()) {

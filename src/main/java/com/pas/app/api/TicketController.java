@@ -5,6 +5,7 @@ import com.pas.app.model.Ticket;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,31 +31,52 @@ public class TicketController {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Ticket get(@PathParam("id") UUID id) {
-        return manager.getById(id);
+    public Response get(@PathParam("id") UUID id) {
+        Ticket t = manager.getById(id);
+        if(t == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok().entity(t).build();
     }
 
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public Ticket create(Ticket f) {
-        System.out.println(f.getFilm());
-        System.out.println(f.getSeat());
-        System.out.println(f.getClient());
-        return manager.add(f);
+    public Response create(Ticket f) {
+        if(f.getFilm().getId() == null || f.getSeat().getId() == null
+        || f.getClient().getId() == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        try {
+            f = manager.add(f);
+        } catch (Exception ex) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        return Response.status(Response.Status.OK).entity(f).build();
     }
 
     @PUT
     @Path("/{id}")
     @Produces("application/json")
     @Consumes("application/json")
-    public Ticket update(@PathParam("id") UUID id, Ticket f) {
-        return manager.update(id, f);
+    public Response update(@PathParam("id") UUID id, Ticket f) {
+        if(!manager.existsById(id)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        if(f.getClient().getId() == null || f.getFilm().getId() == null || f.getSeat() == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        f = manager.update(id, f);
+        return Response.ok().entity(f).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") UUID id) {
+    public Response delete(@PathParam("id") UUID id) {
+        if(!manager.existsById(id)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         manager.remove(manager.getById(id));
+        return Response.ok().build();
     }
 }
