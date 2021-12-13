@@ -12,9 +12,9 @@ public class SeatRepository extends RepositoryGeneric<Seat> {
         Seat tmp = new Seat(1, 1, Hall.A);
         Seat tmp2 = new Seat(1, 2, Hall.A);
         Seat tmp3 = new Seat(2, 1, Hall.B);
-        tmp.setId(UUID.fromString("2ec20a37-c611-6792-92f4-981df080107c"));
-        tmp2.setId(UUID.fromString("2ec20a17-c611-6792-92f4-981df080107c"));
-        tmp3.setId(UUID.fromString("2ec20h67-c611-6792-92f4-981df080107c"));
+        tmp.setId(UUID.fromString("842531e8-5c60-11ec-bf63-0242ac130002"));
+        tmp2.setId(UUID.fromString("8feaf7b0-5c60-11ec-bf63-0242ac130002 "));
+        tmp3.setId(UUID.fromString("95e24d76-5c60-11ec-bf63-0242ac130002"));
         add(tmp);
         add(tmp2);
         add(tmp3);
