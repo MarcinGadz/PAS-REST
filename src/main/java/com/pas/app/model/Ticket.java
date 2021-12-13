@@ -52,9 +52,9 @@ public class Ticket extends Entity {
         return seat;
     }
 
-//    public BigDecimal getFinalPrice() {
-//        return film.adjustWeekendPrice(film.getBeginTime());
-//    }
+    public BigDecimal getFinalPrice() {
+        return film.adjustWeekendPrice(film.getBeginTime());
+    }
 
     @Override
     public String toString() {

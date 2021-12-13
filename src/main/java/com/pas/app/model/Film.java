@@ -2,6 +2,7 @@ package com.pas.app.model;
 
 import javax.json.bind.annotation.JsonbTransient;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
@@ -89,6 +90,7 @@ public class Film extends Entity {
     }
 
     public BigDecimal adjustWeekendPrice(LocalDateTime beginTime) {
+
         if(isWeekend(beginTime)) {
             return basePrice.multiply(BigDecimal.valueOf(1.2));
         }

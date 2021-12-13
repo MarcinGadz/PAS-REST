@@ -4,6 +4,7 @@ import com.pas.app.model.Film;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,6 +24,14 @@ public class FilmRepository extends RepositoryGeneric<Film> {
                 LocalDateTime.of(LocalDate.of(1999,7,16), LocalTime.of(16, 15)),
                 BigDecimal.valueOf(100)
         );
+        Film film2 = new Film (
+                "Titanic",
+                "Tragedy",
+                LocalDateTime.of(LocalDate.of(1989,7,14), LocalTime.of(14, 45)),
+                LocalDateTime.of(LocalDate.of(1989,7,14), LocalTime.of(16, 15)),
+                BigDecimal.valueOf(50)
+        );
         this.add(film);
+        this.add(film2);
     }
 }

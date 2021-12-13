@@ -8,6 +8,7 @@ import com.pas.app.model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -61,11 +62,11 @@ public class TicketManager extends ManagerGeneric<Ticket> {
     @Override
     public void remove(Ticket object) {
         synchronized (super.getLock()) {
-            if (object.getFilm().getEndTime().isAfter(LocalDateTime.from(Instant.now()))) {
-                object.getSeat().removeTicket(object);
-                object.getClient().removeTicket(object);
-                super.remove(object);
-            } else throw new IllegalStateException("Cannot remove ended reservation");
+//            if (object.getFilm().getEndTime().isAfter(LocalDateTime.from(Instant.now()))) {
+//                object.getSeat().removeTicket(object);
+//                object.getClient().removeTicket(object);
+//                super.remove(object);
+//            } else throw new IllegalStateException("Cannot remove ended reservation");
         }
     }
 

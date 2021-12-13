@@ -8,6 +8,7 @@ import com.pas.app.model.Ticket;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
