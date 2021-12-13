@@ -12,8 +12,8 @@ public class UserRepository extends RepositoryGeneric<User> {
     public UserRepository() {
         User u = new User("Jan", "Kowalski", "janko123");
         User u2 = new User("John", "Doe", "JD");
-        u.setId(UUID.fromString("9ca646ee-5c60-11ec-bf63-0242ac130002"));
-        u2.setId(UUID.fromString("a152a70a-5c60-11ec-bf63-0242ac130002"));
+        u.setId(UUID.fromString("df022edf-bb0a-42c4-a4b7-7c37af542fd9"));
+        u2.setId(UUID.fromString("149bf059-f6a3-4c7b-8bfc-a577a485ac32"));
         u2.setActive(true);
         add(u);
         add(u2);

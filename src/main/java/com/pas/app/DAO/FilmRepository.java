@@ -24,7 +24,7 @@ public class FilmRepository extends RepositoryGeneric<Film> {
                 LocalDateTime.of(LocalDate.of(1999,7,16), LocalTime.of(16, 15)),
                 BigDecimal.valueOf(100)
         );
-        film.setId(UUID.fromString("6bf41b16-5c60-11ec-bf63-0242ac130002"));
+        film.setId(UUID.fromString("22bf50c7-bd22-4a80-ba53-becd2aa001b0"));
         this.add(film);
     }
 }
