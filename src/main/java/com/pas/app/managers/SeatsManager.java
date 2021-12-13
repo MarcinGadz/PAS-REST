@@ -58,7 +58,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
     public List<Ticket> getActiveTickets(UUID id) {
         List<Ticket> tickets = new ArrayList<>();
         Seat tmp = getById(id);
-        if (tmp != null) {
+        if (tmp != null && tmp.getTicketList() != null) {
             tmp.getTicketList().forEach(t -> {
                 if (t.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
                     tickets.add(t);
@@ -71,7 +71,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
     public List<Ticket> getInactiveTickets(UUID id) {
         List<Ticket> tickets = new ArrayList<>();
         Seat tmp = getById(id);
-        if (tmp != null) {
+        if (tmp != null && tmp.getTicketList() != null) {
             tmp.getTicketList().forEach(t -> {
                 if (t.getFilm().getEndTime().isBefore(LocalDateTime.now())) {
                     tickets.add(t);
