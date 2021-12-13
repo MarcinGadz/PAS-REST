@@ -43,7 +43,8 @@ public class TicketController {
     @Produces("application/json")
     @Consumes("application/json")
     public Response create(Ticket f) {
-        if(f.getFilm().getId() == null || f.getSeat().getId() == null
+        if(f.getFilm() == null || f.getSeat() == null || f.getClient() == null
+                || f.getFilm().getId() == null || f.getSeat().getId() == null
         || f.getClient().getId() == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -63,7 +64,7 @@ public class TicketController {
         if(!manager.existsById(id)) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        if(f.getClient().getId() == null || f.getFilm().getId() == null || f.getSeat() == null) {
+        if(f == null || f.getClient().getId() == null || f.getFilm().getId() == null || f.getSeat() == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         f = manager.update(id, f);
@@ -76,7 +77,11 @@ public class TicketController {
         if(!manager.existsById(id)) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        manager.remove(manager.getById(id));
+        try {
+            manager.remove(manager.getById(id));
+        } catch (Exception ex) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         return Response.ok().build();
     }
 }

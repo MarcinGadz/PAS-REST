@@ -33,10 +33,10 @@ public class SeatController {
     @Path("/{id}")
     @Produces("application/json")
     public Response get(@PathParam("id") UUID id) {
-        Seat s = manager.getById(id);
-        if (s == null) {
+        if (!manager.existsById(id)) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        Seat s = manager.getById(id);
         return Response.ok().entity(s).build();
     }
 
@@ -44,8 +44,8 @@ public class SeatController {
     @Produces("application/json")
     @Consumes("application/json")
     public Response create(Seat f) {
-        if (f.getHall() == null) {
-            return Response.status(Response.Status.BAD_GATEWAY).build();
+        if (f.getHall() == null || f.getRow() < 0 || f.getColumn() < 0) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
         f = manager.add(f);
         return Response.status(Response.Status.CREATED).entity(f).build();

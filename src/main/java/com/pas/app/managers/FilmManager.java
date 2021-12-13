@@ -1,13 +1,13 @@
 package com.pas.app.managers;
 
 import com.pas.app.DAO.FilmRepository;
-import com.pas.app.DAO.RepositoryGeneric;
 import com.pas.app.model.Film;
 import com.pas.app.model.Ticket;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @ApplicationScoped
@@ -38,10 +38,12 @@ public class FilmManager extends ManagerGeneric<Film> {
     }
 
 
-//    @Override
-//    public void remove(Film object) {
-//        if(object.getTickets().isEmpty() || object.getEndTime().isBefore(Date.from(Instant.now()))) {
-//            super.remove(object);
-//        }
-//    }
+    @Override
+    public void remove(Film object) {
+        if(object.getTickets().isEmpty() || object.getEndTime().isBefore(LocalDateTime.from(Instant.now()))) {
+            super.remove(object);
+        } else {
+            throw new IllegalStateException("Cannot remove film");
+        }
+    }
 }

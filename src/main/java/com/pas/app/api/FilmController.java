@@ -66,7 +66,11 @@ public class FilmController {
         if(!manager.existsById(id)) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        manager.remove(manager.getById(id));
+        try {
+            manager.remove(manager.getById(id));
+        } catch (Exception ex) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         return Response.ok().build();
     }
 }

@@ -41,17 +41,24 @@ public class UserController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         User user = manager.getUser(login);
+        if(user == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.status(Response.Status.OK).entity(user).build();
     }
 
     @GET
     @Path("/findcontaining")
     @Produces("application/json")
-    public List<User> findWithCharsInLogin(@QueryParam("login") String login) {
+    public Response findWithCharsInLogin(@QueryParam("login") String login) {
         if (login == null) {
             return null;
         }
-        return manager.getWithCharsInLogin(login);
+        List<User> users = manager.getWithCharsInLogin(login);
+        if(users == null || users.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok().entity(users).build();
     }
 
     @POST
