@@ -20,7 +20,6 @@ public abstract class RepositoryGeneric<T extends Entity> {
     }
 
     public T add(T object) {
-        object.setId(UUID.randomUUID());
         objects.add(object);
         return object;
     }

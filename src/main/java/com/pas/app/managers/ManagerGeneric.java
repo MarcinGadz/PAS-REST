@@ -36,6 +36,7 @@ public abstract class ManagerGeneric<T extends Entity> {
     }
 
     public T add(T object) {
+        object.setId(UUID.randomUUID());
         return this.repo.add(object);
     }
 
@@ -57,9 +58,9 @@ public abstract class ManagerGeneric<T extends Entity> {
         synchronized(lock) {
             T tmp = repo.getById(id);
             if (tmp != null) {
-                remove(tmp);
+                repo.remove(tmp);
                 obj.setId(id);
-                add(obj);
+                repo.add(obj);
                 return obj;
             }
             return null;

@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.UUID;
 
 @ApplicationScoped
 public class FilmRepository extends RepositoryGeneric<Film> {
@@ -23,6 +24,7 @@ public class FilmRepository extends RepositoryGeneric<Film> {
                 LocalDateTime.of(LocalDate.of(1999,7,16), LocalTime.of(16, 15)),
                 BigDecimal.valueOf(100)
         );
+        film.setId(UUID.fromString("2ec20a37-c611-4192-92f4-922df130107c"));
         this.add(film);
     }
 }

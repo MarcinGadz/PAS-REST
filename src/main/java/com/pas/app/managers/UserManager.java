@@ -65,6 +65,7 @@ public class UserManager {
     //C - Create
     public User register(User c) {
         synchronized (lock) {
+            c.setId(UUID.randomUUID());
             c.setRole(Role.ROLE_USER);
             return repo.add(c);
         }

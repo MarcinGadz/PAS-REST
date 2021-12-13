@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @ApplicationScoped
 public class TicketManager extends ManagerGeneric<Ticket> {
@@ -49,6 +50,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
         // start and end time of existing ticket - cannot put reservation
         synchronized (super.getLock()) {
             if (isSeatAvailable(s, film.getBeginTime()) && client.isActive()) {
+                object.setId(UUID.randomUUID());
                 client.addTicket(object);
                 s.addTicket(object);
                 object.setClient(client);
