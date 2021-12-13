@@ -2,7 +2,6 @@ package com.pas.app.api;
 
 import com.pas.app.managers.FilmManager;
 import com.pas.app.model.Film;
-import com.pas.app.model.Seat;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -25,10 +24,10 @@ public class FilmController {
     @Path("/{id}")
     @Produces("application/json")
     public Response get(@PathParam("id") UUID id) {
-        Film s = manager.getById(id);
-        if (s == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+        if (!manager.existsById(id)) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
         }
+        Film s = manager.getById(id);
         return Response.ok().entity(s).build();
     }
 
@@ -38,7 +37,7 @@ public class FilmController {
     public Response create(Film f) {
         if (f == null || f.getBeginTime() == null || f.getEndTime() == null
         || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
         }
         f = manager.add(f);
         return Response.status(Response.Status.CREATED).entity(f).build();
@@ -50,11 +49,11 @@ public class FilmController {
     @Consumes("application/json")
     public Response update(@PathParam("id") UUID id, Film f) {
         if(!manager.existsById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
         }
         if (f == null || f.getBeginTime() == null || f.getEndTime() == null
                 || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
         }
         f = manager.update(id, f);
         return Response.ok().entity(f).build();
@@ -64,12 +63,12 @@ public class FilmController {
     @Path("/{id}")
     public Response delete(@PathParam("id") UUID id) {
         if(!manager.existsById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
         }
         try {
             manager.remove(manager.getById(id));
         } catch (Exception ex) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         }
         return Response.ok().build();
     }

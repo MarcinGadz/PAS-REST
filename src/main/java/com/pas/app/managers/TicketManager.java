@@ -48,10 +48,12 @@ public class TicketManager extends ManagerGeneric<Ticket> {
         // if repo contains ticket with the same Hall and seat and new ticket has start time between
         // start and end time of existing ticket - cannot put reservation
         synchronized (super.getLock()) {
-            System.out.println(object.getClient().isActive());
             if (isSeatAvailable(s, film.getBeginTime()) && client.isActive()) {
                 client.addTicket(object);
                 s.addTicket(object);
+                object.setClient(client);
+                object.setFilm(film);
+                object.setSeat(s);
                 return super.add(object);
             }
             throw new IllegalStateException("This seat is already taken by another client or client is not active");

@@ -34,7 +34,7 @@ public class TicketController {
     public Response get(@PathParam("id") UUID id) {
         Ticket t = manager.getById(id);
         if(t == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
         }
         return Response.ok().entity(t).build();
     }
@@ -46,12 +46,12 @@ public class TicketController {
         if(f.getFilm() == null || f.getSeat() == null || f.getClient() == null
                 || f.getFilm().getId() == null || f.getSeat().getId() == null
         || f.getClient().getId() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
         }
         try {
             f = manager.add(f);
         } catch (Exception ex) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         }
         return Response.status(Response.Status.CREATED).entity(f).build();
     }
@@ -62,10 +62,10 @@ public class TicketController {
     @Consumes("application/json")
     public Response update(@PathParam("id") UUID id, Ticket f) {
         if(!manager.existsById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
         }
         if(f == null || f.getClient().getId() == null || f.getFilm().getId() == null || f.getSeat() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
         }
         f = manager.update(id, f);
         return Response.ok().entity(f).build();
@@ -75,12 +75,12 @@ public class TicketController {
     @Path("/{id}")
     public Response delete(@PathParam("id") UUID id) {
         if(!manager.existsById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
         }
         try {
             manager.remove(manager.getById(id));
         } catch (Exception ex) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         }
         return Response.ok().build();
     }
