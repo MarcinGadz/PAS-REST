@@ -60,7 +60,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
         Seat tmp = getById(id);
         if (tmp != null) {
             tmp.getTicketList().forEach(t -> {
-                if (t.getFilm().getEndTime().isAfter(LocalDateTime.from(Instant.now()))) {
+                if (t.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
                     tickets.add(t);
                 }
             });
@@ -73,7 +73,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
         Seat tmp = getById(id);
         if (tmp != null) {
             tmp.getTicketList().forEach(t -> {
-                if (t.getFilm().getEndTime().isBefore(LocalDateTime.from(Instant.now()))) {
+                if (t.getFilm().getEndTime().isBefore(LocalDateTime.now())) {
                     tickets.add(t);
                 }
             });

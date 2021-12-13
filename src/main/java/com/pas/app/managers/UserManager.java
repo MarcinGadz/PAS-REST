@@ -99,7 +99,7 @@ public class UserManager {
         User tmp = getById(id);
         if (tmp != null) {
             tmp.getTickets().forEach(t -> {
-                if(t.getFilm().getEndTime().isAfter(LocalDateTime.from(Instant.now()))) {
+                if(t.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
                     tickets.add(t);
                 }
             });
@@ -112,7 +112,7 @@ public class UserManager {
         User tmp = getById(id);
         if (tmp != null) {
             tmp.getTickets().forEach(t -> {
-                if(t.getFilm().getEndTime().isBefore(LocalDateTime.from(Instant.now()))) {
+                if(t.getFilm().getEndTime().isBefore(LocalDateTime.now())) {
                     tickets.add(t);
                 }
             });

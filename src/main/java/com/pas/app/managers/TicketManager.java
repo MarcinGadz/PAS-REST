@@ -65,7 +65,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
     @Override
     public void remove(Ticket object) {
         synchronized (super.getLock()) {
-            if (object.getFilm().getEndTime().isAfter(LocalDateTime.from(Instant.now()))) {
+            if (object.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
                 object.getSeat().removeTicket(object);
                 object.getClient().removeTicket(object);
                 super.remove(object);
