@@ -44,7 +44,7 @@ public class SeatController {
     @Produces("application/json")
     @Consumes("application/json")
     public Response create(Seat f) {
-        if (f.getHall() == null || f.getRow() < 0 || f.getColumn() < 0) {
+        if (f.getHall() == null || f.getId() == null || f.getRow() < 0 || f.getColumn() < 0) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
         }
         f = manager.add(f);

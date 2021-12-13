@@ -85,10 +85,15 @@ public class UserController {
     @Produces("application/json")
     @Consumes("application/json")
     public Response create(User u) {
-        if (u == null || u.getFirstName() == null || u.getLastName() == null || u.getLogin() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+        if (u == null || u.getId() == null ||u.getFirstName() == null
+                || u.getLastName() == null || u.getLogin() == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
         }
-        u = manager.register(u);
+        try {
+            u = manager.register(u);
+        } catch (Exception ex) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+        }
         return Response.status(Response.Status.CREATED).entity(u).build();
     }
 

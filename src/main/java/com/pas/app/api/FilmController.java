@@ -35,7 +35,7 @@ public class FilmController {
     @Produces("application/json")
     @Consumes("application/json")
     public Response create(Film f) {
-        if (f == null || f.getBeginTime() == null || f.getEndTime() == null
+        if (f == null || f.getBeginTime() == null || f.getEndTime() == null || f.getId() == null
         || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
         }

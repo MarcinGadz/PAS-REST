@@ -65,7 +65,10 @@ public class UserManager {
     //C - Create
     public User register(User c) {
         synchronized (lock) {
-            c.setId(UUID.randomUUID());
+//            c.setId(UUID.randomUUID());
+            if(existsById(c.getId())) {
+                throw new IllegalArgumentException("User with specified id already exists");
+            }
             c.setRole(Role.ROLE_USER);
             return repo.add(c);
         }

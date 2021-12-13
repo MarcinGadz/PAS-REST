@@ -45,7 +45,7 @@ public class TicketController {
     public Response create(Ticket f) {
         if(f.getFilm() == null || f.getSeat() == null || f.getClient() == null
                 || f.getFilm().getId() == null || f.getSeat().getId() == null
-        || f.getClient().getId() == null) {
+        || f.getClient().getId() == null || f.getId() == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
         }
         try {

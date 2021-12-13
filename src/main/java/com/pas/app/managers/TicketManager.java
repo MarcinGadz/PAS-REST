@@ -50,7 +50,10 @@ public class TicketManager extends ManagerGeneric<Ticket> {
         // start and end time of existing ticket - cannot put reservation
         synchronized (super.getLock()) {
             if (isSeatAvailable(s, film.getBeginTime()) && client.isActive()) {
-                object.setId(UUID.randomUUID());
+//                object.setId(UUID.randomUUID());
+                if(existsById(object.getId())) {
+                    throw new IllegalArgumentException("Object with specified id already exists");
+                }
                 client.addTicket(object);
                 s.addTicket(object);
                 object.setClient(client);

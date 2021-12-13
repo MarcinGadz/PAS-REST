@@ -36,7 +36,10 @@ public abstract class ManagerGeneric<T extends Entity> {
     }
 
     public T add(T object) {
-        object.setId(UUID.randomUUID());
+//        object.setId(UUID.randomUUID());
+        if(existsById(object.getId())) {
+            throw new IllegalArgumentException("Object with specified id already exists");
+        }
         return this.repo.add(object);
     }
 
