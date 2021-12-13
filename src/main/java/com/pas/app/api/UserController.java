@@ -82,7 +82,7 @@ public class UserController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         u = manager.register(u);
-        return Response.status(Response.Status.OK).entity(u).build();
+        return Response.status(Response.Status.CREATED).entity(u).build();
     }
 
     @PUT

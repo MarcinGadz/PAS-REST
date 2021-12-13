@@ -41,7 +41,7 @@ public class FilmController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         f = manager.add(f);
-        return Response.ok().entity(f).build();
+        return Response.status(Response.Status.CREATED).entity(f).build();
     }
 
     @PUT

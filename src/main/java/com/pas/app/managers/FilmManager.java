@@ -40,7 +40,7 @@ public class FilmManager extends ManagerGeneric<Film> {
 
 //    @Override
 //    public void remove(Film object) {
-//        if(object.getTickets().isEmpty() || object.getEndTime().before(Date.from(Instant.now()))) {
+//        if(object.getTickets().isEmpty() || object.getEndTime().isBefore(Date.from(Instant.now()))) {
 //            super.remove(object);
 //        }
 //    }

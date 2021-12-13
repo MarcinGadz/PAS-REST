@@ -48,7 +48,7 @@ public class SeatController {
             return Response.status(Response.Status.BAD_GATEWAY).build();
         }
         f = manager.add(f);
-        return Response.ok().entity(f).build();
+        return Response.status(Response.Status.CREATED).entity(f).build();
     }
 
     @PUT

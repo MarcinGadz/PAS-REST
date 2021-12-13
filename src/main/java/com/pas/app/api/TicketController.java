@@ -52,7 +52,7 @@ public class TicketController {
         } catch (Exception ex) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        return Response.status(Response.Status.OK).entity(f).build();
+        return Response.status(Response.Status.CREATED).entity(f).build();
     }
 
     @PUT
