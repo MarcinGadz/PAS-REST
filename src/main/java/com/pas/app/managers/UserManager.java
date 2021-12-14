@@ -4,9 +4,10 @@ import com.pas.app.DAO.UserRepository;
 import com.pas.app.model.Role;
 import com.pas.app.model.Ticket;
 import com.pas.app.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+
 import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@ApplicationScoped
+@Service
 public class UserManager {
     private UserRepository repo;
     private final Object lock = new Object();
@@ -27,7 +28,7 @@ public class UserManager {
         return repo;
     }
 
-    @Inject
+    @Autowired
     public void setRepo(UserRepository repo) {
         this.repo = repo;
     }

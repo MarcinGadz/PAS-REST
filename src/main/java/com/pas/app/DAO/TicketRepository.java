@@ -1,9 +1,9 @@
 package com.pas.app.DAO;
 
 import com.pas.app.model.Ticket;
+import org.springframework.stereotype.Repository;
 
-import javax.enterprise.context.ApplicationScoped;
 
-@ApplicationScoped
+@Repository
 public class TicketRepository extends RepositoryGeneric<Ticket> {
 }

@@ -4,9 +4,10 @@ import com.pas.app.DAO.FilmRepository;
 import com.pas.app.DAO.SeatRepository;
 import com.pas.app.model.Seat;
 import com.pas.app.model.Ticket;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+
 import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@ApplicationScoped
+@Service
 public class SeatsManager extends ManagerGeneric<Seat> {
     private SeatRepository repository;
 
@@ -23,7 +24,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
         return repository;
     }
 
-    @Inject
+    @Autowired
     public void setRepository(SeatRepository repository) {
         this.repository = repository;
         super.setRepo(repository);

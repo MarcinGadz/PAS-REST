@@ -1,13 +1,14 @@
 package com.pas.app.DAO;
 
 import com.pas.app.model.User;
+import org.springframework.stereotype.Repository;
 
-import javax.enterprise.context.ApplicationScoped;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@ApplicationScoped
+@Repository
 public class UserRepository extends RepositoryGeneric<User> {
     public UserRepository() {
         User u = new User("Jan", "Kowalski", "janko123");

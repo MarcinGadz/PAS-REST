@@ -2,11 +2,12 @@ package com.pas.app.DAO;
 
 import com.pas.app.model.Hall;
 import com.pas.app.model.Seat;
+import org.springframework.stereotype.Repository;
 
-import javax.enterprise.context.ApplicationScoped;
+
 import java.util.UUID;
 
-@ApplicationScoped
+@Repository
 public class SeatRepository extends RepositoryGeneric<Seat> {
     public SeatRepository() {
         Seat tmp = new Seat(1, 1, Hall.A);

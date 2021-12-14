@@ -1,6 +1,6 @@
 package com.pas.app.model;
 
-import javax.json.bind.annotation.JsonbTransient;
+//import javax.json.bind.annotation.JsonbTransient;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ public class Film extends Entity {
     private String genre;
     private LocalDateTime beginTime;
     private LocalDateTime endTime;
-    @JsonbTransient
+//    @JsonbTransient
     private List<Ticket> tickets;
     private BigDecimal basePrice;
 

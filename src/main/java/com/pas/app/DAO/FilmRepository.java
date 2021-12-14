@@ -1,8 +1,9 @@
 package com.pas.app.DAO;
 
 import com.pas.app.model.Film;
+import org.springframework.stereotype.Repository;
 
-import javax.enterprise.context.ApplicationScoped;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.UUID;
 
-@ApplicationScoped
+@Repository
 public class FilmRepository extends RepositoryGeneric<Film> {
     public FilmRepository() {
         addFilms();

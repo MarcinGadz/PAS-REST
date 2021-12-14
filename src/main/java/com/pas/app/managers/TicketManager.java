@@ -5,34 +5,36 @@ import com.pas.app.model.Film;
 import com.pas.app.model.Seat;
 import com.pas.app.model.Ticket;
 import com.pas.app.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@ApplicationScoped
+@Service
 public class TicketManager extends ManagerGeneric<Ticket> {
 
     private TicketRepository repository;
-
-    @Inject
     private SeatsManager seatsManager;
-    @Inject
     private UserManager userManager;
-    @Inject
     private FilmManager filmManager;
 
-    public TicketManager() {
+    @Autowired
+    public TicketManager(FilmManager filmManager, UserManager userManager, SeatsManager seatsManager, TicketRepository repository) {
+        this.filmManager = filmManager;
+        this.userManager = userManager;
+        this.seatsManager = seatsManager;
+        this.repository = repository;
     }
 
     public TicketRepository getRepository() {
         return repository;
     }
 
-    @Inject
+    @Autowired
     public void setRepository(TicketRepository repository) {
         this.repository = repository;
         super.setRepo(repository);

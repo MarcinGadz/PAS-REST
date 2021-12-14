@@ -3,14 +3,14 @@ package com.pas.app.managers;
 import com.pas.app.DAO.FilmRepository;
 import com.pas.app.model.Film;
 import com.pas.app.model.Ticket;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import java.time.Instant;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
-@ApplicationScoped
+@Service
 public class FilmManager extends ManagerGeneric<Film> {
 
     private FilmRepository repository;
@@ -23,7 +23,7 @@ public class FilmManager extends ManagerGeneric<Film> {
         return repository;
     }
 
-    @Inject
+    @Autowired
     public void setRepository(FilmRepository repository) {
         this.repository = repository;
         super.setRepo(repository);
