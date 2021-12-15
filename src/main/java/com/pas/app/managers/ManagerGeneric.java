@@ -4,6 +4,7 @@ import com.pas.app.DAO.RepositoryGeneric;
 import com.pas.app.model.Entity;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public abstract class ManagerGeneric<T extends Entity> {
@@ -39,7 +40,11 @@ public abstract class ManagerGeneric<T extends Entity> {
     }
 
     public T getById(UUID id) {
-        return repo.getById(id);
+        T obj = repo.getById(id);
+        if(obj == null) {
+            throw new NoSuchElementException("User does not exists");
+        }
+        return obj;
     }
 
     public List<T> getAll() {

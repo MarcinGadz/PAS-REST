@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -38,11 +39,34 @@ public class FilmManager extends ManagerGeneric<Film> {
         return new ArrayList<>();
     }
 
+    @Override
+    public synchronized Film add(Film f) {
+        if (f == null || f.getBeginTime() == null || f.getEndTime() == null
+                || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
+            throw new IllegalArgumentException("Passed wrong entity");
+        }
+        return super.add(f);
+    }
+
+    @Override
+    public synchronized Film update(UUID id, Film f) {
+        if(!existsById(id)) {
+            throw new NoSuchElementException("Film does not exists");
+        }
+        if (f.getBeginTime() == null || f.getEndTime() == null
+                || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
+            throw new IllegalArgumentException("Passed wrong entity");
+        }
+        return super.update(id, f);
+    }
 
     @Override
     public synchronized void remove(Film object) {
         object = getById(object.getId());
-        if (object == null || object.getTickets() == null
+        if(object == null) {
+            throw new NoSuchElementException("Film does not exists");
+        }
+        if (object.getTickets() == null
                 || object.getTickets().isEmpty()
                 || object.getEndTime().isBefore(LocalDateTime.now())) {
             super.remove(object);

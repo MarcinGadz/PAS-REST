@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Path("/film")
@@ -24,23 +25,24 @@ public class FilmController {
     @Path("/{id}")
     @Produces("application/json")
     public Response get(@PathParam("id") UUID id) {
-        if (!manager.existsById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
+        try {
+            Film s = manager.getById(id);
+            return Response.ok().entity(s).build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
         }
-        Film s = manager.getById(id);
-        return Response.ok().entity(s).build();
     }
 
     @POST
     @Produces("application/json")
     @Consumes("application/json")
     public Response create(Film f) {
-        if (f == null || f.getBeginTime() == null || f.getEndTime() == null
-        || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
+        try {
+            f = manager.add(f);
+            return Response.status(Response.Status.CREATED).entity(f).build();
+        } catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         }
-        f = manager.add(f);
-        return Response.status(Response.Status.CREATED).entity(f).build();
     }
 
     @PUT
@@ -48,28 +50,26 @@ public class FilmController {
     @Produces("application/json")
     @Consumes("application/json")
     public Response update(@PathParam("id") UUID id, Film f) {
-        if(!manager.existsById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
+        try {
+            f = manager.update(id, f);
+            return Response.ok().entity(f).build();
+        } catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
         }
-        if (f == null || f.getBeginTime() == null || f.getEndTime() == null
-                || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
-        }
-        f = manager.update(id, f);
-        return Response.ok().entity(f).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") UUID id) {
-        if(!manager.existsById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
-        }
         try {
             manager.remove(manager.getById(id));
-        } catch (Exception ex) {
+            return Response.ok().build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
+        } catch (IllegalArgumentException ex) {
             return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         }
-        return Response.ok().build();
     }
 }
