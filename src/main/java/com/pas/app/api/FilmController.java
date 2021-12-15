@@ -8,10 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/film")
+@RequestMapping("/api/film")
 
 public class FilmController {
 
@@ -28,56 +29,49 @@ public class FilmController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Film> gowno(@PathVariable("id") UUID id) {
-        if(!manager.existsById(id)) {
+    public ResponseEntity<Film> get(@PathVariable("id") UUID id) {
+        try {
+            Film f = manager.getById(id);
+            return ResponseEntity.ok(f);
+        } catch (NoSuchElementException ex) {
             return ResponseEntity.notFound().build();
         }
-        Film f = manager.getById(id);
-        return ResponseEntity.ok(f);
     }
-
 
 
     @PostMapping
     public ResponseEntity<Film> postFilm(@RequestBody Film f) {
-        if (f == null || f.getBeginTime() == null || f.getEndTime() == null
-        || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
+        try {
+            f = manager.add(f);
+            return new ResponseEntity<>(f, HttpStatus.CREATED);
+        } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().build();
         }
-        f = manager.add(f);
-
-        return new ResponseEntity<>(f, HttpStatus.CREATED);
-
     }
 
-@PutMapping("/{id}")
-    public ResponseEntity<Film>  update(@PathVariable("id") UUID id, Film f) {
-        if(!manager.existsById(id)) {
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Film> update(@PathVariable("id") UUID id, Film f) {
+        try {
+            f = manager.update(id, f);
+            return new ResponseEntity<>(f, HttpStatus.ACCEPTED);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().build();
+        } catch (NoSuchElementException ex) {
             return ResponseEntity.notFound().build();
         }
-        if (f == null || f.getBeginTime() == null || f.getEndTime() == null
-                || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
-
-            return ResponseEntity.badRequest().build();
-        }
-        f = manager.update(id, f);
-        return new ResponseEntity<>(f, HttpStatus.ACCEPTED);
     }
-
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Film> deleteFilm(@PathVariable("id") UUID id) {
-        if(!manager.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
         try {
             manager.remove(manager.getById(id));
+            return ResponseEntity.accepted().build();
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.notFound().build();
         } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.accepted().build();
     }
 
 }

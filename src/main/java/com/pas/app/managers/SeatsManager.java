@@ -1,7 +1,9 @@
 package com.pas.app.managers;
 
 import com.pas.app.DAO.FilmRepository;
+import com.pas.app.DAO.RepositoryGeneric;
 import com.pas.app.DAO.SeatRepository;
+import com.pas.app.model.Entity;
 import com.pas.app.model.Seat;
 import com.pas.app.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
 public class SeatsManager extends ManagerGeneric<Seat> {
     private SeatRepository repository;
+
+    public SeatsManager() {
+    }
 
     public SeatRepository getRepository() {
         return repository;
@@ -30,30 +36,42 @@ public class SeatsManager extends ManagerGeneric<Seat> {
         super.setRepo(repository);
     }
 
-    public SeatsManager() {
+
+    @Override
+    public synchronized Seat add(Seat f) {
+        if (f.getHall() == null || f.getRow() < 0 || f.getColumn() < 0) {
+            throw new IllegalArgumentException("Wrong parameters");
+        }
+        return super.add(f);
     }
 
     @Override
-    public void remove(Seat object) {
+    public synchronized void remove(Seat object) {
         // If there aren't active reservations with this object - remove
-        synchronized (super.getLock()) {
-            if (getActiveTickets(object.getId()).isEmpty()) {
-                super.remove(object);
-            } else throw new IllegalStateException("Cannot remove seat with active reservations");
+        object = getById(object.getId());
+        if (object == null) {
+            throw new NoSuchElementException("Seat does not exists");
+        }
+        if (getActiveTickets(object.getId()).isEmpty()) {
+            super.remove(object);
+        } else {
+            throw new IllegalStateException("Cannot remove seat with active reservations");
         }
     }
 
     @Override
-    public Seat update(UUID id, Seat c) {
-        synchronized (super.getLock()) {
-            Seat tmp = getById(id);
-            if (tmp != null) {
-                tmp.setHall(c.getHall());
-                tmp.setColumn(c.getColumn());
-                tmp.setRow(c.getRow());
-            }
-            return tmp;
+    public synchronized Seat update(UUID id, Seat c) {
+        if (c == null || c.getHall() == null || c.getRow() < 0 || c.getColumn() < 0) {
+            throw new IllegalArgumentException("Cannot update with passed values");
         }
+        Seat tmp = getById(id);
+        if (tmp == null) {
+            throw new NoSuchElementException("Seat does not exists");
+        }
+        tmp.setHall(c.getHall());
+        tmp.setColumn(c.getColumn());
+        tmp.setRow(c.getRow());
+        return tmp;
     }
 
     public List<Ticket> getActiveTickets(UUID id) {

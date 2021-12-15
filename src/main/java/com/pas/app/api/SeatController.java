@@ -9,10 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/seat")
+@RequestMapping("/api/seat")
 public class SeatController {
 
     private SeatsManager manager;
@@ -29,48 +30,46 @@ public class SeatController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Seat> getSeat(@PathVariable("id") UUID id) {
-        if(!manager.existsById(id)) {
+        try {
+            Seat s = manager.getById(id);
+            return ResponseEntity.ok(s);
+        } catch (NoSuchElementException ex) {
             return ResponseEntity.notFound().build();
         }
-        Seat s = manager.getById(id);
-        return ResponseEntity.ok(s);
     }
 
 
     @PostMapping
     public ResponseEntity<Seat> postSeat(@RequestBody Seat f) {
-        if (f.getHall() == null || f.getRow() < 0 || f.getColumn() < 0) {
+        try {
+            f = manager.add(f);
+            return new ResponseEntity<>(f, HttpStatus.CREATED);
+        } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().build();
         }
-        f = manager.add(f);
-
-        return new ResponseEntity<>(f, HttpStatus.CREATED);
-
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Seat>  update(@PathVariable("id") UUID id, Seat f) {
-        if(!manager.existsById(id)) {
-
+        try {
+            f = manager.update(id, f);
+            return new ResponseEntity<>(f, HttpStatus.ACCEPTED);
+        } catch (NoSuchElementException ex) {
             return ResponseEntity.notFound().build();
-        }
-        if (f.getHall() == null || f.getRow() < 0 || f.getColumn() < 0){
+        } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().build();
         }
-        f = manager.update(id, f);
-        return new ResponseEntity<>(f, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Film> delete(@PathVariable("id") UUID id) {
-        if(!manager.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
         try {
             manager.remove(manager.getById(id));
-        } catch (Exception ex) {
+            return ResponseEntity.accepted().build();
+        } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().build();
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.accepted().build();
     }
 }

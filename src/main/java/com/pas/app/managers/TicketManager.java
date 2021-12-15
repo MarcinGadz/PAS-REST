@@ -12,22 +12,22 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
 public class TicketManager extends ManagerGeneric<Ticket> {
 
     private TicketRepository repository;
-    private SeatsManager seatsManager;
-    private UserManager userManager;
-    private FilmManager filmManager;
 
     @Autowired
-    public TicketManager(FilmManager filmManager, UserManager userManager, SeatsManager seatsManager, TicketRepository repository) {
-        this.filmManager = filmManager;
-        this.userManager = userManager;
-        this.seatsManager = seatsManager;
-        this.repository = repository;
+    private SeatsManager seatsManager;
+    @Autowired
+    private UserManager userManager;
+    @Autowired
+    private FilmManager filmManager;
+
+    public TicketManager() {
     }
 
     public TicketRepository getRepository() {
@@ -41,48 +41,68 @@ public class TicketManager extends ManagerGeneric<Ticket> {
     }
 
     @Override
-    public Ticket add(Ticket object) {
+    public synchronized Ticket add(Ticket object) {
+        if (object.getFilm() == null || object.getSeat() == null || object.getClient() == null
+                || object.getFilm().getId() == null || object.getSeat().getId() == null
+                || object.getClient().getId() == null) {
+            throw new IllegalArgumentException("Passed wrong arguments");
+        }
+
         User client = userManager.getById(object.getClient().getId());
         Film film = filmManager.getById(object.getFilm().getId());
         Seat s = seatsManager.getById(object.getSeat().getId());
-        if(client == null || film == null || s == null) {
+        if (client == null || film == null || s == null) {
             throw new IllegalArgumentException("Passed wrong id");
         }
+
         // if repo contains ticket with the same Hall and seat and new ticket has start time between
         // start and end time of existing ticket - cannot put reservation
-        synchronized (super.getLock()) {
-            if (isSeatAvailable(s, film.getBeginTime()) && client.isActive()) {
-                object.setId(UUID.randomUUID());
-                client.addTicket(object);
-                s.addTicket(object);
-                object.setClient(client);
-                object.setFilm(film);
-                object.setSeat(s);
-                return super.add(object);
-            }
-            throw new IllegalStateException("This seat is already taken by another client or client is not active");
+        if (isSeatAvailable(s, film.getBeginTime()) && client.isActive()) {
+            object.setId(UUID.randomUUID());
+            client.addTicket(object);
+            s.addTicket(object);
+            object.setClient(client);
+            object.setFilm(film);
+            object.setSeat(s);
+            return super.add(object);
         }
+        throw new IllegalStateException("This seat is already taken by another client or client is not active");
     }
 
     @Override
-    public void remove(Ticket object) {
-        synchronized (super.getLock()) {
-            if (object.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
-                object.getSeat().removeTicket(object);
-                object.getClient().removeTicket(object);
-                super.remove(object);
-            } else throw new IllegalStateException("Cannot remove ended reservation");
+    public synchronized void remove(Ticket object) {
+        if (object == null) {
+            throw new NoSuchElementException("Ticket does not exists");
         }
+        if (object.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
+            object.getSeat().removeTicket(object);
+            object.getClient().removeTicket(object);
+            super.remove(object);
+        } else throw new IllegalStateException("Cannot remove ended reservation");
     }
 
-    private boolean isSeatAvailable(Seat s, LocalDateTime d) {
-        synchronized (super.getLock()) {
-            for (Ticket t : getAll()) {
-                if (t.getSeat().equals(s) && t.getFilm().getBeginTime().isBefore(d) && t.getFilm().getEndTime().isAfter(d)) {
-                    return false;
-                }
-            }
-            return true;
+    @Override
+    public synchronized Ticket update(UUID id, Ticket obj) {
+        Ticket tmp = getById(id);
+        if (tmp == null) {
+            throw new NoSuchElementException("Ticket does not exists");
         }
+        if(tmp.getFilm().getBeginTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Cannot edit expired ticket");
+        }
+        if(obj.getClient().getId() == null
+                || obj.getFilm().getId() == null || obj.getSeat() == null) {
+            throw new IllegalArgumentException("Wrong arguments");
+        }
+        return super.update(id, obj);
+    }
+
+    private synchronized boolean isSeatAvailable(Seat s, LocalDateTime d) {
+        for (Ticket t : getAll()) {
+            if (t.getSeat().equals(s) && t.getFilm().getBeginTime().isBefore(d) && t.getFilm().getEndTime().isAfter(d)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

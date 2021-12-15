@@ -4,17 +4,19 @@ import com.pas.app.DAO.RepositoryGeneric;
 import com.pas.app.model.Entity;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public abstract class ManagerGeneric<T extends Entity> {
 
-    private final Object lock = new Object();
+    private RepositoryGeneric<T> repo;
 
-    public Object getLock() {
-        return lock;
+    public ManagerGeneric(RepositoryGeneric<T> repo) {
+        this.repo = repo;
     }
 
-    private RepositoryGeneric<T> repo;
+    public ManagerGeneric() {
+    }
 
     public RepositoryGeneric<T> getRepo() {
         return repo;
@@ -24,47 +26,40 @@ public abstract class ManagerGeneric<T extends Entity> {
         this.repo = repo;
     }
 
-    public ManagerGeneric(RepositoryGeneric<T> repo) {
-        this.repo = repo;
-    }
-
-    public ManagerGeneric() {
-    }
-
     public boolean existsById(UUID id) {
         return repo.existsById(id);
     }
 
-    public T add(T object) {
+    public synchronized T add(T object) {
         object.setId(UUID.randomUUID());
         return this.repo.add(object);
     }
 
-    public void remove(T obj) {
-        synchronized (lock) {
-            this.repo.remove(obj);
-        }
+    public synchronized void remove(T obj) {
+        this.repo.remove(obj);
     }
 
     public T getById(UUID id) {
-        return repo.getById(id);
+        T obj = repo.getById(id);
+        if(obj == null) {
+            throw new NoSuchElementException("Object does not exists");
+        }
+        return obj;
     }
 
     public List<T> getAll() {
         return repo.getAll();
     }
 
-    public T update(UUID id, T obj) {
-        synchronized(lock) {
-            T tmp = repo.getById(id);
-            if (tmp != null) {
-                repo.remove(tmp);
-                obj.setId(id);
-                repo.add(obj);
-                return obj;
-            }
-            return null;
+    public synchronized T update(UUID id, T obj) {
+        T tmp = repo.getById(id);
+        if (tmp != null) {
+            repo.remove(tmp);
+            obj.setId(id);
+            repo.add(obj);
+            return obj;
         }
+        return null;
     }
 
     public String generateReport() {
@@ -75,3 +70,4 @@ public abstract class ManagerGeneric<T extends Entity> {
         return this.repo.getSize();
     }
 }
+
