@@ -1,5 +1,6 @@
 package com.pas.app.model;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,9 +8,12 @@ import java.util.Objects;
 public class User extends Entity {
     private String firstName;
     private String lastName;
+
+    @NotNull
     private String login;
     private boolean active;
     private List<Ticket> tickets;
+    @NotNull
     private Role role;
 
     public User() {

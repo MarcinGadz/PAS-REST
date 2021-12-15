@@ -32,6 +32,14 @@ public class UserRepository extends RepositoryGeneric<User> {
         c.setActive(true);
     }
 
+    @Override
+    public User add(User object) {
+        if (super.getAll().stream().anyMatch(c -> c.getLogin().equals(object.getLogin()))) {
+            throw new IllegalArgumentException("User with specified login already exists");
+        }
+        return super.add(object);
+    }
+
     public void deactivate(UUID id) {
         User c = getById(id);
         if (c != null) {

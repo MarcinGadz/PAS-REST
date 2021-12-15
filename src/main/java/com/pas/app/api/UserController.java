@@ -41,7 +41,7 @@ public class UserController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         User user = manager.getUser(login);
-        if(user == null) {
+        if (user == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.status(Response.Status.OK).entity(user).build();
@@ -55,7 +55,7 @@ public class UserController {
             return null;
         }
         List<User> users = manager.getWithCharsInLogin(login);
-        if(users == null || users.isEmpty()) {
+        if (users == null || users.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok().entity(users).build();
@@ -88,8 +88,12 @@ public class UserController {
         if (u == null || u.getFirstName() == null || u.getLastName() == null || u.getLogin() == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        u = manager.register(u);
-        return Response.status(Response.Status.CREATED).entity(u).build();
+        try {
+            u = manager.register(u);
+            return Response.status(Response.Status.CREATED).entity(u).build();
+        } catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+        }
     }
 
     @PUT
