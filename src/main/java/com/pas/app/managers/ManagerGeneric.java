@@ -42,7 +42,7 @@ public abstract class ManagerGeneric<T extends Entity> {
     public T getById(UUID id) {
         T obj = repo.getById(id);
         if(obj == null) {
-            throw new NoSuchElementException("User does not exists");
+            throw new NoSuchElementException("Object does not exists");
         }
         return obj;
     }

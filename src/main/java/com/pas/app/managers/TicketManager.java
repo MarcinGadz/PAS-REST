@@ -9,6 +9,7 @@ import com.pas.app.model.User;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -38,12 +39,19 @@ public class TicketManager extends ManagerGeneric<Ticket> {
 
     @Override
     public synchronized Ticket add(Ticket object) {
+        if (object.getFilm() == null || object.getSeat() == null || object.getClient() == null
+                || object.getFilm().getId() == null || object.getSeat().getId() == null
+                || object.getClient().getId() == null) {
+            throw new IllegalArgumentException("Passed wrong arguments");
+        }
+
         User client = userManager.getById(object.getClient().getId());
         Film film = filmManager.getById(object.getFilm().getId());
         Seat s = seatsManager.getById(object.getSeat().getId());
         if (client == null || film == null || s == null) {
             throw new IllegalArgumentException("Passed wrong id");
         }
+
         // if repo contains ticket with the same Hall and seat and new ticket has start time between
         // start and end time of existing ticket - cannot put reservation
         if (isSeatAvailable(s, film.getBeginTime()) && client.isActive()) {
@@ -60,15 +68,30 @@ public class TicketManager extends ManagerGeneric<Ticket> {
 
     @Override
     public synchronized void remove(Ticket object) {
-        object = getById(object.getId());
         if (object == null) {
-            throw new IllegalArgumentException("Ticket does not exists");
+            throw new NoSuchElementException("Ticket does not exists");
         }
         if (object.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
             object.getSeat().removeTicket(object);
             object.getClient().removeTicket(object);
             super.remove(object);
         } else throw new IllegalStateException("Cannot remove ended reservation");
+    }
+
+    @Override
+    public synchronized Ticket update(UUID id, Ticket obj) {
+        Ticket tmp = getById(id);
+        if (tmp == null) {
+            throw new NoSuchElementException("Ticket does not exists");
+        }
+        if(tmp.getFilm().getBeginTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Cannot edit expired ticket");
+        }
+        if(obj.getClient().getId() == null
+                || obj.getFilm().getId() == null || obj.getSeat() == null) {
+            throw new IllegalArgumentException("Wrong arguments");
+        }
+        return super.update(id, obj);
     }
 
     private synchronized boolean isSeatAvailable(Seat s, LocalDateTime d) {

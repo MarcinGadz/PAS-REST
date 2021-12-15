@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Path("/ticket")
@@ -32,22 +33,18 @@ public class TicketController {
     @Path("/{id}")
     @Produces("application/json")
     public Response get(@PathParam("id") UUID id) {
-        Ticket t = manager.getById(id);
-        if(t == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
+        try {
+            Ticket t = manager.getById(id);
+            return Response.ok().entity(t).build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
         }
-        return Response.ok().entity(t).build();
     }
 
     @POST
     @Produces("application/json")
     @Consumes("application/json")
     public Response create(Ticket f) {
-        if(f.getFilm() == null || f.getSeat() == null || f.getClient() == null
-                || f.getFilm().getId() == null || f.getSeat().getId() == null
-        || f.getClient().getId() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
-        }
         try {
             f = manager.add(f);
         } catch (Exception ex) {
@@ -61,24 +58,23 @@ public class TicketController {
     @Produces("application/json")
     @Consumes("application/json")
     public Response update(@PathParam("id") UUID id, Ticket f) {
-        if(!manager.existsById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
+        try {
+            f = manager.update(id, f);
+            return Response.ok().entity(f).build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
+        } catch (Exception ex) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         }
-        if(f == null || f.getClient().getId() == null || f.getFilm().getId() == null || f.getSeat() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong parameters").build();
-        }
-        f = manager.update(id, f);
-        return Response.ok().entity(f).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") UUID id) {
-        if(!manager.existsById(id)) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
-        }
         try {
             manager.remove(manager.getById(id));
+        } catch (NoSuchElementException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
         } catch (Exception ex) {
             return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         }
