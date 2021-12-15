@@ -31,6 +31,10 @@ public class SeatsManager extends ManagerGeneric<Seat> {
     @Override
     public synchronized void remove(Seat object) {
         // If there aren't active reservations with this object - remove
+        object = getById(object.getId());
+        if (object == null) {
+            throw new IllegalArgumentException("Seat does not exists");
+        }
         if (getActiveTickets(object.getId()).isEmpty()) {
             super.remove(object);
         } else throw new IllegalStateException("Cannot remove seat with active reservations");

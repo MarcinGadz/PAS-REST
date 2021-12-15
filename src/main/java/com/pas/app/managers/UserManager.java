@@ -65,7 +65,6 @@ public class UserManager {
 
     public synchronized void activate(UUID id) {
         repo.activate(id);
-
     }
 
     public synchronized User update(UUID id, User c) {

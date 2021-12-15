@@ -60,6 +60,10 @@ public class TicketManager extends ManagerGeneric<Ticket> {
 
     @Override
     public synchronized void remove(Ticket object) {
+        object = getById(object.getId());
+        if (object == null) {
+            throw new IllegalArgumentException("Ticket does not exists");
+        }
         if (object.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
             object.getSeat().removeTicket(object);
             object.getClient().removeTicket(object);
