@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -39,7 +40,11 @@ public class UserManager {
 
     //R - Read
     public User getUser(String login) {
-        return repo.get(login);
+        User u = repo.get(login);
+        if (u == null) {
+            throw new NoSuchElementException("User does not exists");
+        }
+        return u;
     }
 
     public List<User> getAll() {
@@ -53,24 +58,36 @@ public class UserManager {
     //D - Delete
 
     public synchronized void deactivate(UUID id) {
+        if (!existsById(id)) {
+            throw new NoSuchElementException("User does not exists");
+        }
         repo.deactivate(id);
     }
 
     //C - Create
-    public synchronized User register(User c) {
-        c.setId(UUID.randomUUID());
-        c.setRole(Role.ROLE_USER);
-        return repo.add(c);
+    public synchronized User register(User u) {
+        if (u == null || u.getFirstName() == null || u.getLastName() == null || u.getLogin() == null) {
+            throw new IllegalArgumentException("Passed wrong entity");
+        }
+        u.setId(UUID.randomUUID());
+        u.setRole(Role.ROLE_USER);
+        return repo.add(u);
     }
 
     public synchronized void activate(UUID id) {
+        if (!existsById(id)) {
+            throw new NoSuchElementException("User does not exists");
+        }
         repo.activate(id);
     }
 
     public synchronized User update(UUID id, User c) {
+        if (id == null || c == null || c.getFirstName() == null || c.getLastName() == null || c.getLogin() == null) {
+            throw new IllegalArgumentException("Wrong parameters");
+        }
         User tmp = getById(id);
-        repo.remove(tmp);
         if (tmp != null) {
+            repo.remove(tmp);
             if (c.getFirstName() != null) {
                 tmp.setFirstName(c.getFirstName());
             }
@@ -78,6 +95,8 @@ public class UserManager {
                 tmp.setLastName(c.getLastName());
             }
             repo.add(tmp);
+        } else {
+            throw new NoSuchElementException("User does not exists");
         }
         return tmp;
     }
@@ -91,6 +110,8 @@ public class UserManager {
                     tickets.add(t);
                 }
             });
+        } else {
+            throw new NoSuchElementException("User does not exists");
         }
         return tickets;
     }
@@ -104,6 +125,8 @@ public class UserManager {
                     tickets.add(t);
                 }
             });
+        } else {
+            throw new NoSuchElementException("User does not exists");
         }
         return tickets;
     }
@@ -112,7 +135,8 @@ public class UserManager {
         User tmp = getById(id);
         if (tmp != null) {
             return tmp.getTickets();
+        } else {
+            throw new NoSuchElementException("User does not exists");
         }
-        return new ArrayList<>();
     }
 }
