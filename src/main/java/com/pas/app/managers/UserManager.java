@@ -66,7 +66,13 @@ public class UserManager {
 
     //C - Create
     public synchronized User register(User u) {
-        if (u == null || u.getFirstName() == null || u.getLastName() == null || u.getLogin() == null) {
+        if (u == null
+                || u.getFirstName() == null
+                || u.getFirstName().trim().equals("")
+                || u.getLastName() == null
+                || u.getLastName().trim().equals("")
+                || u.getLogin() == null
+                || u.getLogin().trim().equals("")) {
             throw new IllegalArgumentException("Passed wrong entity");
         }
         u.setId(UUID.randomUUID());
@@ -88,10 +94,10 @@ public class UserManager {
         User tmp = getById(id);
         if (tmp != null) {
             repo.remove(tmp);
-            if (c.getFirstName() != null) {
+            if (c.getFirstName() != null && !c.getFirstName().trim().equals("")) {
                 tmp.setFirstName(c.getFirstName());
             }
-            if (c.getLastName() != null) {
+            if (c.getLastName() != null && !c.getLastName().trim().equals("")) {
                 tmp.setLastName(c.getLastName());
             }
             repo.add(tmp);

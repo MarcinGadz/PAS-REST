@@ -42,7 +42,8 @@ public class FilmManager extends ManagerGeneric<Film> {
     @Override
     public synchronized Film add(Film f) {
         if (f == null || f.getBeginTime() == null || f.getEndTime() == null
-                || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
+                || f.getGenre() == null || f.getBasePrice() == null
+                || f.getTitle() == null || f.getBeginTime().isAfter(f.getEndTime())) {
             throw new IllegalArgumentException("Passed wrong entity");
         }
         return super.add(f);
@@ -50,11 +51,12 @@ public class FilmManager extends ManagerGeneric<Film> {
 
     @Override
     public synchronized Film update(UUID id, Film f) {
-        if(!existsById(id)) {
+        if (!existsById(id)) {
             throw new NoSuchElementException("Film does not exists");
         }
         if (f.getBeginTime() == null || f.getEndTime() == null
-                || f.getGenre() == null || f.getBasePrice() == null || f.getTitle() == null) {
+                || f.getGenre() == null || f.getBasePrice() == null
+                || f.getTitle() == null || f.getBeginTime().isAfter(f.getEndTime())) {
             throw new IllegalArgumentException("Passed wrong entity");
         }
         return super.update(id, f);
@@ -63,7 +65,7 @@ public class FilmManager extends ManagerGeneric<Film> {
     @Override
     public synchronized void remove(Film object) {
         object = getById(object.getId());
-        if(object == null) {
+        if (object == null) {
             throw new NoSuchElementException("Film does not exists");
         }
         if (object.getTickets() == null
