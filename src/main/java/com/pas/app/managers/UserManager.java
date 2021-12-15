@@ -7,9 +7,6 @@ import com.pas.app.model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.sql.Date;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +15,6 @@ import java.util.UUID;
 @ApplicationScoped
 public class UserManager {
     private UserRepository repo;
-    private final Object lock = new Object();
 
     public UserManager() {
     }
@@ -56,42 +52,35 @@ public class UserManager {
 
     //D - Delete
 
-    public void deactivate(UUID id) {
-        synchronized (lock) {
-            repo.deactivate(id);
-        }
+    public synchronized void deactivate(UUID id) {
+        repo.deactivate(id);
     }
 
     //C - Create
-    public User register(User c) {
-        synchronized (lock) {
-            c.setId(UUID.randomUUID());
-            c.setRole(Role.ROLE_USER);
-            return repo.add(c);
-        }
+    public synchronized User register(User c) {
+        c.setId(UUID.randomUUID());
+        c.setRole(Role.ROLE_USER);
+        return repo.add(c);
     }
 
-    public void activate(UUID id) {
-        synchronized (lock) {
-            repo.activate(id);
-        }
+    public synchronized void activate(UUID id) {
+        repo.activate(id);
+
     }
 
-    public User update(UUID id, User c) {
-        synchronized (lock) {
-            User tmp = getById(id);
-            repo.remove(tmp);
-            if (tmp != null) {
-                if (c.getFirstName() != null) {
-                    tmp.setFirstName(c.getFirstName());
-                }
-                if (c.getLastName() != null) {
-                    tmp.setLastName(c.getLastName());
-                }
-                repo.add(tmp);
+    public synchronized User update(UUID id, User c) {
+        User tmp = getById(id);
+        repo.remove(tmp);
+        if (tmp != null) {
+            if (c.getFirstName() != null) {
+                tmp.setFirstName(c.getFirstName());
             }
-            return tmp;
+            if (c.getLastName() != null) {
+                tmp.setLastName(c.getLastName());
+            }
+            repo.add(tmp);
         }
+        return tmp;
     }
 
     public List<Ticket> getActiveTickets(UUID id) {
@@ -99,7 +88,7 @@ public class UserManager {
         User tmp = getById(id);
         if (tmp != null) {
             tmp.getTickets().forEach(t -> {
-                if(t.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
+                if (t.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
                     tickets.add(t);
                 }
             });
@@ -112,7 +101,7 @@ public class UserManager {
         User tmp = getById(id);
         if (tmp != null) {
             tmp.getTickets().forEach(t -> {
-                if(t.getFilm().getEndTime().isBefore(LocalDateTime.now())) {
+                if (t.getFilm().getEndTime().isBefore(LocalDateTime.now())) {
                     tickets.add(t);
                 }
             });

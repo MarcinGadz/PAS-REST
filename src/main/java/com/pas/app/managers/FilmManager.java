@@ -6,9 +6,10 @@ import com.pas.app.model.Ticket;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 public class FilmManager extends ManagerGeneric<Film> {
@@ -31,7 +32,7 @@ public class FilmManager extends ManagerGeneric<Film> {
 
     public List<Ticket> getTickets(UUID id) {
         Film f = getById(id);
-        if(f != null) {
+        if (f != null) {
             return f.getTickets();
         }
         return new ArrayList<>();
@@ -39,8 +40,8 @@ public class FilmManager extends ManagerGeneric<Film> {
 
 
     @Override
-    public void remove(Film object) {
-        if(object.getTickets() == null || object.getTickets().isEmpty() || object.getEndTime().isBefore(LocalDateTime.now())) {
+    public synchronized void remove(Film object) {
+        if (object.getTickets() == null || object.getTickets().isEmpty() || object.getEndTime().isBefore(LocalDateTime.now())) {
             super.remove(object);
         } else {
             throw new IllegalStateException("Cannot remove film");
