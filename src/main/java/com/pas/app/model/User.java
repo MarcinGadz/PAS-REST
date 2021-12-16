@@ -1,5 +1,7 @@
 package com.pas.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -45,6 +47,7 @@ public class User extends Entity {
         tickets.remove(t);
     }
 
+    @JsonIgnore
     public List<Ticket> getTickets() {
         return tickets;
     }

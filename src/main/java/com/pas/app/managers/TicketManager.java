@@ -61,6 +61,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
             object.setId(UUID.randomUUID());
             client.addTicket(object);
             s.addTicket(object);
+            film.addTicket(object);
             object.setClient(client);
             object.setFilm(film);
             object.setSeat(s);

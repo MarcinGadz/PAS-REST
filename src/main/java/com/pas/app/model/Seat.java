@@ -1,6 +1,8 @@
 package com.pas.app.model;
 
 //import javax.json.bind.annotation.JsonbTransient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class Seat extends Entity {
         ticketList.remove(t);
     }
 
+    @JsonIgnore
     public List<Ticket> getTicketList() {
         return ticketList;
     }
