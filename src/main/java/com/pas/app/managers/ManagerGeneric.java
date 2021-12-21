@@ -30,12 +30,12 @@ public abstract class ManagerGeneric<T extends Entity> {
         return repo.existsById(id);
     }
 
-    public synchronized T add(T object) {
+    public T add(T object) {
         object.setId(UUID.randomUUID());
         return this.repo.add(object);
     }
 
-    public synchronized void remove(T obj) {
+    public void remove(T obj) {
         this.repo.remove(obj);
     }
 
@@ -51,7 +51,7 @@ public abstract class ManagerGeneric<T extends Entity> {
         return repo.getAll();
     }
 
-    public synchronized T update(UUID id, T obj) {
+    public T update(UUID id, T obj) {
         T tmp = repo.getById(id);
         if (tmp != null) {
             repo.remove(tmp);

@@ -83,6 +83,17 @@ public class UserController {
         }
     }
 
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") UUID id) {
+        try {
+            manager.deactivate(id);
+            return Response.ok().build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
+        }
+    }
+
     @POST
     @Produces("application/json")
     @Consumes("application/json")

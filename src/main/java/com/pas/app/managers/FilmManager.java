@@ -40,7 +40,7 @@ public class FilmManager extends ManagerGeneric<Film> {
     }
 
     @Override
-    public synchronized Film add(Film f) {
+    public Film add(Film f) {
         if (f == null || f.getBeginTime() == null || f.getEndTime() == null
                 || f.getGenre() == null || f.getBasePrice() == null
                 || f.getTitle() == null || f.getBeginTime().isAfter(f.getEndTime())) {
@@ -50,7 +50,7 @@ public class FilmManager extends ManagerGeneric<Film> {
     }
 
     @Override
-    public synchronized Film update(UUID id, Film f) {
+    public Film update(UUID id, Film f) {
         if (!existsById(id)) {
             throw new NoSuchElementException("Film does not exists");
         }
@@ -63,7 +63,7 @@ public class FilmManager extends ManagerGeneric<Film> {
     }
 
     @Override
-    public synchronized void remove(Film object) {
+    public void remove(Film object) {
         object = getById(object.getId());
         if (object == null) {
             throw new NoSuchElementException("Film does not exists");

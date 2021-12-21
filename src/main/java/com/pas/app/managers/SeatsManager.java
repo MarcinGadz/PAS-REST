@@ -31,7 +31,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
 
 
     @Override
-    public synchronized Seat add(Seat f) {
+    public Seat add(Seat f) {
         if (f.getHall() == null || f.getRow() < 0 || f.getColumn() < 0) {
             throw new IllegalArgumentException("Wrong parameters");
         }
@@ -39,7 +39,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
     }
 
     @Override
-    public synchronized void remove(Seat object) {
+    public void remove(Seat object) {
         // If there aren't active reservations with this object - remove
         object = getById(object.getId());
         if (object == null) {
@@ -53,7 +53,7 @@ public class SeatsManager extends ManagerGeneric<Seat> {
     }
 
     @Override
-    public synchronized Seat update(UUID id, Seat c) {
+    public Seat update(UUID id, Seat c) {
         if (c == null || c.getHall() == null || c.getRow() < 0 || c.getColumn() < 0) {
             throw new IllegalArgumentException("Cannot update with passed values");
         }

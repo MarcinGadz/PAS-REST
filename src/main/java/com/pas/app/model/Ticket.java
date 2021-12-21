@@ -23,7 +23,7 @@ public class Ticket extends Entity {
         this.ticketId = ticketId;
     }
 
-    public void setClient(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -40,7 +40,7 @@ public class Ticket extends Entity {
     }
 
     @JsonbTransient
-    public User getClient() {
+    public User getUser() {
         return user;
     }
 

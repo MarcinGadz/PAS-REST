@@ -57,7 +57,7 @@ public class UserManager {
 
     //D - Delete
 
-    public synchronized void deactivate(UUID id) {
+    public void deactivate(UUID id) {
         if (!existsById(id)) {
             throw new NoSuchElementException("User does not exists");
         }
@@ -65,7 +65,7 @@ public class UserManager {
     }
 
     //C - Create
-    public synchronized User register(User u) {
+    public User register(User u) {
         if (u == null
                 || u.getFirstName() == null
                 || u.getFirstName().trim().equals("")
@@ -80,14 +80,14 @@ public class UserManager {
         return repo.add(u);
     }
 
-    public synchronized void activate(UUID id) {
+    public void activate(UUID id) {
         if (!existsById(id)) {
             throw new NoSuchElementException("User does not exists");
         }
         repo.activate(id);
     }
 
-    public synchronized User update(UUID id, User c) {
+    public User update(UUID id, User c) {
         if (id == null || c == null || c.getFirstName() == null || c.getLastName() == null || c.getLogin() == null) {
             throw new IllegalArgumentException("Wrong parameters");
         }

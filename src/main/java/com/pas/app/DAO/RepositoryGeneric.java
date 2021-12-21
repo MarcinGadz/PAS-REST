@@ -11,7 +11,7 @@ public abstract class RepositoryGeneric<T extends Entity> {
         return res;
     }
 
-    public boolean existsById(UUID id) {
+    public synchronized boolean existsById(UUID id) {
         return !(getById(id) == null);
     }
 
@@ -19,12 +19,12 @@ public abstract class RepositoryGeneric<T extends Entity> {
         return new ArrayList<>(objects);
     }
 
-    public T add(T object) {
+    public synchronized T add(T object) {
         objects.add(object);
         return object;
     }
 
-    public void remove(T object) {
+    public synchronized void remove(T object) {
         objects.remove(object);
     }
 
