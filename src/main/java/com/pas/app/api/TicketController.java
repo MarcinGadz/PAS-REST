@@ -17,7 +17,7 @@ public class TicketController {
     private TicketManager manager;
 
     @Autowired
-    public void TicketController(TicketManager manager) {
+    public TicketController(TicketManager manager) {
         this.manager = manager;
     }
 
@@ -48,7 +48,7 @@ public class TicketController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Ticket> update(@PathVariable("id") UUID id, Ticket f) {
+    public ResponseEntity<Ticket> update(@PathVariable("id") UUID id, @RequestBody Ticket f) {
         try {
             f = manager.update(id, f);
             return new ResponseEntity<>(f, HttpStatus.ACCEPTED);

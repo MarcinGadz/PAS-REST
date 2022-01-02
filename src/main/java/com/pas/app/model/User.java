@@ -18,10 +18,10 @@ public class User extends Entity {
     }
 
     public User(String firstName, String lastName, String personalID) {
-        if (Objects.equals(firstName, "") || Objects.equals(lastName, "") ||
-                Objects.equals(personalID, "")) {
-            throw new IllegalArgumentException();
-        }
+//        if (Objects.equals(firstName, "") || Objects.equals(lastName, "") ||
+//                Objects.equals(personalID, "")) {
+//            throw new IllegalArgumentException();
+//        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = personalID;

@@ -11,13 +11,17 @@ import java.util.stream.Collectors;
 @Repository
 public class UserRepository extends RepositoryGeneric<User> {
     public UserRepository() {
-        User u = new User("Jan", "Kowalski", "janko123");
+        User u = new User("Jan", "Kowalski", "Janko123");
         User u2 = new User("John", "Doe", "JD");
+        User u3 = new User("Testname", "Testsurname", "Testlogin");
         u.setId(UUID.fromString("df022edf-bb0a-42c4-a4b7-7c37af542fd9"));
         u2.setId(UUID.fromString("149bf059-f6a3-4c7b-8bfc-a577a485ac32"));
+        u3.setId(UUID.fromString("a3bf9df2-6b2b-11ec-90d6-0242ac120003"));
         u2.setActive(true);
+        u3.setActive(true);
         add(u);
         add(u2);
+        add(u3);
     }
 
     public User get(String login) {

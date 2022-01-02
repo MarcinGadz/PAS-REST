@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -42,13 +40,13 @@ public class TicketManager extends ManagerGeneric<Ticket> {
 
     @Override
     public synchronized Ticket add(Ticket object) {
-        if (object.getFilm() == null || object.getSeat() == null || object.getClient() == null
+        if (object.getFilm() == null || object.getSeat() == null || object.getUser() == null
                 || object.getFilm().getId() == null || object.getSeat().getId() == null
-                || object.getClient().getId() == null) {
+                || object.getUser().getId() == null) {
             throw new IllegalArgumentException("Passed wrong arguments");
         }
 
-        User client = userManager.getById(object.getClient().getId());
+        User client = userManager.getById(object.getUser().getId());
         Film film = filmManager.getById(object.getFilm().getId());
         Seat s = seatsManager.getById(object.getSeat().getId());
         if (client == null || film == null || s == null) {
@@ -62,7 +60,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
             client.addTicket(object);
             s.addTicket(object);
             film.addTicket(object);
-            object.setClient(client);
+            object.setUser(client);
             object.setFilm(film);
             object.setSeat(s);
             return super.add(object);
@@ -77,7 +75,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
         }
         if (object.getFilm().getEndTime().isAfter(LocalDateTime.now())) {
             object.getSeat().removeTicket(object);
-            object.getClient().removeTicket(object);
+            object.getUser().removeTicket(object);
             super.remove(object);
         } else throw new IllegalStateException("Cannot remove ended reservation");
     }
@@ -91,7 +89,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
         if(tmp.getFilm().getBeginTime().isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("Cannot edit expired ticket");
         }
-        if(obj.getClient().getId() == null
+        if(obj.getUser().getId() == null
                 || obj.getFilm().getId() == null || obj.getSeat() == null) {
             throw new IllegalArgumentException("Wrong arguments");
         }
@@ -100,7 +98,9 @@ public class TicketManager extends ManagerGeneric<Ticket> {
 
     private synchronized boolean isSeatAvailable(Seat s, LocalDateTime d) {
         for (Ticket t : getAll()) {
-            if (t.getSeat().equals(s) && t.getFilm().getBeginTime().isBefore(d) && t.getFilm().getEndTime().isAfter(d)) {
+            if ((t.getSeat().getColumn() == s.getColumn() && t.getSeat().getRow() == s.getRow())
+                    && t.getSeat().equals(s) && t.getFilm().getBeginTime().isBefore(d)
+                    && t.getFilm().getEndTime().isAfter(d)) {
                 return false;
             }
         }
