@@ -50,7 +50,7 @@ public class SeatController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Seat>  update(@PathVariable("id") UUID id, Seat f) {
+    public ResponseEntity<Seat>  update(@PathVariable("id") UUID id, @RequestBody Seat f) {
         try {
             f = manager.update(id, f);
             return new ResponseEntity<>(f, HttpStatus.ACCEPTED);

@@ -92,7 +92,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable("id") UUID id, User u) {
+    public ResponseEntity<User> update(@PathVariable("id") UUID id, @RequestBody User u) {
         try {
             u = manager.update(id, u);
             return new ResponseEntity<>(u, HttpStatus.ACCEPTED);

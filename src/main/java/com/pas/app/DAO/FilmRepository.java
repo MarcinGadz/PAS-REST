@@ -14,7 +14,7 @@ import java.util.UUID;
 @Repository
 public class FilmRepository extends RepositoryGeneric<Film> {
     public FilmRepository() {
-        addFilms();
+
     }
 
     private void addFilms() {
