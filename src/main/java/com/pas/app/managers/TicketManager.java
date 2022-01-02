@@ -96,11 +96,9 @@ public class TicketManager extends ManagerGeneric<Ticket> {
         return super.update(id, obj);
     }
 
-    private synchronized boolean isSeatAvailable(Seat s, LocalDateTime d) {
+    private boolean isSeatAvailable(Seat s, LocalDateTime d) {
         for (Ticket t : getAll()) {
-            if ((t.getSeat().getColumn() == s.getColumn() && t.getSeat().getRow() == s.getRow())
-                    && t.getSeat().equals(s) && t.getFilm().getBeginTime().isBefore(d)
-                    && t.getFilm().getEndTime().isAfter(d)) {
+            if (t.getSeat().equals(s) && !t.getFilm().getBeginTime().isAfter(d) && !t.getFilm().getEndTime().isBefore(d)) {
                 return false;
             }
         }
