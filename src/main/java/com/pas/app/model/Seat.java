@@ -3,6 +3,7 @@ package com.pas.app.model;
 import javax.json.bind.annotation.JsonbTransient;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Seat extends Entity {
     private int row;
@@ -74,11 +75,15 @@ public class Seat extends Entity {
 
     @Override
     public boolean equals(Object o) {
-        return super.equals(o);
-    }
-    @Override
-    public int hashCode() {
-        return super.hashCode();
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Seat seat = (Seat) o;
+        return row == seat.row && column == seat.column && hall == seat.hall;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), row, column, hall);
+    }
 }
