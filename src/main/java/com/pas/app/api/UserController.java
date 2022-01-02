@@ -60,7 +60,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PutMapping("/{id}/activate")
+    @PostMapping("/{id}/activate")
     public ResponseEntity activate(@PathVariable("id") UUID id) {
         try {
             manager.activate(id);
@@ -70,7 +70,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{id}/deactivate")
+    @DeleteMapping("/{id}/deactivate")
     public ResponseEntity deactivate(@PathVariable("id") UUID id) {
         try {
             manager.deactivate(id);
