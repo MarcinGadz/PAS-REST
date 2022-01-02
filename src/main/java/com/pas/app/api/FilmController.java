@@ -52,7 +52,6 @@ public class FilmController {
     @PutMapping("/{id}")
     public ResponseEntity<Film> update(@PathVariable("id") UUID id, @RequestBody Film f) {
         try {
-            System.out.println("lol");
             f = manager.update(id, f);
             return new ResponseEntity<>(f, HttpStatus.ACCEPTED);
         } catch (IllegalArgumentException ex) {

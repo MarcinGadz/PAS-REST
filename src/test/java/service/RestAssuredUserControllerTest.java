@@ -86,6 +86,9 @@ public class RestAssuredUserControllerTest {
         get("/api/user/df022edf-bb0a-42c4-a4b7-7c37af542fd9")
                 .then().statusCode(200).assertThat()
                 .body("active", equalTo(true));
+
+        put("/api/user/df022edf-bb0a-42c4-a4b7-7c37af542fd9/deactivate")
+                .then().statusCode(202);
     }
 
     @Test
@@ -103,6 +106,10 @@ public class RestAssuredUserControllerTest {
         get("/api/user/a3bf9df2-6b2b-11ec-90d6-0242ac120003")
                 .then().statusCode(200).assertThat()
                 .body("active", equalTo(false));
+
+        given().contentType(ContentType.JSON)
+                .put("/api/user/a3bf9df2-6b2b-11ec-90d6-0242ac120003/activate")
+                .then().statusCode(202);
     }
 
     @Test

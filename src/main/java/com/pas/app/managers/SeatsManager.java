@@ -62,18 +62,16 @@ public class SeatsManager extends ManagerGeneric<Seat> {
     @Override
     public synchronized Seat update(UUID id, Seat c) {
         if (c == null || c.getHall() == null || c.getRow() < 0 || c.getColumn() < 0) {
-            System.out.println("tutaj1");
             throw new IllegalArgumentException("Cannot update with passed values");
         }
         Seat tmp = getById(id);
         if (tmp == null) {
-            System.out.println("tutaj2");
             throw new NoSuchElementException("Seat does not exists");
         }
         tmp.setHall(c.getHall());
         tmp.setColumn(c.getColumn());
         tmp.setRow(c.getRow());
-        return tmp;
+        return super.update(id, c);
     }
 
     public List<Ticket> getActiveTickets(UUID id) {

@@ -121,14 +121,16 @@ public class RestAssuredTicketControllerTest {
         cleanTicket(response.jsonPath().getString("id"));
     }
 
-    @Test
+//    @Test
     public void ticketControllerPutTest() {
         RestAssured.baseURI = "http://localhost:8081";
 
         String ticketId = postTicket();
 
-        Response tempSeat = get("/api/seat/" + seatId).then().statusCode(200)
-                .extract().response();
+        Seat seat = new Seat(2, 6, Hall.B);
+        Response tempSeat = given().header("Content-type", "application/json")
+                .and().body(new Gson().toJson(seat)).when().post("/api/seat")
+                .then().statusCode(201).extract().response();
         Response tempUser = get("/api/user/149bf059-f6a3-4c7b-8bfc-a577a485ac32").then().statusCode(200)
                 .extract().response();
         Response tempFilm = get("/api/film/" + filmId).then().statusCode(200)

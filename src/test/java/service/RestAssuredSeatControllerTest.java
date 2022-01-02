@@ -90,7 +90,7 @@ public class RestAssuredSeatControllerTest {
                         "column", equalTo(5),
                         "hall", equalTo("B")).extract().response();
 
-        given().header("Content-type", "application/json")
+        Response responseAfterPut = given().header("Content-type", "application/json")
                 .and().body(new Gson().toJson(tmp2))
                 .when().put("/api/seat/" + responseBeforePut.jsonPath().getString("id"))
                 .then().statusCode(202)
@@ -98,6 +98,9 @@ public class RestAssuredSeatControllerTest {
                         "column", equalTo(6),
                         "hall", equalTo("C")).extract().response();
 
+        given().header("Content-type", "application/json")
+                .when().delete("/api/seat/"+responseAfterPut.jsonPath().getString("id"))
+                .then().statusCode(202);
         given().header("Content-type", "application/json")
                 .when().delete("/api/seat/"+responseBeforePut.jsonPath().getString("id"))
                 .then().statusCode(202);
