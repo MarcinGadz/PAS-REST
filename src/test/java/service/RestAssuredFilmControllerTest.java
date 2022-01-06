@@ -39,16 +39,17 @@ public class RestAssuredFilmControllerTest {
     public void filmControllerGetListTest() {
         RestAssured.baseURI = "http://localhost:8081";
 
-        Response response =  given().header("Content-type", "application/json")
+        Response response = given().header("Content-type", "application/json")
                 .and().body(gson.toJson(tmp))
                 .when().post("/api/film")
-                .then().statusCode(201).extract().response();;
+                .then().statusCode(201).extract().response();
+        ;
 
         get("/api/film").then().statusCode(200).assertThat()
                 .body("size()", equalTo(1));
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/film/"+response.jsonPath().getString("id"))
+                .when().delete("/api/film/" + response.jsonPath().getString("id"))
                 .then().statusCode(202);
     }
 
@@ -61,7 +62,7 @@ public class RestAssuredFilmControllerTest {
                 .when().post("/api/film")
                 .then().statusCode(201).extract().response();
 
-        get("/api/film/"+response.jsonPath().getString("id")).then().statusCode(200)
+        get("/api/film/" + response.jsonPath().getString("id")).then().statusCode(200)
                 .assertThat().body("title", equalTo("Title"),
                         "genre", equalTo("Genre"),
                         "beginTime", equalTo("1999-07-16T14:45:00"),
@@ -69,7 +70,7 @@ public class RestAssuredFilmControllerTest {
                         "basePrice", equalTo(100));
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/film/"+response.jsonPath().getString("id"))
+                .when().delete("/api/film/" + response.jsonPath().getString("id"))
                 .then().statusCode(202);
     }
 
@@ -94,7 +95,7 @@ public class RestAssuredFilmControllerTest {
                 .body("size()", equalTo(1));
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/film/"+response.jsonPath().getString("id"))
+                .when().delete("/api/film/" + response.jsonPath().getString("id"))
                 .then().statusCode(202);
     }
 
@@ -107,10 +108,10 @@ public class RestAssuredFilmControllerTest {
                 .when().post("/api/film")
                 .then().statusCode(201)
                 .assertThat().body("title", equalTo("Title"),
-                "genre", equalTo("Genre"),
-                "beginTime", equalTo("1999-07-16T14:45:00"),
-                "endTime", equalTo("1999-07-16T16:15:00"),
-                "basePrice", equalTo(100)).extract().response();
+                        "genre", equalTo("Genre"),
+                        "beginTime", equalTo("1999-07-16T14:45:00"),
+                        "endTime", equalTo("1999-07-16T16:15:00"),
+                        "basePrice", equalTo(100)).extract().response();
 
         given().header("Content-type", "application/json")
                 .and().body(gson.toJson(tmp2))
@@ -123,7 +124,7 @@ public class RestAssuredFilmControllerTest {
                         "basePrice", equalTo(100)).extract().response();
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/film/"+responseBeforePut.jsonPath().getString("id"))
+                .when().delete("/api/film/" + responseBeforePut.jsonPath().getString("id"))
                 .then().statusCode(202);
     }
 
@@ -140,7 +141,7 @@ public class RestAssuredFilmControllerTest {
                 .body("size()", equalTo(1));
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/film/"+response.jsonPath().getString("id"))
+                .when().delete("/api/film/" + response.jsonPath().getString("id"))
                 .then().statusCode(202);
 
         get("/api/film").then().statusCode(200).assertThat()

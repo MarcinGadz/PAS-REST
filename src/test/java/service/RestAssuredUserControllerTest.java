@@ -21,7 +21,6 @@ public class RestAssuredUserControllerTest {
     public void userControllerGetListTest() {
         RestAssured.baseURI = "http://localhost:8081";
 
-        //To trzeba tu inaczej, bo w poscie dodaje i zalezy od kolejnosci testow
         get("/api/user").then().statusCode(200).assertThat()
                 .body("size()", equalTo(3));
     }

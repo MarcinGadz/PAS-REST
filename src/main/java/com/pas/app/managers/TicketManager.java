@@ -39,7 +39,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
     }
 
     @Override
-    public synchronized Ticket add(Ticket object) {
+    public Ticket add(Ticket object) {
         if (object.getFilm() == null || object.getSeat() == null || object.getUser() == null
                 || object.getFilm().getId() == null || object.getSeat().getId() == null
                 || object.getUser().getId() == null) {
@@ -69,7 +69,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
     }
 
     @Override
-    public synchronized void remove(Ticket object) {
+    public void remove(Ticket object) {
         if (object == null) {
             throw new NoSuchElementException("Ticket does not exists");
         }
@@ -81,22 +81,22 @@ public class TicketManager extends ManagerGeneric<Ticket> {
     }
 
     @Override
-    public synchronized Ticket update(UUID id, Ticket obj) {
+    public Ticket update(UUID id, Ticket obj) {
         Ticket tmp = getById(id);
         if (tmp == null) {
             throw new NoSuchElementException("Ticket does not exists");
         }
-        if(tmp.getFilm().getBeginTime().isBefore(LocalDateTime.now())) {
+        if (tmp.getFilm().getBeginTime().isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("Cannot edit expired ticket");
         }
-        if(obj.getUser().getId() == null
+        if (obj.getUser().getId() == null
                 || obj.getFilm().getId() == null || obj.getSeat() == null) {
             throw new IllegalArgumentException("Wrong arguments");
         }
         return super.update(id, obj);
     }
 
-    private synchronized boolean isSeatAvailable(Seat s, LocalDateTime d) {
+    private boolean isSeatAvailable(Seat s, LocalDateTime d) {
         for (Ticket t : getAll()) {
             if (t.getSeat().equals(s) && !t.getFilm().getBeginTime().isAfter(d) && !t.getFilm().getEndTime().isBefore(d)) {
                 return false;

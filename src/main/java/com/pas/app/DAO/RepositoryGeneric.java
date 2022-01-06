@@ -6,6 +6,7 @@ import java.util.*;
 
 public abstract class RepositoryGeneric<T extends Entity> {
     private Set<T> objects = new HashSet<T>();
+
     public T getById(UUID id) {
         T res = objects.stream().filter(obj -> obj.getId().equals(id)).findAny().orElse(null);
         return res;
@@ -19,13 +20,13 @@ public abstract class RepositoryGeneric<T extends Entity> {
         return new ArrayList<>(objects);
     }
 
-    public T add(T object) {
+    public synchronized T add(T object) {
         objects.add(object);
         return object;
     }
 
-    public void remove(T object) {
-        objects.remove(object);
+    public synchronized void remove(T object) {
+        objects.remove(getById(object.getId()));
     }
 
     public String generateReport() {

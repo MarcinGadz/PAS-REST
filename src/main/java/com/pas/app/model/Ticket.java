@@ -1,7 +1,6 @@
 package com.pas.app.model;
 
 
-
 public class Ticket extends Entity {
     private String ticketId;
     private User user;
@@ -68,6 +67,7 @@ public class Ticket extends Entity {
     public boolean equals(Object o) {
         return super.equals(o);
     }
+
     @Override
     public int hashCode() {
         return super.hashCode();

@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 import java.time.LocalDateTime;
 
 public class GsonLocalDateTime {
-    public static Gson getGsonSerializer(){
+    public static Gson getGsonSerializer() {
         return new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())

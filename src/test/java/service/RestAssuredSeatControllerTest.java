@@ -19,7 +19,7 @@ public class RestAssuredSeatControllerTest {
         RestAssured.baseURI = "http://localhost:8081";
 
         Seat tmp = new Seat(2, 5, Hall.B);
-        Response response =  given().header("Content-type", "application/json")
+        Response response = given().header("Content-type", "application/json")
                 .and().body(new Gson().toJson(tmp))
                 .when().post("/api/seat")
                 .then().statusCode(201).extract().response();
@@ -28,7 +28,7 @@ public class RestAssuredSeatControllerTest {
                 .body("size()", equalTo(1));
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/seat/"+response.jsonPath().getString("id"))
+                .when().delete("/api/seat/" + response.jsonPath().getString("id"))
                 .then().statusCode(202);
     }
 
@@ -42,13 +42,13 @@ public class RestAssuredSeatControllerTest {
                 .when().post("/api/seat")
                 .then().statusCode(201).extract().response();
 
-        get("/api/seat/"+response.jsonPath().getString("id")).then().statusCode(200)
+        get("/api/seat/" + response.jsonPath().getString("id")).then().statusCode(200)
                 .assertThat().body("row", equalTo(2),
                         "column", equalTo(5),
                         "hall", equalTo("B"));
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/seat/"+response.jsonPath().getString("id"))
+                .when().delete("/api/seat/" + response.jsonPath().getString("id"))
                 .then().statusCode(202);
     }
 
@@ -72,7 +72,7 @@ public class RestAssuredSeatControllerTest {
                 .body("size()", equalTo(1));
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/seat/"+response.jsonPath().getString("id"))
+                .when().delete("/api/seat/" + response.jsonPath().getString("id"))
                 .then().statusCode(202);
     }
 
@@ -99,10 +99,7 @@ public class RestAssuredSeatControllerTest {
                         "hall", equalTo("C")).extract().response();
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/seat/"+responseAfterPut.jsonPath().getString("id"))
-                .then().statusCode(202);
-        given().header("Content-type", "application/json")
-                .when().delete("/api/seat/"+responseBeforePut.jsonPath().getString("id"))
+                .when().delete("/api/seat/" + responseAfterPut.jsonPath().getString("id"))
                 .then().statusCode(202);
     }
 
@@ -120,7 +117,7 @@ public class RestAssuredSeatControllerTest {
                 .body("size()", equalTo(1));
 
         given().header("Content-type", "application/json")
-                .when().delete("/api/seat/"+response.jsonPath().getString("id"))
+                .when().delete("/api/seat/" + response.jsonPath().getString("id"))
                 .then().statusCode(202);
 
         get("/api/seat").then().statusCode(200).assertThat()

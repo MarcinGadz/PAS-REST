@@ -32,20 +32,20 @@ public class UserRepository extends RepositoryGeneric<User> {
         return super.getAll().stream().filter(c -> c.getLogin().contains(chars)).collect(Collectors.toList());
     }
 
-    public void activate(UUID id) {
+    public synchronized void activate(UUID id) {
         User c = getById(id);
         c.setActive(true);
     }
 
     @Override
-    public User add(User object) {
+    public synchronized User add(User object) {
         if (super.getAll().stream().anyMatch(c -> c.getLogin().equals(object.getLogin()))) {
             throw new IllegalArgumentException("User with specified login already exists");
         }
         return super.add(object);
     }
 
-    public void deactivate(UUID id) {
+    public synchronized void deactivate(UUID id) {
         User c = getById(id);
         if (c != null) {
             c.setActive(false);

@@ -1,6 +1,7 @@
 package com.pas.app.model;
 
 //import javax.json.bind.annotation.JsonbTransient;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
@@ -31,7 +32,7 @@ public class Film extends Entity {
     }
 
     public void addTicket(Ticket t) {
-        if(tickets == null) {
+        if (tickets == null) {
             tickets = new ArrayList<>();
         }
         tickets.add(t);
@@ -91,7 +92,7 @@ public class Film extends Entity {
     }
 
     public BigDecimal adjustWeekendPrice(LocalDateTime beginTime) {
-        if(isWeekend(beginTime)) {
+        if (isWeekend(beginTime)) {
             return basePrice.multiply(BigDecimal.valueOf(1.2));
         }
         return basePrice;
@@ -101,6 +102,7 @@ public class Film extends Entity {
     public boolean equals(Object o) {
         return super.equals(o);
     }
+
     @Override
     public int hashCode() {
         return super.hashCode();

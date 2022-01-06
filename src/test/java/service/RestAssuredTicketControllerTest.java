@@ -93,7 +93,7 @@ public class RestAssuredTicketControllerTest {
     public void ticketControllerPostTest() {
         RestAssured.baseURI = "http://localhost:8081";
 
-        get("/api/seat").then().statusCode(200).assertThat()
+        get("/api/ticket").then().statusCode(200).assertThat()
                 .body("size()", equalTo(0)).extract().response();
 
         Response tempSeat = given().header("Content-type", "application/json")
@@ -115,13 +115,13 @@ public class RestAssuredTicketControllerTest {
         seatId = tempSeat.jsonPath().getString("id");
         filmId = tempFilm.jsonPath().getString("id");
 
-        get("/api/seat").then().statusCode(200).assertThat()
+        get("/api/ticket").then().statusCode(200).assertThat()
                 .body("size()", equalTo(1));
 
         cleanTicket(response.jsonPath().getString("id"));
     }
 
-//    @Test
+    @Test
     public void ticketControllerPutTest() {
         RestAssured.baseURI = "http://localhost:8081";
 
@@ -144,9 +144,9 @@ public class RestAssuredTicketControllerTest {
                 .when().put("/api/ticket/" + ticketId)
                 .then().statusCode(202)
                 .assertThat().body("ticketId", equalTo("aa"),
-                "user.firstName", equalTo("John"),
-                "film.title", equalTo("Title"),
-                "seat.row", equalTo(2));
+                        "user.firstName", equalTo("John"),
+                        "film.title", equalTo("Title"),
+                        "seat.row", equalTo(2));
 
         cleanTicket(ticketId);
     }
