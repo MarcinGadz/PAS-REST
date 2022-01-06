@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
+<head>
+    <title>Title</title>
+</head>
+<h:body>
+    <h1>Create User</h1>
+    <h:form>
+        <h:dataTable value="#{readListUserBean.userList}" var="user">
+            <h:column>
+                <h:outputText value="#{user.firstName}" />
+            </h:column>
+            <h:column>
+                <h:outputText value="#{user.lastName}" />
+            </h:column>
+            <h:column>
+                <h:outputText value="#{user.login}" />
+            </h:column>
+            <h:column>
+                <h:outputText value="#{user.role}" />
+            </h:column>
+            <h:column>
+                <h:selectBooleanCheckbox value="#{user.active}" disabled="true"/>
+                <h:commandButton action="#{readListUserBean.setActive(user)}" value="Activate" />
+            </h:column>
+
+        </h:dataTable>
+
+        <h:commandButton action="#{goBack}" value="Create" />
+    </h:form>
+
+</h:body>
+</html>

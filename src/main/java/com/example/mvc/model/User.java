@@ -93,4 +93,15 @@ public class User extends Entity {
     public int hashCode() {
         return super.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", login='" + login + '\'' +
+                ", active=" + active +
+                ", role=" + role +
+                '}';
+    }
 }
