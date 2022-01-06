@@ -99,6 +99,18 @@ public class Film extends Entity {
     }
 
     @Override
+    public String toString() {
+        return "Film{" +
+                "title='" + title + '\'' +
+                ", genre='" + genre + '\'' +
+                ", beginTime=" + beginTime +
+                ", endTime=" + endTime +
+                ", tickets=" + tickets +
+                ", basePrice=" + basePrice +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         return super.equals(o);
     }

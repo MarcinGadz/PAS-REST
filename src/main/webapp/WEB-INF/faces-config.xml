@@ -21,6 +21,26 @@
             <to-view-id>/user/listUsers.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>createFilm</from-outcome>
+            <to-view-id>/film/createFilm.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>listFilms</from-outcome>
+            <to-view-id>/film/listFilms.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/film/listFilms.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editFilm</from-outcome>
+            <to-view-id>/film/editFilm.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
     </navigation-rule>
   
 </faces-config>

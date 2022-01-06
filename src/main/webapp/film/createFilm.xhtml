@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  xml:lang="en" lang="en">
+<head>
+    <title>Title</title>
+</head>
+
+<h:body>
+    <h1>Create Film</h1>
+    <h:form>
+        Title: <h:inputText value="#{createFilmBean.film.title}" /> <br/>
+        Genre: <h:inputText value="#{createFilmBean.film.genre}" /> <br/>
+<!--        Begin date:-->
+<!--            <h:inputText id="beginTime" value="#{createFilmBean.film.beginTime}">-->
+<!--                <f:convertDateTime pattern="dd-mm-yyyy"/>-->
+<!--            </h:inputText><br/>-->
+<!--        <h:message for="beginTime" style="color:red" />-->
+<!--        End date:-->
+<!--        <h:inputText id="endDate" value="#{createFilmBean.film.endTime}">-->
+<!--            <f:convertDateTime pattern="dd-mm-yyyy"/>-->
+<!--        </h:inputText><br/>-->
+<!--        <h:message for="endDate" style="color:red" />-->
+        Price:
+            <h:inputText value="#{createFilmBean.film.basePrice}">
+                 <f:convertNumber maxFractionDigits="2" maxIntegerDigits="3" />
+            </h:inputText><br/>
+        <h:commandButton action="#{createFilmBean.createFilm}" value="Create" />
+    </h:form>
+
+
+</h:body>
+</html>

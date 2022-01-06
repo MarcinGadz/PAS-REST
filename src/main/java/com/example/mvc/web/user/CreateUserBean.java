@@ -1,4 +1,4 @@
-package com.example.mvc.web;
+package com.example.mvc.web.user;
 
 import com.example.mvc.model.User;
 
