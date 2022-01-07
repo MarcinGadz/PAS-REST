@@ -31,6 +31,16 @@
             <to-view-id>/film/listFilms.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>listTickets</from-outcome>
+            <to-view-id>/ticket/listTickets.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>createTicket</from-outcome>
+            <to-view-id>/ticket/createTicket.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 
     <navigation-rule>

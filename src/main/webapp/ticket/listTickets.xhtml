@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
+<head>
+    <title>Title</title>
+</head>
+<h:body>
+    <h1>Create Film</h1>
+    <h:form>
+        <h:dataTable value="#{readListTicketBean.ticketList}" var="ticket">
+            <h:column>
+                <h:outputText value="#{ticket.user.login}" />
+            </h:column>
+            <h:column>
+                <h:outputText value="#{ticket.film.title}" />
+            </h:column>
+            <h:column>
+                <h:outputText value="#{ticket.film.beginTime}" />
+            </h:column>
+            <h:column>
+                <h:outputText value="#{ticket.film.endTime}" />
+            </h:column>
+            <h:column>
+                <h:outputText value="#{ticket.film.basePrice}" />
+            </h:column>
+            <h:column>
+                <h:outputText value="#{ticket.seat.hall}"/>
+            </h:column>
+            <h:column>
+                <h:outputText value="#{ticket.seat.column}"/>
+            </h:column>
+            <h:column>
+                <h:outputText value="#{ticket.seat.row}"/>
+            </h:column>
+<!--            <h:column>-->
+<!--                <h:commandButton action="#{readListFilmBean.editFilm(film)}" value="Edit" />-->
+<!--                <h:commandButton action="#{readListFilmBean.deleteFilm(film)}" value="Delete" />-->
+<!--            </h:column>-->
+        </h:dataTable>
+
+        <h:commandButton action="#{readListFilmBean.goBack}" value="Back to homepage" />
+    </h:form>
+
+</h:body>
+</html>
