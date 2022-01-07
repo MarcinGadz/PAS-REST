@@ -35,6 +35,7 @@ public class Film extends Entity {
     }
 
     public Date getBeginDate() {
+        if(beginTime == null) return Date.from(Instant.EPOCH);
         Instant instant = beginTime.atZone(ZoneId.of("Europe/Warsaw")).toInstant();
         return Date.from(instant);
     }
@@ -45,6 +46,7 @@ public class Film extends Entity {
     }
 
     public Date getEndDate() {
+        if(endTime == null) return Date.from(Instant.EPOCH);
         Instant instant = endTime.atZone(ZoneId.of("Europe/Warsaw")).toInstant();
         return Date.from(instant);
     }
