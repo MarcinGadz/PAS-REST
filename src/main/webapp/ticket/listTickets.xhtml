@@ -34,10 +34,10 @@
             <h:column>
                 <h:outputText value="#{ticket.seat.row}"/>
             </h:column>
-<!--            <h:column>-->
-<!--                <h:commandButton action="#{readListFilmBean.editFilm(film)}" value="Edit" />-->
-<!--                <h:commandButton action="#{readListFilmBean.deleteFilm(film)}" value="Delete" />-->
-<!--            </h:column>-->
+            <h:column>
+                <h:commandButton action="#{readListTicketBean.editTicket(ticket)}" value="Edit" />
+                <h:commandButton action="#{readListTicketBean.deleteTicket(ticket)}" value="Delete" />
+            </h:column>
         </h:dataTable>
 
         <h:commandButton action="#{readListFilmBean.goBack}" value="Back to homepage" />

@@ -1,6 +1,6 @@
 package com.example.mvc.web.ticket;
 
-import com.example.mvc.model.Film;
+import com.example.mvc.model.Ticket;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -14,24 +14,23 @@ import java.io.Serializable;
 @SessionScoped
 @Named
 public class EditTicketBean implements Serializable {
-    private Film editedFilm;
+    private Ticket editedTicket;
 
-    public Film getEditedFilm() {
-        return editedFilm;
+    public Ticket getEditedTicket() {
+        return editedTicket;
     }
 
-    public void setEditedFilm(Film editedFilm) {
-        this.editedFilm = editedFilm;
+    public void setEditedTicket(Ticket editedTicket) {
+        this.editedTicket = editedTicket;
     }
 
-    public String editFilm() {
-        if(editedFilm != null) {
-            System.out.println(editedFilm);
-//            TODO: Zeby dzialalo trzeba zmienic te daty w film, tak to reszta dziala
+    public String editTicket() {
+        if (editedTicket != null) {
+            System.out.println(editedTicket);
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target("http://localhost:8081");
-            target.path("api").path("film").path(String.valueOf(editedFilm.getId())).request(MediaType.APPLICATION_JSON).put(Entity.json(editedFilm));
-            editedFilm = null;
+            target.path("api").path("ticket").path(String.valueOf(editedTicket.getId())).request(MediaType.APPLICATION_JSON).put(Entity.json(editedTicket));
+            editedTicket = null;
         } else {
             throw new IllegalArgumentException("Proba pominiecia");
         }

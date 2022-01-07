@@ -29,10 +29,11 @@ public class ReadListFilmBean implements Serializable {
         return target.path("api").path("film").request(MediaType.APPLICATION_JSON).get(new GenericType<List<Film>>() {});
     }
 
-    public void deleteFilm(Film f) {
+    public String deleteFilm(Film f) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8081/");
         target.path("api").path("film").path(String.valueOf(f.getId())).request(MediaType.APPLICATION_JSON).delete();
+        return "listFilms";
     }
 
     public String editFilm(Film f) {

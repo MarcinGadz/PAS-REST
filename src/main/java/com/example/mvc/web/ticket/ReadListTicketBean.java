@@ -18,7 +18,7 @@ import java.util.List;
 @Named
 public class ReadListTicketBean implements Serializable {
     @Inject
-    private EditTicketBean editFilmBean;
+    private EditTicketBean editTicketBean;
 
     public List<Ticket> getTicketList() {
         Client client = ClientBuilder.newClient();
@@ -27,16 +27,20 @@ public class ReadListTicketBean implements Serializable {
         });
     }
 
-//    public void deleteFilm(Film f) {
-//        Client client = ClientBuilder.newClient();
-//        WebTarget target = client.target("http://localhost:8081/");
-//        target.path("api").path("film").path(String.valueOf(f.getId())).request(MediaType.APPLICATION_JSON).delete();
-//    }
-//
-//    public String editFilm(Film f) {
-//        editFilmBean.setEditedFilm(f);
-//        return "editFilm";
-//    }
+    public String deleteTicket(Ticket ticket) {
+        System.out.println("HERE");
+        System.out.println(ticket.getId());
+        System.out.println("HERE");
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8081/");
+        target.path("api").path("ticket").path(String.valueOf(ticket.getId())).request(MediaType.APPLICATION_JSON).delete();
+        return "listTickets";
+    }
+
+    public String editTicket(Ticket t) {
+        editTicketBean.setEditedTicket(t);
+        return "editTicket";
+    }
 
     public String goBack() {
         return "main";

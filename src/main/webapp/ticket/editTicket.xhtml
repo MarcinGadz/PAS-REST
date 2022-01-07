@@ -11,25 +11,11 @@
 <h:body>
     <h1>Edit Film</h1>
     <h:form>
-        Title: <h:inputText value="#{editFilmBean.editedFilm.title}" /> <br/>
-        Genre: <h:inputText value="#{editFilmBean.editedFilm.genre}" /> <br/>
-        Begin date:
-            <h:inputText id="beginTime" value="#{editFilmBean.editedFilm.beginDate}">
-                <f:converter converterId="javax.faces.DateTime"/>
-                <f:convertDateTime type="both" pattern="yyyy-MM-dd HH:mm"/>
-            </h:inputText><br/>
-        <h:message for="beginTime" style="color:red" />
-        End date:
-        <h:inputText id="endDate" value="#{editFilmBean.editedFilm.endDate}">
-            <f:converter converterId="javax.faces.DateTime"/>
-            <f:convertDateTime type="both" pattern="yyyy-MM-dd HH:mm"/>
-        </h:inputText><br/>
-        <h:message for="endDate" style="color:red" />
-        Price:
-            <h:inputText value="#{editFilmBean.editedFilm.basePrice}">
-                 <f:convertNumber maxFractionDigits="2" maxIntegerDigits="3" />
-            </h:inputText><br/>
-        <h:commandButton action="#{editFilmBean.editFilm}" value="Edit" />
+        Seat id: <h:inputText value="#{editTicketBean.editedTicket.seat.id}" /> <br/>
+        Film id: <h:inputText value="#{editTicketBean.editedTicket.film.id}" /> <br/>
+        User id: <h:inputText value="#{editTicketBean.editedTicket.user.id}"/> <br/>
+
+        <h:commandButton action="#{editTicketBean.editTicket}" value="Edit" />
     </h:form>
 
 

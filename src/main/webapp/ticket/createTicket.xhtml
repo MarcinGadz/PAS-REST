@@ -7,7 +7,6 @@
 <head>
     <title>Title</title>
 </head>
-
 <h:body>
     <h1>Create Ticket</h1>
     <h:form>
@@ -15,11 +14,13 @@
         <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
     </h:inputText>
         <br/>
-        Seat id: <h:inputText value="#{createTicketBean.ticket.seat.id}"/> <br/>
-        User id: <h:inputText value="#{createTicketBean.ticket.user.id}"/> <br/>
+        Seat id: <h:inputText value="#{createTicketBean.ticket.seat.id}">
+        <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
+    </h:inputText><br/>
+        User id: <h:inputText value="#{createTicketBean.ticket.user.id}">
+        <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
+    </h:inputText><br/>
         <h:commandButton action="#{createTicketBean.createTicket}" value="Create"/>
     </h:form>
-
-
 </h:body>
 </html>
