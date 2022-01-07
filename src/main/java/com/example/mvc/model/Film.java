@@ -6,9 +6,12 @@ package com.example.mvc.model;
 import javax.json.bind.annotation.JsonbTransient;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Film extends Entity {
@@ -29,6 +32,26 @@ public class Film extends Entity {
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.basePrice = basePrice;
+    }
+
+    public Date getBeginDate() {
+        Instant instant = beginTime.atZone(ZoneId.of("Europe/Warsaw")).toInstant();
+        return Date.from(instant);
+    }
+
+    public void setBeginDate(Date d) {
+        Instant instant = Instant.ofEpochMilli(d.getTime());
+        beginTime = LocalDateTime.ofInstant(instant, ZoneId.of("Europe/Warsaw"));
+    }
+
+    public Date getEndDate() {
+        Instant instant = endTime.atZone(ZoneId.of("Europe/Warsaw")).toInstant();
+        return Date.from(instant);
+    }
+
+    public void setEndDate(Date d) {
+        Instant instant = Instant.ofEpochMilli(d.getTime());
+        endTime = LocalDateTime.ofInstant(instant, ZoneId.of("Europe/Warsaw"));
     }
 
     public void addTicket(Ticket t) {

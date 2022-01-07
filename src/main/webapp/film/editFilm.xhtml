@@ -14,15 +14,17 @@
         Title: <h:inputText value="#{editFilmBean.editedFilm.title}" /> <br/>
         Genre: <h:inputText value="#{editFilmBean.editedFilm.genre}" /> <br/>
         Begin date:
-            <h:outputText id="beginTime" value="#{createFilmBean.film.beginTime}">
-                <f:convertDateTime pattern="dd-mm-yyyy"/>
-            </h:outputText><br/>
+            <h:inputText id="beginTime" value="#{editFilmBean.editedFilm.beginDate}">
+                <f:converter converterId="javax.faces.DateTime"/>
+                <f:convertDateTime type="both" pattern="yyyy-MM-dd HH:mm"/>
+            </h:inputText><br/>
         <h:message for="beginTime" style="color:red" />
-<!--        End date:-->
-<!--        <h:outputText id="endDate" value="#{createFilmBean.film.endTime}">-->
-<!--            <f:convertDateTime pattern="dd-mm-yyyy"/>-->
-<!--        </h:outputText><br/>-->
-<!--        <h:message for="endDate" style="color:red" />-->
+        End date:
+        <h:inputText id="endDate" value="#{editFilmBean.editedFilm.endDate}">
+            <f:converter converterId="javax.faces.DateTime"/>
+            <f:convertDateTime type="both" pattern="yyyy-MM-dd HH:mm"/>
+        </h:inputText><br/>
+        <h:message for="endDate" style="color:red" />
         Price:
             <h:inputText value="#{editFilmBean.editedFilm.basePrice}">
                  <f:convertNumber maxFractionDigits="2" maxIntegerDigits="3" />

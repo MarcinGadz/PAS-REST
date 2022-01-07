@@ -10,6 +10,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @SessionScoped
 @Named
@@ -30,12 +34,12 @@ public class EditFilmBean implements Serializable {
 //            TODO: Zeby dzialalo trzeba zmienic te daty w film, tak to reszta dziala
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target("http://localhost:8081");
-            target.path("api").path("film").path(String.valueOf(editedFilm.getId())).request(MediaType.APPLICATION_JSON).post(Entity.json(editedFilm));
+            target.path("api").path("film").path(String.valueOf(editedFilm.getId())).request(MediaType.APPLICATION_JSON).put(Entity.json(editedFilm));
             editedFilm = null;
         } else {
             throw new IllegalArgumentException("Proba pominiecia");
         }
-
         return "main";
     }
+
 }
