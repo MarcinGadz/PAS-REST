@@ -30,8 +30,6 @@ public class EditFilmBean implements Serializable {
 
     public String editFilm() {
         if(editedFilm != null) {
-            System.out.println(editedFilm);
-//            TODO: Zeby dzialalo trzeba zmienic te daty w film, tak to reszta dziala
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target("http://localhost:8081");
             target.path("api").path("film").path(String.valueOf(editedFilm.getId())).request(MediaType.APPLICATION_JSON).put(Entity.json(editedFilm));

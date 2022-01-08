@@ -61,7 +61,15 @@
             <to-view-id>/film/editFilm.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+    </navigation-rule>
 
+    <navigation-rule>
+        <from-view-id>/user/listUsers.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editUser</from-outcome>
+            <to-view-id>/user/editUser.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
   
 </faces-config>
