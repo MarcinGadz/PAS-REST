@@ -41,6 +41,17 @@
             <to-view-id>/ticket/createTicket.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>createSeat</from-outcome>
+            <to-view-id>/seat/createSeat.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>listSeats</from-outcome>
+            <to-view-id>/seat/listSeats.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
     </navigation-rule>
 
     <navigation-rule>
