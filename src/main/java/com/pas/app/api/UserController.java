@@ -122,4 +122,14 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/{id}/all")
+    public ResponseEntity<List<Ticket>> getAllTickets(@PathVariable("id") UUID id) {
+        try {
+            List<Ticket> t = manager.getAllTickets(id);
+            return ResponseEntity.ok(t);
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

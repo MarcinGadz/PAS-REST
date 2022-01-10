@@ -2,7 +2,6 @@ package com.pas.app.model;
 
 
 public class Ticket extends Entity {
-    private String ticketId;
     private User user;
     private Film film;
     private Seat seat;
@@ -10,15 +9,10 @@ public class Ticket extends Entity {
     public Ticket() {
     }
 
-    public Ticket(String ticketId, User user, Film film, Seat seat) {
-        this.ticketId = ticketId;
+    public Ticket(User user, Film film, Seat seat) {
         this.user = user;
         this.film = film;
         this.seat = seat;
-    }
-
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
     }
 
     public void setUser(User user) {
@@ -33,10 +27,6 @@ public class Ticket extends Entity {
         this.seat = seat;
     }
 
-    public String getTicketId() {
-        return ticketId;
-    }
-
     public User getUser() {
         return user;
     }
@@ -49,15 +39,10 @@ public class Ticket extends Entity {
         return seat;
     }
 
-//    public BigDecimal getFinalPrice() {
-//        return film.adjustWeekendPrice(film.getBeginTime());
-//    }
-
     @Override
     public String toString() {
         return "Ticket{" +
-                "ticketId='" + ticketId + '\'' +
-                ", client=" + user +
+                "client=" + user +
                 ", film=" + film +
                 ", seat=" + seat +
                 '}';

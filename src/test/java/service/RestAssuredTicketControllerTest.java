@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.UUID;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -39,7 +38,7 @@ public class RestAssuredTicketControllerTest {
                 .and().body(gson.toJson(film)).when().post("/api/film")
                 .then().statusCode(201).extract().response();
 
-        Ticket ticket = new Ticket("aa", tempUser.body().as(User.class),
+        Ticket ticket = new Ticket(tempUser.body().as(User.class),
                 tempFilm.body().as(Film.class), tempSeat.body().as(Seat.class));
 //        ticket.setId(UUID.fromString("22b24cd6-6b45-11ec-90d6-0242ac120003"));
 
@@ -105,7 +104,7 @@ public class RestAssuredTicketControllerTest {
                 .and().body(gson.toJson(film)).when().post("/api/film")
                 .then().statusCode(201).extract().response();
 
-        Ticket ticket = new Ticket("aa", tempUser.body().as(User.class),
+        Ticket ticket = new Ticket(tempUser.body().as(User.class),
                 tempFilm.body().as(Film.class), tempSeat.body().as(Seat.class));
 
         Response response = given().header("Content-type", "application/json")
@@ -136,7 +135,7 @@ public class RestAssuredTicketControllerTest {
         Response tempFilm = get("/api/film/" + filmId).then().statusCode(200)
                 .extract().response();
 
-        Ticket ticket = new Ticket("aa", tempUser.body().as(User.class),
+        Ticket ticket = new Ticket(tempUser.body().as(User.class),
                 tempFilm.body().as(Film.class), tempSeat.body().as(Seat.class));
 
         given().header("Content-type", "application/json")
@@ -164,7 +163,7 @@ public class RestAssuredTicketControllerTest {
         Response tempFilm = get("/api/film/" + filmId).then().statusCode(200)
                 .extract().response();
 
-        Ticket ticket = new Ticket("aa", tempUser.body().as(User.class),
+        Ticket ticket = new Ticket(tempUser.body().as(User.class),
                 tempFilm.body().as(Film.class), tempSeat.body().as(Seat.class));
 
         Response response = given().header("Content-type", "application/json")
