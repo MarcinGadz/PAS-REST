@@ -11,10 +11,16 @@
 <h:body>
     <h1>Create Seat</h1>
     <h:form>
-        Row: <h:inputText value="#{createSeatBean.seat.row}" /> <br/>
-        Column: <h:inputText value="#{createSeatBean.seat.column}" /> <br/>
-        Hall: <h:inputText value="#{createSeatBean.seat.hall}" /> <br/>
-
+        Row: <h:inputText value="#{createSeatBean.seat.row}" >
+        <f:validateDoubleRange minimum="0" maximum="100" />
+    </h:inputText> <br/>
+        Column: <h:inputText value="#{createSeatBean.seat.column}" >
+        <f:validateDoubleRange minimum="0" maximum="100" />
+    </h:inputText> <br/>
+        Hall: <h:inputText value="#{createSeatBean.seat.hall}" >
+        <f:validator validatorId="com.example.mvc.util.SeatValidator"/>
+    </h:inputText> <br/>
+        <h:messages style="color:red"/>
         <h:commandButton action="#{createSeatBean.createSeat}" value="Create" />
     </h:form>
 

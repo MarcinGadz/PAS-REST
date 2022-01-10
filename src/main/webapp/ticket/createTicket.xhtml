@@ -20,6 +20,7 @@
         User id: <h:inputText value="#{createTicketBean.ticket.user.id}">
         <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
     </h:inputText><br/>
+        <h:messages style="color:red"/>
         <h:commandButton action="#{createTicketBean.createTicket}" value="Create"/>
     </h:form>
 </h:body>

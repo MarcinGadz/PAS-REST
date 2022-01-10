@@ -11,8 +11,12 @@
 <h:body>
     <h1>Edit Film</h1>
     <h:form>
-        Title: <h:inputText value="#{editFilmBean.editedFilm.title}" /> <br/>
-        Genre: <h:inputText value="#{editFilmBean.editedFilm.genre}" /> <br/>
+        Title: <h:inputText value="#{editFilmBean.editedFilm.title}" >
+        <f:validateLength minimum="2" maximum="50" />
+    </h:inputText> <br/>
+        Genre: <h:inputText value="#{editFilmBean.editedFilm.genre}" >
+        <f:validateLength minimum="2" maximum="50" />
+    </h:inputText> <br/>
         Begin date:
             <h:inputText id="beginTime" value="#{editFilmBean.editedFilm.beginDate}">
                 <f:converter converterId="javax.faces.DateTime"/>
@@ -27,8 +31,9 @@
         <h:message for="endDate" style="color:red" />
         Price:
             <h:inputText value="#{editFilmBean.editedFilm.basePrice}">
-                 <f:convertNumber maxFractionDigits="2" maxIntegerDigits="3" />
+                <f:validateDoubleRange minimum="10" maximum="100" />
             </h:inputText><br/>
+        <h:messages style="color:red"/>
         <h:commandButton action="#{editFilmBean.editFilm}" value="Edit" />
     </h:form>
 
