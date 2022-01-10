@@ -100,4 +100,12 @@ public class SeatsManager extends ManagerGeneric<Seat> {
         return tickets;
     }
 
+    public List<Ticket> getAllTickets(UUID id) {
+        List<Ticket> tickets = new ArrayList<>();
+        Seat tmp = getById(id);
+        if (tmp != null && tmp.getTicketList() != null) {
+            tickets = tmp.getTicketList();
+        }
+        return tickets;
+    }
 }

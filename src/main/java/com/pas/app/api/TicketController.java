@@ -61,7 +61,7 @@ public class TicketController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Ticket> deleteFilm(@PathVariable("id") UUID id) {
+    public ResponseEntity<Ticket> delete(@PathVariable("id") UUID id) {
 
         try {
             manager.remove(manager.getById(id));

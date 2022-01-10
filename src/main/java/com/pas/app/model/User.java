@@ -11,7 +11,7 @@ public class User extends Entity {
     private String lastName;
     private String login;
     private boolean active;
-    private List<Ticket> tickets;
+    private List<Ticket> tickets = new ArrayList<>();
     private Role role;
 
     public User() {

@@ -3,6 +3,7 @@ package com.pas.app.api;
 import com.pas.app.managers.SeatsManager;
 import com.pas.app.model.Film;
 import com.pas.app.model.Seat;
+import com.pas.app.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,12 +63,42 @@ public class SeatController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Film> delete(@PathVariable("id") UUID id) {
+    public ResponseEntity delete(@PathVariable("id") UUID id) {
         try {
             manager.remove(manager.getById(id));
             return ResponseEntity.accepted().build();
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().build();
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}/active")
+    public ResponseEntity<List<Ticket>> getActive(@PathVariable("id") UUID id) {
+        try {
+            List<Ticket> t = manager.getActiveTickets(id);
+            return ResponseEntity.ok(t);
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}/past")
+    public ResponseEntity<List<Ticket>> getPast(@PathVariable("id") UUID id) {
+        try {
+            List<Ticket> t = manager.getInactiveTickets(id);
+            return ResponseEntity.ok(t);
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}/all")
+    public ResponseEntity<List<Ticket>> getAllTickets(@PathVariable("id") UUID id) {
+        try {
+            List<Ticket> t = manager.getAllTickets(id);
+            return ResponseEntity.ok(t);
         } catch (NoSuchElementException ex) {
             return ResponseEntity.notFound().build();
         }
