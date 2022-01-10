@@ -1,6 +1,7 @@
 package com.example.mvc.web.seat;
 
 import com.example.mvc.model.Seat;
+import com.example.mvc.model.Ticket;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -20,6 +21,9 @@ public class ReadListSeatBean implements Serializable {
     @Inject
     private EditSeatBean editSeatBean;
 
+    @Inject
+    ListSeatTicketsBean seatTicketsBean;
+
     public List<Seat> getSeatList() {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8081/");
@@ -36,6 +40,30 @@ public class ReadListSeatBean implements Serializable {
     public String editSeat(Seat s) {
         editSeatBean.setEditedSeat(s);
         return "editSeat";
+    }
+
+    public String getActiveTickets(Seat u) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8081/");
+        List<Ticket> active = target.path("api").path("seat").path(u.getId().toString()).path("active").request().get(new GenericType<List<Ticket>>() {});
+        seatTicketsBean.setSeatTickets(active);
+        return "seatTickets";
+    }
+
+    public String getInActiveTickets(Seat u) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8081/");
+        List<Ticket> active = target.path("api").path("seat").path(u.getId().toString()).path("past").request().get(new GenericType<List<Ticket>>() {});
+        seatTicketsBean.setSeatTickets(active);
+        return "seatTickets";
+    }
+
+    public String getAllTickets(Seat u) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8081/");
+        List<Ticket> active = target.path("api").path("seat").path(u.getId().toString()).path("all").request().get(new GenericType<List<Ticket>>() {});
+        seatTicketsBean.setSeatTickets(active);
+        return "seatTickets";
     }
 
     public String goBack() { return "main";}

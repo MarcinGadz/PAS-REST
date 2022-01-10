@@ -27,6 +27,9 @@
                 <h:commandButton action="#{readListUserBean.setActive(user)}" value="Activate" />
                 <h:commandButton action="#{readListUserBean.setInactive(user)}" value="Deactivate" />
                 <h:commandButton action="#{readListUserBean.editUser(user)}" value="Edit" />
+                <h:commandButton action="#{readListUserBean.getActiveTickets(user)}" value="Active tickets" />
+                <h:commandButton action="#{readListUserBean.getInActiveTickets(user)}" value="Inactive tickets" />
+                <h:commandButton action="#{readListUserBean.getAllTickets(user)}" value="All tickets" />
             </h:column>
 
         </h:dataTable>
