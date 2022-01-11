@@ -7,9 +7,10 @@
     <title>Title</title>
 </head>
 <h:body>
-    <h1>Create User</h1>
+    <h1>Show Found User</h1>
     <h:form>
-        <h:dataTable value="#{readListUserBean.userList}" var="user">
+        <h:dataTable value="#{searchUserBean.isList ?
+        searchUserBean.foundUsers : searchUserBean.foundUser}" var="user">
             <h:column>
                 <h:outputText value="#{user.firstName}" />
             </h:column>
@@ -28,11 +29,11 @@
                 <h:commandButton action="#{readListUserBean.setInactive(user)}" value="Deactivate" />
                 <h:commandButton action="#{readListUserBean.editUser(user)}" value="Edit" />
             </h:column>
-
         </h:dataTable>
 
-        <h:commandButton action="#{readListUserBean.goBack}" value="Back to homepage" />
-        <h:commandButton action="#{readListUserBean.goToSearch}" value="Search user" />
+
+
+        <h:commandButton action="#{searchUserBean.goBack}" value="Back to homepage" />
     </h:form>
 
 </h:body>

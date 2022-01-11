@@ -73,4 +73,6 @@ public class ReadListUserBean implements Serializable {
         return "main";
     }
 
+    public String goToSearch() { return "searchUsers"; }
+
 }

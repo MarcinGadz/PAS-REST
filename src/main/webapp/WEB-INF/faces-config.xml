@@ -70,6 +70,21 @@
             <to-view-id>/user/editUser.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>searchUsers</from-outcome>
+            <to-view-id>/user/searchUsers.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
-  
+
+    <navigation-rule>
+        <from-view-id>/user/searchUsers.xhtml</from-view-id>
+        <navigation-case>
+                <from-outcome>showFoundUser</from-outcome>
+                <to-view-id>/user/showFoundUser.xhtml</to-view-id>
+                <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+
 </faces-config>
