@@ -24,7 +24,8 @@ import java.util.List;
 public class ReadListUserBean implements Serializable {
     @Inject
     EditUserBean editUserBean;
-
+    @Inject
+    ListUserTicketsBean userTicketsBean;
     public List<User> getUserList() {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8081/");
@@ -57,17 +58,30 @@ public class ReadListUserBean implements Serializable {
 
     }
 
-    public List<Ticket> getActiveTickets(User u) {
-        //TODO
-        //rest.getActiveTickets
-        return null;
+    public String getActiveTickets(User u) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8081/");
+        List<Ticket> active = target.path("api").path("user").path(u.getId().toString()).path("active").request().get(new GenericType<List<Ticket>>() {});
+        userTicketsBean.setUserTickets(active);
+        return "userTickets";
     }
 
-    public List<Ticket> getInActiveTickets(User u) {
-        //TODO
-        //rest.getActiveTickets
-        return null;
+    public String getInActiveTickets(User u) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8081/");
+        List<Ticket> active = target.path("api").path("user").path(u.getId().toString()).path("past").request().get(new GenericType<List<Ticket>>() {});
+        userTicketsBean.setUserTickets(active);
+        return "userTickets";
     }
+
+    public String getAllTickets(User u) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8081/");
+        List<Ticket> active = target.path("api").path("user").path(u.getId().toString()).path("all").request().get(new GenericType<List<Ticket>>() {});
+        userTicketsBean.setUserTickets(active);
+        return "userTickets";
+    }
+
 
     public String goBack() {
         return "main";

@@ -22,6 +22,9 @@
             <h:column>
                 <h:commandButton action="#{readListSeatBean.editSeat(seat)}" value="Edit" />
                 <h:commandButton action="#{readListSeatBean.deleteSeat(seat)}" value="Delete" />
+                <h:commandButton action="#{readListSeatBean.getActiveTickets(seat)}" value="Active tickets" />
+                <h:commandButton action="#{readListSeatBean.getInActiveTickets(seat)}" value="Inctive tickets" />
+                <h:commandButton action="#{readListSeatBean.getAllTickets(seat)}" value="All tickets" />
             </h:column>
         </h:dataTable>
 
