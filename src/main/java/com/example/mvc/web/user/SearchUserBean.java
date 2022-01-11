@@ -63,6 +63,7 @@ public class SearchUserBean implements Serializable {
         WebTarget target = client.target("http://localhost:8081/");
         setFoundUser(target.path("api").path("user").path("find").queryParam("login", searchedLogin).request(MediaType.APPLICATION_JSON).get(User.class));
         setIsList(false);
+        setSearchedLogin("");
         return "showFoundUser";
     }
 
@@ -71,6 +72,7 @@ public class SearchUserBean implements Serializable {
         WebTarget target = client.target("http://localhost:8081/");
         setFoundUsers(target.path("api").path("user").path("findcontaining").queryParam("login", searchedLogin).request(MediaType.APPLICATION_JSON).get(new GenericType<List<User>>() {}));
         setIsList(true);
+        setSearchedLogin("");
         return "showFoundUser";
     }
 
