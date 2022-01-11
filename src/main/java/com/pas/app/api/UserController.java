@@ -61,23 +61,23 @@ public class UserController {
         return Response.ok().entity(users).build();
     }
 
-    @POST
+    @PUT
     @Path("/{id}/activate")
     public Response activate(@PathParam("id") UUID id) {
         try {
             manager.activate(id);
-            return Response.ok().build();
+            return Response.status(202).build();
         } catch (NoSuchElementException ex) {
             return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
         }
     }
 
-    @POST
+    @PUT
     @Path("/{id}/deactivate")
     public Response deactivate(@PathParam("id") UUID id) {
         try {
             manager.deactivate(id);
-            return Response.ok().build();
+            return Response.status(202).build();
         } catch (NoSuchElementException ex) {
             return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
         }
@@ -113,7 +113,7 @@ public class UserController {
     public Response update(@PathParam("id") UUID id, User u) {
         try {
             User tmp = manager.update(id, u);
-            return Response.status(Response.Status.OK).entity(tmp).build();
+            return Response.status(202).entity(tmp).build();
         } catch (IllegalArgumentException ex) {
             return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         } catch (NoSuchElementException ex) {
@@ -142,6 +142,17 @@ public class UserController {
             return Response.ok().entity(t).build();
         } catch (NoSuchElementException ex) {
             return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}/all")
+    public Response getAllTickets(@PathParam("id") UUID id) {
+        try {
+            List<Ticket> t = manager.getAllTickets(id);
+            return Response.ok(t).build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(404).build();
         }
     }
 }

@@ -58,6 +58,7 @@ public class TicketManager extends ManagerGeneric<Ticket> {
             object.setId(UUID.randomUUID());
             client.addTicket(object);
             s.addTicket(object);
+            film.addTicket(object);
             object.setUser(client);
             object.setFilm(film);
             object.setSeat(s);
@@ -84,10 +85,10 @@ public class TicketManager extends ManagerGeneric<Ticket> {
         if (tmp == null) {
             throw new NoSuchElementException("Ticket does not exists");
         }
-        if(tmp.getFilm().getBeginTime().isBefore(LocalDateTime.now())) {
+        if (tmp.getFilm().getBeginTime().isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("Cannot edit expired ticket");
         }
-        if(obj.getUser().getId() == null
+        if (obj.getUser().getId() == null
                 || obj.getFilm().getId() == null || obj.getSeat() == null) {
             throw new IllegalArgumentException("Wrong arguments");
         }

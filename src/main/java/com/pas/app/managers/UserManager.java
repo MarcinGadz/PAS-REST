@@ -75,7 +75,15 @@ public class UserManager {
                 || u.getLogin().trim().equals("")) {
             throw new IllegalArgumentException("Passed wrong entity");
         }
-        u.setId(UUID.randomUUID());
+
+        if (u.getId() == null) {
+            u.setId(UUID.randomUUID());
+        }
+
+        if (getById(u.getId()) != null) {
+            throw new IllegalArgumentException("User with this ID already exists");
+        }
+        u.setActive(false);
         u.setRole(Role.ROLE_USER);
         return repo.add(u);
     }
@@ -99,6 +107,9 @@ public class UserManager {
             }
             if (c.getLastName() != null && !c.getLastName().trim().equals("")) {
                 tmp.setLastName(c.getLastName());
+            }
+            if (c.getLastName() != null && !c.getLastName().trim().equals("")) {
+                tmp.setLogin(c.getLogin());
             }
             repo.add(tmp);
         } else {

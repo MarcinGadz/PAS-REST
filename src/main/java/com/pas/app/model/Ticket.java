@@ -1,7 +1,6 @@
 package com.pas.app.model;
 
 import javax.json.bind.annotation.JsonbTransient;
-import java.math.BigDecimal;
 
 public class Ticket extends Entity {
     private String ticketId;
@@ -12,8 +11,7 @@ public class Ticket extends Entity {
     public Ticket() {
     }
 
-    public Ticket(String ticketId, User user, Film film, Seat seat) {
-        this.ticketId = ticketId;
+    public Ticket(User user, Film film, Seat seat) {
         this.user = user;
         this.film = film;
         this.seat = seat;
@@ -39,7 +37,6 @@ public class Ticket extends Entity {
         return ticketId;
     }
 
-    @JsonbTransient
     public User getUser() {
         return user;
     }

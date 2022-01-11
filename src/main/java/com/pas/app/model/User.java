@@ -1,5 +1,6 @@
 package com.pas.app.model;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,6 @@ public class User extends Entity {
     }
 
     public User(String firstName, String lastName, String personalID) {
-        if (Objects.equals(firstName, "") || Objects.equals(lastName, "") ||
-                Objects.equals(personalID, "")) {
-            throw new IllegalArgumentException();
-        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = personalID;
@@ -39,16 +36,18 @@ public class User extends Entity {
     }
 
     public void addTicket(Ticket t) {
-        if(tickets == null) {
+        if (tickets == null) {
             tickets = new ArrayList<>();
         }
         tickets.add(t);
     }
 
     public void removeTicket(Ticket t) {
+        if (tickets == null) return;
         tickets.remove(t);
     }
 
+    @JsonbTransient
     public List<Ticket> getTickets() {
         return tickets;
     }

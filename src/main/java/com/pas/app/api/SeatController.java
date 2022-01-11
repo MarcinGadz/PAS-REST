@@ -2,6 +2,7 @@ package com.pas.app.api;
 
 import com.pas.app.managers.SeatsManager;
 import com.pas.app.model.Seat;
+import com.pas.app.model.Ticket;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -61,7 +62,7 @@ public class SeatController {
     public Response update(@PathParam("id") UUID id, Seat f) {
         try {
             f = manager.update(id, f);
-            return Response.ok().entity(f).build();
+            return Response.status(202).entity(f).build();
         } catch (NoSuchElementException ex) {
             return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
         } catch (IllegalArgumentException ex) {
@@ -74,11 +75,44 @@ public class SeatController {
     public Response delete(@PathParam("id") UUID id) {
         try {
             manager.remove(manager.getById(id));
-            return Response.ok().build();
+            return Response.status(202).build();
         } catch (IllegalStateException ex) {
             return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         } catch (NoSuchElementException ex) {
             return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}/active")
+    public Response getActive(@PathParam("id") UUID id) {
+        try {
+            List<Ticket> t = manager.getActiveTickets(id);
+            return Response.ok(t).build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(404).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}/past")
+    public Response getPast(@PathParam("id") UUID id) {
+        try {
+            List<Ticket> t = manager.getInactiveTickets(id);
+            return Response.ok(t).build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(404).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}/all")
+    public Response getAllTickets(@PathParam("id") UUID id) {
+        try {
+            List<Ticket> t = manager.getAllTickets(id);
+            return Response.ok(t).build();
+        } catch (NoSuchElementException ex) {
+            return Response.status(404).build();
         }
     }
 }

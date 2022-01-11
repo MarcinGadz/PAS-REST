@@ -25,6 +25,7 @@ public abstract class RepositoryGeneric<T extends Entity> {
     }
 
     public synchronized void remove(T object) {
+
         objects.remove(object);
     }
 

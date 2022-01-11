@@ -45,11 +45,11 @@ public class SeatsManager extends ManagerGeneric<Seat> {
         if (object == null) {
             throw new NoSuchElementException("Seat does not exists");
         }
-        if (getActiveTickets(object.getId()).isEmpty()) {
-            super.remove(object);
-        } else {
-            throw new IllegalStateException("Cannot remove seat with active reservations");
-        }
+//        if (getActiveTickets(object.getId()).isEmpty()) {
+        super.remove(object);
+//        } else {
+//            throw new IllegalStateException("Cannot remove seat with active reservations");
+//        }
     }
 
     @Override
@@ -93,4 +93,12 @@ public class SeatsManager extends ManagerGeneric<Seat> {
         return tickets;
     }
 
+    public List<Ticket> getAllTickets(UUID id) {
+        List<Ticket> tickets = new ArrayList<>();
+        Seat tmp = getById(id);
+        if (tmp != null && tmp.getTicketList() != null) {
+            tickets = tmp.getTicketList();
+        }
+        return tickets;
+    }
 }

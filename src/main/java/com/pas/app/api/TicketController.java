@@ -60,7 +60,7 @@ public class TicketController {
     public Response update(@PathParam("id") UUID id, Ticket f) {
         try {
             f = manager.update(id, f);
-            return Response.ok().entity(f).build();
+            return Response.status(202).entity(f).build();
         } catch (NoSuchElementException ex) {
             return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
         } catch (Exception ex) {
@@ -78,6 +78,6 @@ public class TicketController {
         } catch (Exception ex) {
             return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         }
-        return Response.ok().build();
+        return Response.status(202).build();
     }
 }

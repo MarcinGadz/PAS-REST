@@ -52,7 +52,7 @@ public class FilmController {
     public Response update(@PathParam("id") UUID id, Film f) {
         try {
             f = manager.update(id, f);
-            return Response.ok().entity(f).build();
+            return Response.status(202).entity(f).build();
         } catch (IllegalArgumentException ex) {
             return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
         } catch (NoSuchElementException ex) {
@@ -65,7 +65,7 @@ public class FilmController {
     public Response delete(@PathParam("id") UUID id) {
         try {
             manager.remove(manager.getById(id));
-            return Response.ok().build();
+            return Response.status(202).build();
         } catch (NoSuchElementException ex) {
             return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
         } catch (IllegalArgumentException ex) {

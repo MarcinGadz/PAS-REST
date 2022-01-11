@@ -70,7 +70,7 @@ public class FilmManager extends ManagerGeneric<Film> {
         }
         if (object.getTickets() == null
                 || object.getTickets().isEmpty()
-                || object.getEndTime().isBefore(LocalDateTime.now())) {
+                || object.getEndTime().isAfter(LocalDateTime.now())) {
             super.remove(object);
         } else {
             throw new IllegalStateException("Cannot remove film");
