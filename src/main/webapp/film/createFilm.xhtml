@@ -11,22 +11,26 @@
 <h:body>
     <h1>Create Film</h1>
     <h:form>
-        Title: <h:inputText value="#{createFilmBean.film.title}" /> <br/>
-        Genre: <h:inputText value="#{createFilmBean.film.genre}" /> <br/>
+        Title: <h:inputText value="#{createFilmBean.film.title}">
+                     <f:validateLength minimum="2" maximum="50" />
+             </h:inputText> <br/>
+        Genre: <h:inputText value="#{createFilmBean.film.genre}">
+                     <f:validateLength minimum="2" maximum="50" />
+             </h:inputText> <br/>
         Begin date:
             <h:inputText id="beginTime" value="#{createFilmBean.film.beginDate}">
                 <f:convertDateTime pattern="dd-mm-yyyy HH:mm"/>
             </h:inputText><br/>
-        <h:message for="beginTime" style="color:red" />
+<!--        <h:message for="beginTime" style="color:red" />-->
         End date:
         <h:inputText id="endDate" value="#{createFilmBean.film.endDate}">
             <f:convertDateTime pattern="dd-mm-yyyy HH:mm"/>
         </h:inputText><br/>
-        <h:message for="endDate" style="color:red" />
         Price:
             <h:inputText value="#{createFilmBean.film.basePrice}">
-                 <f:convertNumber maxFractionDigits="2" maxIntegerDigits="3" />
+                 <f:validateDoubleRange minimum="10" maximum="100" />
             </h:inputText><br/>
+        <h:messages style="color:red"/>
         <h:commandButton action="#{createFilmBean.createFilm}" value="Create" />
     </h:form>
 
