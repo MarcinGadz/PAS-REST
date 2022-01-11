@@ -12,7 +12,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class RestAssuredTicketControllerTest {
@@ -81,7 +82,7 @@ public class RestAssuredTicketControllerTest {
 
         String ticketId = postTicket();
         get("/api/ticket/" + ticketId).then().statusCode(200).assertThat()
-                .body("ticketId", equalTo("aa"),
+                .body(
                         "user.firstName", equalTo("John"),
                         "film.title", equalTo("Title"),
                         "seat.row", equalTo(2));
@@ -142,7 +143,7 @@ public class RestAssuredTicketControllerTest {
                 .and().body(gson.toJson(ticket))
                 .when().put("/api/ticket/" + ticketId)
                 .then().statusCode(202)
-                .assertThat().body("ticketId", equalTo("aa"),
+                .assertThat().body(
                         "user.firstName", equalTo("John"),
                         "film.title", equalTo("Title"),
                         "seat.row", equalTo(2));
