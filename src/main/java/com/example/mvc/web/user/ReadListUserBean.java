@@ -35,14 +35,12 @@ public class ReadListUserBean implements Serializable {
     public void setActive(User u) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8081/");
-        System.out.println(u.getId());
         target.path("api").path("user").path(String.valueOf(u.getId())).path("activate").request().put(Entity.json(u));
     }
 
     public void setInactive(User u) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8081/");
-        System.out.println(u.getId());
         target.path("api").path("user").path(String.valueOf(u.getId())).path("deactivate").request().put(Entity.json(u));
     }
 

@@ -1,9 +1,11 @@
 package com.example.mvc.util;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.validator.ValidatorException;
 import java.util.UUID;
 
 @FacesConverter("com.example.mvc.util.UUIDConverter")
@@ -11,9 +13,13 @@ public class UUIDConverter implements Converter<UUID> {
     @Override
     public UUID getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
         if (s == null || s.trim().isEmpty()) {
+          return null;
+        }
+        try {
+            return UUID.fromString(s);
+        } catch(Exception ex) {
             return null;
         }
-        return UUID.fromString(s);
     }
 
     @Override

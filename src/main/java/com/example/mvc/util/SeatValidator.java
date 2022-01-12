@@ -1,5 +1,7 @@
 package com.example.mvc.util;
 
+import com.example.mvc.model.Hall;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -24,11 +26,11 @@ public class SeatValidator implements Validator {
 
     @Override
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
-        if(!Objects.equals(o.toString(), "A") || !Objects.equals(o.toString(), "B") || !Objects.equals(o.toString(), "C")) {
-            System.out.println(o);
+        if(!Objects.equals(o, Hall.A) && !Objects.equals(o, Hall.B) && !Objects.equals(o, Hall.C)) {
             FacesMessage msg = new FacesMessage("Must be A, B or C");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
         };
+//
     }
 }

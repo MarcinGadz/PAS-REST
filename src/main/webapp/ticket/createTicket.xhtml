@@ -11,15 +11,18 @@
     <h1>Create Ticket</h1>
     <h:form>
         Film id: <h:inputText value="#{createTicketBean.ticket.film.id}">
-        <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
-    </h:inputText>
+            <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
+        <f:validator validatorId="com.example.mvc.util.UUIDValidator"/>
+        </h:inputText>
         <br/>
         Seat id: <h:inputText value="#{createTicketBean.ticket.seat.id}">
-        <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
-    </h:inputText><br/>
+            <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
+        <f:validator validatorId="com.example.mvc.util.UUIDValidator"/>
+        </h:inputText><br/>
         User id: <h:inputText value="#{createTicketBean.ticket.user.id}">
-        <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
-    </h:inputText><br/>
+            <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
+         <f:validator validatorId="com.example.mvc.util.UUIDValidator"/>
+        </h:inputText><br/>
         <h:messages style="color:red"/>
         <h:commandButton action="#{createTicketBean.createTicket}" value="Create"/>
     </h:form>

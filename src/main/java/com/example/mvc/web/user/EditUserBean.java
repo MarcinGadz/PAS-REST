@@ -30,7 +30,6 @@ public class EditUserBean implements Serializable {
         if(editedUser != null) {
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target("http://localhost:8081");
-            System.out.println(editedUser);
             target.path("api").path("user").path(String.valueOf(editedUser.getId())).request(MediaType.APPLICATION_JSON).put(Entity.json(editedUser));
             editedUser = null;
         } else {

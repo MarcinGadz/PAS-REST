@@ -28,9 +28,6 @@ public class ReadListTicketBean implements Serializable {
     }
 
     public String deleteTicket(Ticket ticket) {
-        System.out.println("HERE");
-        System.out.println(ticket.getId());
-        System.out.println("HERE");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8081/");
         target.path("api").path("ticket").path(String.valueOf(ticket.getId())).request(MediaType.APPLICATION_JSON).delete();

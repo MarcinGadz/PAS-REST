@@ -11,9 +11,18 @@
 <h:body>
     <h1>Edit Film</h1>
     <h:form>
-        Seat id: <h:inputText value="#{editTicketBean.editedTicket.seat.id}" /> <br/>
-        Film id: <h:inputText value="#{editTicketBean.editedTicket.film.id}" /> <br/>
-        User id: <h:inputText value="#{editTicketBean.editedTicket.user.id}"/> <br/>
+        Seat id: <h:inputText value="#{editTicketBean.editedTicket.seat.id}">
+        <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
+        <f:validator validatorId="com.example.mvc.util.UUIDValidator"/>
+    </h:inputText> <br/>
+        Film id: <h:inputText value="#{editTicketBean.editedTicket.film.id}" >
+        <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
+        <f:validator validatorId="com.example.mvc.util.UUIDValidator"/>
+    </h:inputText> <br/>
+        User id: <h:inputText value="#{editTicketBean.editedTicket.user.id}">
+        <f:converter converterId="com.example.mvc.util.UUIDConverter"/>
+        <f:validator validatorId="com.example.mvc.util.UUIDValidator"/>
+    </h:inputText> <br/>
 
         <h:commandButton action="#{editTicketBean.editTicket}" value="Edit" />
     </h:form>

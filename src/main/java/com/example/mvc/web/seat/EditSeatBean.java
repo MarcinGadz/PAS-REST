@@ -27,7 +27,6 @@ public class EditSeatBean implements Serializable {
 
     public String editSeat() {
         if(editedSeat != null) {
-            System.out.println(editedSeat);
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target("http://localhost:8081");
             target.path("api").path("seat").path(String.valueOf(editedSeat.getId())).request(MediaType.APPLICATION_JSON).put(Entity.json(editedSeat));

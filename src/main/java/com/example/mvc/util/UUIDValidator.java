@@ -1,0 +1,24 @@
+package com.example.mvc.util;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.FacesValidator;
+import javax.faces.validator.ValidatorException;
+import javax.faces.validator.Validator;
+
+
+
+@FacesValidator("com.example.mvc.util.UUIDValidator")
+public class UUIDValidator implements Validator {
+
+    @Override
+    public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
+        if (o == null) {
+            FacesMessage msg = new FacesMessage("Not valid UUID");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(msg);
+        }
+
+    }
+}

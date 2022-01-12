@@ -11,9 +11,16 @@
 <h:body>
     <h1>Edit Seat</h1>
     <h:form>
-        Row: <h:inputText value="#{editSeatBean.editedSeat.row}" /> <br/>
-        Column: <h:inputText value="#{editSeatBean.editedSeat.column}" /> <br/>
-        Hall: <h:inputText value="#{editSeatBean.editedSeat.hall}" /> <br/>
+        Row: <h:inputText value="#{editSeatBean.editedSeat.row}" >
+        <f:validateDoubleRange minimum="0" maximum="100" />
+    </h:inputText> <br/>
+        Column: <h:inputText value="#{editSeatBean.editedSeat.column}" >
+        <f:validateDoubleRange minimum="0" maximum="100" />
+    </h:inputText> <br/>
+        Hall: <h:inputText value="#{editSeatBean.editedSeat.hall}" >
+        <f:validator validatorId="com.example.mvc.util.SeatValidator"/>
+    </h:inputText> <br/>
+        <h:messages style="color:red"/>
         <h:commandButton action="#{editSeatBean.editSeat}" value="Edit" />
     </h:form>
 

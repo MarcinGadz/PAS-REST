@@ -26,7 +26,6 @@ public class EditTicketBean implements Serializable {
 
     public String editTicket() {
         if (editedTicket != null) {
-            System.out.println(editedTicket);
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target("http://localhost:8081");
             target.path("api").path("ticket").path(String.valueOf(editedTicket.getId())).request(MediaType.APPLICATION_JSON).put(Entity.json(editedTicket));
