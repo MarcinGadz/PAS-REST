@@ -7,9 +7,10 @@
     <title>Title</title>
 </head>
 <h:body>
-    <h1>Create User</h1>
+    <h1>Show Found User</h1>
     <h:form>
-        <h:dataTable value="#{readListUserBean.userList}" var="user">
+        <h:dataTable value="#{searchUserBean.isList ?
+        searchUserBean.foundUsers : searchUserBean.foundUser}" var="user">
             <h:column>
                 <h:outputText value="#{user.firstName}" />
             </h:column>
@@ -22,21 +23,17 @@
             <h:column>
                 <h:outputText value="#{user.role}" />
             </h:column>
-            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
             <h:column>
                 <h:selectBooleanCheckbox value="#{user.active}" disabled="true"/>
                 <h:commandButton action="#{readListUserBean.setActive(user)}" value="Activate" />
                 <h:commandButton action="#{readListUserBean.setInactive(user)}" value="Deactivate" />
                 <h:commandButton action="#{readListUserBean.editUser(user)}" value="Edit" />
-                <h:commandButton action="#{readListUserBean.getActiveTickets(user)}" value="Active tickets" />
-                <h:commandButton action="#{readListUserBean.getInActiveTickets(user)}" value="Inactive tickets" />
-                <h:commandButton action="#{readListUserBean.getAllTickets(user)}" value="All tickets" />
             </h:column>
-
         </h:dataTable>
 
-        <h:commandButton action="#{readListUserBean.goBack}" value="Back to homepage" />
-        <h:commandButton action="#{readListUserBean.goToSearch}" value="Search user" />
+
+
+        <h:commandButton action="#{searchUserBean.goBack}" value="Back to homepage" />
     </h:form>
 
 </h:body>

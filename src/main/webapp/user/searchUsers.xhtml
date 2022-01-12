@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
+<head>
+    <title>Title</title>
+</head>
+<h:body>
+    <h1>Search User</h1>
+    <h:form>
+        <h:column>
+            <h:inputText value="#{searchUserBean.searchedLogin}" />
+        </h:column>
+
+        <h:commandButton action="#{searchUserBean.searchByLogin}" value="Search exact login" />
+        <h:commandButton action="#{searchUserBean.searchByContaining}" value="Search this phrase in login" />
+
+        <h:commandButton action="#{searchUserBean.goBack}" value="Back to homepage" />
+    </h:form>
+
+</h:body>
+</html>

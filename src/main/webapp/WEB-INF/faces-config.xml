@@ -71,23 +71,5 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
-
-    <navigation-rule>
-        <from-view-id>/user/listUsers.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>userTickets</from-outcome>
-            <to-view-id>/user/userTickets.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-
-    <navigation-rule>
-        <from-view-id>/seat/listSeats.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>seatTickets</from-outcome>
-            <to-view-id>/seat/seatTickets.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
   
 </faces-config>
