@@ -3,6 +3,7 @@ package com.example.mvc.web.ticket;
 import com.example.mvc.model.Ticket;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 
 @SessionScoped
@@ -27,10 +29,12 @@ public class ReadListTicketBean implements Serializable {
         });
     }
 
-    public String deleteTicket(Ticket ticket) {
+    public String deleteTicket() {
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String ticketid = params.get("ticketid");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8081/");
-        target.path("api").path("ticket").path(String.valueOf(ticket.getId())).request(MediaType.APPLICATION_JSON).delete();
+        target.path("api").path("ticket").path(ticketid).request(MediaType.APPLICATION_JSON).delete();
         return "listTickets";
     }
 

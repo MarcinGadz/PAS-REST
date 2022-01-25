@@ -2,12 +2,13 @@
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xml:lang="en" lang="en">
 <head>
     <title>Title</title>
 </head>
 <h:body>
-    <h1>Create Film</h1>
+    <h1>List Film</h1>
     <h:form>
         <h:dataTable value="#{readListFilmBean.filmList}" var="film">
             <h:column>
@@ -26,8 +27,13 @@
                 <h:outputText value="#{film.basePrice}" />
             </h:column>
             <h:column>
+                <h:outputText value="#{film.id}" />
+            </h:column>
+            <h:column>
                 <h:commandButton action="#{readListFilmBean.editFilm(film)}" value="Edit" />
-                <h:commandButton action="#{readListFilmBean.deleteFilm(film)}" value="Delete" />
+                <h:commandButton action="#{readListFilmBean.deleteFilm()}" value="Delete">
+                    <f:param name="filmid" value="#{film.id.toString()}" />
+                </h:commandButton>
             </h:column>
         </h:dataTable>
 

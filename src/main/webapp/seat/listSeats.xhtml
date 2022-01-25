@@ -2,12 +2,13 @@
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xml:lang="en" lang="en">
 <head>
     <title>Title</title>
 </head>
 <h:body>
-    <h1>Create Seat</h1>
+    <h1>List Seat</h1>
     <h:form>
         <h:dataTable value="#{readListSeatBean.seatList}" var="seat">
             <h:column>
@@ -20,8 +21,14 @@
                 <h:outputText value="#{seat.hall}" />
             </h:column>
             <h:column>
+                <h:outputText value="#{seat.id}" />
+            </h:column>
+            <h:column>
                 <h:commandButton action="#{readListSeatBean.editSeat(seat)}" value="Edit" />
-                <h:commandButton action="#{readListSeatBean.deleteSeat(seat)}" value="Delete" />
+                <h:commandButton action="#{readListSeatBean.deleteSeat()}" value="Delete">
+                    <f:param name="seatid" value="#{seat.id.toString()}" />
+                </h:commandButton>
+
                 <h:commandButton action="#{readListSeatBean.getActiveTickets(seat)}" value="Active tickets" />
                 <h:commandButton action="#{readListSeatBean.getInActiveTickets(seat)}" value="Inctive tickets" />
                 <h:commandButton action="#{readListSeatBean.getAllTickets(seat)}" value="All tickets" />

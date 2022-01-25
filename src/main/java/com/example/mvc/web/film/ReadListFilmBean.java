@@ -5,6 +5,7 @@ import com.example.mvc.model.Ticket;
 import com.example.mvc.model.User;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 
 @SessionScoped
@@ -29,10 +31,12 @@ public class ReadListFilmBean implements Serializable {
         return target.path("api").path("film").request(MediaType.APPLICATION_JSON).get(new GenericType<List<Film>>() {});
     }
 
-    public String deleteFilm(Film f) {
+    public String deleteFilm() {
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String filmid = params.get("filmid");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8081/");
-        target.path("api").path("film").path(String.valueOf(f.getId())).request(MediaType.APPLICATION_JSON).delete();
+        target.path("api").path("film").path(filmid).request(MediaType.APPLICATION_JSON).delete();
         return "listFilms";
     }
 
